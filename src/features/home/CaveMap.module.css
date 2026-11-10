@@ -377,7 +377,7 @@
 .nodeNum {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--cave);
+  color: color-mix(in srgb, var(--cave) var(--cave-ink), var(--text));
   letter-spacing: 0.02em;
 }
 
