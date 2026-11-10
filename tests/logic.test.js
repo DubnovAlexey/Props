@@ -240,6 +240,27 @@ describe('живой значок вкладки', () => {
     }
   });
 
+  it('значки приложения — нужного размера и без прозрачности', () => {
+    // Телефон берёт эти файлы для значка на экране: размеры обещаны в manifest.webmanifest.
+    // У PNG ширина и высота записаны в самом начале файла (блок IHDR), там же — тип цвета:
+    // 2 — обычный цвет без прозрачности. Прозрачный значок iPhone залил бы чёрным.
+    const sizes = {
+      'icons/icon-192.png': 192,
+      'icons/icon-512.png': 512,
+      'icons/icon-maskable-512.png': 512,
+      'icons/apple-touch-icon.png': 180,
+      'favicon.png': 64,
+    };
+    for (const [file, side] of Object.entries(sizes)) {
+      const png = readFileSync(new URL(`../public/${file}`, import.meta.url));
+      expect(png.toString('latin1', 1, 4)).toBe('PNG');
+      expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([side, side]);
+      expect(png[25]).toBe(2);
+    }
+    const manifest = JSON.parse(readFileSync(new URL('../public/manifest.webmanifest', import.meta.url), 'utf8'));
+    for (const icon of manifest.icons) expect(sizes[icon.src]).toBe(Number(icon.sizes.split('x')[0]));
+  });
+
   it('раскадровка: числа в разумных пределах, большую часть времени значок неподвижен', () => {
     let total = 0;
     let calm = 0;
