@@ -1,12 +1,16 @@
 // «Заклинание» — короткая рифма-мнемоника главы.
 // Кнопка «Прочитать вслух» использует встроенный синтез речи браузера:
 // произнесённое вслух запоминается лучше прочитанного про себя (эффект продукции).
+import { useEffect } from 'react';
 import { RichText } from '../RichText/RichText.jsx';
 import styles from './Spell.module.css';
 
 const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
 
 export default function Spell({ spell }) {
+  // Ушли со страницы — замолкаем: функция очистки эффекта выполняется при размонтировании
+  useEffect(() => () => window.speechSynthesis?.cancel(), []);
+
   function speak() {
     const utterance = new SpeechSynthesisUtterance(spell.text);
     utterance.lang = 'ru-RU';

@@ -14,6 +14,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Props" />
     <title>Props — Пещеры Графа Пропсулы</title>
+    <script>
+      // Тему ставим ДО загрузки приложения: иначе при дневной теме страница
+      // на мгновение мигала бы тёмной. Ключ тот же, что в src/utils/storage.js.
+      try {
+        var saved = JSON.parse(localStorage.getItem('props-castle/progress/v1') || '{}');
+        if (saved.theme === 'day') {
+          document.documentElement.dataset.theme = 'day';
+          document.querySelector('meta[name="theme-color"]').content = '#f5efe4';
+        }
+      } catch (error) {
+        // хранилище недоступно (приватный режим) — остаётся ночная тема
+      }
+    </script>
   </head>
   <body>
     <!-- Сюда React «монтирует» всё приложение (см. src/main.jsx) -->

@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  scroll-margin-top: calc(var(--header-h) + 12px);
 }
 
 .taskCard {

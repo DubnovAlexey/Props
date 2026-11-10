@@ -1,7 +1,7 @@
 // Корень приложения: провайдеры, шапка, страница по адресу и Граф.
 // Обрати внимание на <ChapterPage key={param} />: при переходе в другую
 // пещеру меняется key, и React создаёт страницу заново со свежим
-// состоянием — тот самый приём «сброс через key» из главы 5.
+// состоянием — тот самый приём «сброс через key» из пещеры 8 («Пещера памяти»).
 import { lazy, Suspense, useEffect } from 'react';
 import { useHashRoute } from './app/useHashRoute.js';
 import { ProgressProvider } from './state/ProgressContext.jsx';
@@ -21,6 +21,7 @@ import InstallPage from './features/install/InstallPage.jsx';
 import GuardianDefs from './mascot/guardians/GuardianDefs.jsx';
 import Ambience from './components/Ambience/Ambience.jsx';
 import NotFound from './app/NotFound.jsx';
+import ErrorBoundary from './app/ErrorBoundary.jsx';
 
 // Свитки (теория) грузятся только когда нужны: это отдельный кусок кода
 const LibraryPage = lazy(() => import('./features/library/LibraryPage.jsx'));
@@ -82,7 +83,10 @@ export default function App() {
         <Ambience />
         <Header section={section} />
         <main className="page" id="main">
-          <Page route={route} />
+          {/* Ошибка на одной странице не должна гасить всю игру: шапка и меню остаются */}
+          <ErrorBoundary resetKey={route.path}>
+            <Page route={route} />
+          </ErrorBoundary>
         </main>
         <TabBar section={section} />
         <MascotDock routeKey={route.path} />

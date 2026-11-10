@@ -2,7 +2,7 @@
 // Короткая смена деятельности снимает усталость внимания, а надписи на
 // мышах заставляют ещё раз быстро вспомнить материал (лёгкое повторение).
 import { sfx } from '../../audio/sfx.js';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import Bat from '../../mascot/Bat.jsx';
 import { BREAK_ROUNDS } from '../../content/breakRounds.js';
 import { pick } from '../../utils/random.js';
@@ -10,7 +10,9 @@ import { useReducedMotion } from '../../hooks/useMediaQuery.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import styles from './BatCatcher.module.css';
 
-export default function BatCatcher({ roundId, duration = 20, onFinish, finishLabel = 'Дальше →' }) {
+// Пропсы: onScore(очки) — вызывается сам, когда время вышло (например, чтобы записать рекорд);
+//         onFinish(очки) — по кнопке «дальше» (её подпись — finishLabel). Оба необязательные.
+export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, finishLabel = 'Дальше →' }) {
   const [round, setRound] = useState(() => BREAK_ROUNDS[roundId] ?? pick(Object.values(BREAK_ROUNDS)));
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState('intro'); // intro → play → over
@@ -62,6 +64,14 @@ export default function BatCatcher({ roundId, duration = 20, onFinish, finishLab
       setBats([]);
     }
   }, [phase, timeLeft]);
+
+  // Время вышло — сообщаем счёт родителю. useEffectEvent даёт функцию, которая всегда
+  // видит свежие score и onScore, но не заставляет эффект срабатывать при их изменении:
+  // эффект зависит только от фазы игры и выполняется ровно один раз за раунд.
+  const reportScore = useEffectEvent(() => onScore?.(score));
+  useEffect(() => {
+    if (phase === 'over') reportScore();
+  }, [phase]);
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 

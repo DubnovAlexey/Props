@@ -3,6 +3,11 @@
 // Телефон: при нажатии; закрывается повторным нажатием, тапом мимо или прокруткой.
 // Окно рисуется через портал (createPortal) прямо в <body>, чтобы его
 // не обрезали родители с overflow: hidden.
+// Почему термин — <span role="button">, а не <button>: кнопка в строке текста —
+// неразрывный блок. Она не переносится по словам (длинный термин вылезал бы
+// за край карточки на телефоне), а точка или запятая после неё могла уехать
+// на новую строку в одиночку. <span> ведёт себя как обычный текст, а «кнопочное»
+// поведение добавляем сами: role, tabIndex и клавиши Enter / пробел.
 import Spelling from '../Spelling/Spelling.jsx';
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -27,7 +32,8 @@ export default function Term({ id, children }) {
       setPosition(null);
       return;
     }
-    const anchor = anchorRef.current.getBoundingClientRect();
+    // Термин может переноситься на две строки — привязываем окно к первой
+    const anchor = anchorRef.current.getClientRects()[0] ?? anchorRef.current.getBoundingClientRect();
     const tip = tipRef.current.getBoundingClientRect();
     const gap = 8;
     let top = anchor.top - tip.height - gap;
@@ -68,23 +74,33 @@ export default function Term({ id, children }) {
   const hideSoon = () => {
     closeTimer.current = setTimeout(() => setOpen(false), 160);
   };
+  // Мышь: окно уже открыто наведением, клик его не закрывает. Палец: открыть / закрыть
+  const handleClick = () => (hoverCapable ? show() : setOpen((value) => !value));
+  // У <span> нет встроенной реакции на клавиши — повторяем поведение кнопки
+  const handleKeyDown = (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault(); // пробел не должен прокручивать страницу
+    handleClick();
+  };
 
   return (
     <>
-      <button
-        type="button"
+      <span
+        role="button"
+        tabIndex={0}
         ref={anchorRef}
         className={`${styles.term} ${open ? styles.active : ''}`}
         aria-expanded={open}
         aria-describedby={open ? tipId : undefined}
-        onClick={() => (hoverCapable ? show() : setOpen((value) => !value))}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
         onMouseEnter={hoverCapable ? show : undefined}
         onMouseLeave={hoverCapable ? hideSoon : undefined}
         onFocus={(event) => event.currentTarget.matches(':focus-visible') && show()}
         onBlur={hideSoon}
       >
         {children ?? entry.label}
-      </button>
+      </span>
       {open &&
         createPortal(
           <div

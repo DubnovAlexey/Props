@@ -1,10 +1,5 @@
 .term {
-  display: inline;
   padding: 0 1px;
-  margin: 0;
-  border: 0;
-  background: none;
-  font: inherit;
   color: var(--magic);
   font-weight: 600;
   text-decoration: underline dotted;
@@ -12,6 +7,10 @@
   text-underline-offset: 3px;
   cursor: help;
   border-radius: 4px;
+  /* термин из двух слов может перенестись — фон и скругление у каждой части свои */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .term:hover,

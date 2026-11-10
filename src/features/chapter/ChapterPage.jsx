@@ -31,11 +31,22 @@ const STEPS = [
   { id: 'done', label: 'Итог', icon: '🏆' },
 ];
 
+/**
+ * С какого шага открыть пещеру. Бой ещё идёт (практика не пройдена) —
+ * продолжаем с первого непройденного шага: не нужно заново отвечать на разминку.
+ * Новая или уже пройденная пещера открывается с начала — со встречи с хозяином.
+ */
+function firstStepFor(done) {
+  if (done.done) return 'warmup';
+  return ['warmup', 'lesson', 'spell'].find((id) => !done[id]) ?? 'practice';
+}
+
 export default function ChapterPage({ chapterId }) {
   const chapter = CHAPTER_MAP[chapterId];
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
-  const [step, setStep] = useState('warmup');
+  // Функция в useState выполняется один раз, при первом рендере («ленивое» начальное значение)
+  const [step, setStep] = useState(() => firstStepFor(progress.chapters[chapterId] ?? {}));
   const [cardIndex, setCardIndex] = useState(0);
   const [summary, setSummary] = useState(null);
   const tasks = useMemo(() => ALL_TASKS.filter((task) => task.chapterId === chapterId), [chapterId]);
@@ -56,8 +67,18 @@ export default function ChapterPage({ chapterId }) {
 
   function complete(stepId, nextStep, xp = XP.step) {
     dispatch({ type: 'step', chapterId: chapter.id, step: stepId, xp });
-    if (nextStep === 'done') sfx.complete();
+    // Победу празднуем, только если практика действительно пройдена
+    if (nextStep === 'done' && done.done) {
+      sfx.complete();
+      say(phrase('chapterDone'), 'happy');
+    }
     go(nextStep);
+  }
+
+  /** Показать карточку урока с начала: карточки разной высоты, прокрутка сбивала бы с толку */
+  function showCard(index) {
+    setCardIndex(index);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function finishPractice(result) {
@@ -74,7 +95,6 @@ export default function ChapterPage({ chapterId }) {
   function finishBreak(score) {
     dispatch({ type: 'break', score });
     complete('break', 'done');
-    say(phrase('chapterDone'), 'happy');
   }
 
   const card = chapter.lesson[cardIndex];
@@ -140,7 +160,7 @@ export default function ChapterPage({ chapterId }) {
           />
           <LessonCard key={cardIndex} card={card} index={cardIndex} total={chapter.lesson.length} />
           <div className={styles.cardNav}>
-            <button type="button" className="btn" disabled={cardIndex === 0} onClick={() => setCardIndex(cardIndex - 1)}>
+            <button type="button" className="btn" disabled={cardIndex === 0} onClick={() => showCard(cardIndex - 1)}>
               ← Назад
             </button>
             <div className={styles.dots} role="tablist" aria-label="Карточки урока">
@@ -152,7 +172,7 @@ export default function ChapterPage({ chapterId }) {
                   aria-selected={i === cardIndex}
                   aria-label={`Карточка ${i + 1}: ${item.title}`}
                   className={`${styles.dot} ${i === cardIndex ? styles.dotActive : ''}`}
-                  onClick={() => setCardIndex(i)}
+                  onClick={() => showCard(i)}
                 />
               ))}
             </div>
@@ -161,14 +181,7 @@ export default function ChapterPage({ chapterId }) {
                 К заклинанию ✨
               </button>
             ) : (
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => {
-                  setCardIndex(cardIndex + 1);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
+              <button type="button" className="btn btn-primary" onClick={() => showCard(cardIndex + 1)}>
                 Дальше →
               </button>
             )}
@@ -202,7 +215,27 @@ export default function ChapterPage({ chapterId }) {
         </div>
       )}
 
-      {step === 'done' && (
+      {/* Итог открыт всегда (шаги переключаются свободно), но победу показываем только после практики */}
+      {step === 'done' && !done.done && (
+        <div className="card stack anim-in">
+          <span className="eyebrow">Итог пещеры</span>
+          <h2>Хозяин ещё не повержен</h2>
+          <p>
+            {chapter.story.guardian.name} ждёт боя. Итог появится, когда пройдёшь практику — {tasks.length} заданий. Ошибаться можно:
+            каждая ошибка объясняется и попадает в склеп повторения.
+          </p>
+          <div className="row">
+            <button type="button" className="btn btn-primary" onClick={() => go('practice')}>
+              К практике ⚔️
+            </button>
+            <button type="button" className="btn btn-ghost" onClick={() => go('lesson')}>
+              Сначала урок 📖
+            </button>
+          </div>
+        </div>
+      )}
+
+      {step === 'done' && done.done && (
         <div className="stack anim-in">
           <CaveHost chapter={chapter} defeated />
           <div className="card stack">

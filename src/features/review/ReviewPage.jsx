@@ -20,7 +20,9 @@ const NEW_CARDS_PER_SESSION = 8;
 export default function ReviewPage() {
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
-  const [now] = useState(() => Date.now());
+  // «Сейчас» запоминаем в состоянии: список к повторению не должен меняться прямо во время сеанса.
+  // После сеанса время обновляем — и свежие ошибки сразу появляются в списке.
+  const [now, setNow] = useState(() => Date.now());
   const [session, setSession] = useState(null); // { kind: 'tasks' | 'cards', ids: [...] }
   const [cardIndex, setCardIndex] = useState(0);
   const [finished, setFinished] = useState(null);
@@ -52,10 +54,14 @@ export default function ReviewPage() {
   function rateCard(remembered) {
     dispatch({ type: 'card', itemId: `term:${session.ids[cardIndex]}`, remembered });
     if (cardIndex + 1 < session.ids.length) setCardIndex(cardIndex + 1);
-    else {
-      setFinished({ kind: 'cards', total: session.ids.length });
-      setSession(null);
-    }
+    else endSession({ kind: 'cards', total: session.ids.length });
+  }
+
+  function endSession(result) {
+    setFinished(result);
+    setSession(null);
+    setNow(Date.now());
+    window.scrollTo(0, 0);
   }
 
   if (session?.kind === 'tasks') {
@@ -65,10 +71,7 @@ export default function ReviewPage() {
         <PracticeRunner
           tasks={session.ids.map((id) => TASK_MAP[id])}
           showChapter
-          onFinish={(result) => {
-            setFinished({ kind: 'tasks', ...result });
-            setSession(null);
-          }}
+          onFinish={(result) => endSession({ kind: 'tasks', ...result })}
         />
       </div>
     );

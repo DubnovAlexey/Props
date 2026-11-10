@@ -21,7 +21,8 @@ export default function BreakPage() {
         <h1>Поймай мышей</h1>
         <p className="muted">20 секунд игры — и мозг снова готов учиться. Лучший результат: {progress.breakBest}.</p>
       </div>
-      <BatCatcher duration={20} onFinish={(score) => dispatch({ type: 'break', score })} finishLabel="Записать результат" />
+      {/* Рекорд записывается сам, когда время вышло: отдельная кнопка для этого не нужна */}
+      <BatCatcher duration={20} onScore={(score) => dispatch({ type: 'break', score })} />
       <p className="muted small">Совет Графа: после 25 минут учёбы делай перерыв на 5 минут — встань, пройдись, посмотри вдаль.</p>
     </div>
   );

@@ -18,14 +18,24 @@ export function ProgressProvider({ children }) {
     saveJSON(progress);
   }, [progress]);
 
-  // Отмечаем визит для серии дней
+  // Отмечаем визит для серии дней: при запуске и каждый раз, когда игра снова
+  // оказывается на экране. Установленное приложение на телефоне может жить
+  // в памяти несколько дней подряд без перезагрузки — без второй проверки
+  // новый день не засчитался бы, и серия оборвалась бы несправедливо.
   useEffect(() => {
-    dispatch({ type: 'visit', today: dayKey() });
+    const visit = () => dispatch({ type: 'visit', today: dayKey() });
+    const onVisible = () => document.visibilityState === 'visible' && visit();
+    visit();
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
 
-  // Тема оформления — атрибут на <html>, его читают CSS-переменные
+  // Тема оформления — атрибут на <html>, его читают CSS-переменные.
+  // Заодно красим панель браузера на телефоне (meta theme-color) в цвет фона.
   useEffect(() => {
     document.documentElement.dataset.theme = progress.theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = progress.theme === 'day' ? '#f5efe4' : '#0a080d';
   }, [progress.theme]);
 
   // Звук: модуль sfx живёт вне React, поэтому сообщаем ему настройку
