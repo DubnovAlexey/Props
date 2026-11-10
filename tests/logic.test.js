@@ -253,7 +253,7 @@ describe('живой значок вкладки', () => {
     };
     for (const [file, side] of Object.entries(sizes)) {
       const png = readFileSync(new URL(`../public/${file}`, import.meta.url));
-      expect(png.toString('latin1', 1, 4)).toBe('PNG');
+      expect(String.fromCharCode(png[1], png[2], png[3])).toBe('PNG');
       expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([side, side]);
       expect(png[25]).toBe(2);
     }
