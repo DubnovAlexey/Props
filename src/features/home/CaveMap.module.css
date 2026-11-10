@@ -430,3 +430,16 @@
 .fact p {
   margin-bottom: 10px;
 }
+
+/* --- Подтверждение сброса прогресса --- */
+.reset {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--bad);
+  background: var(--bad-soft);
+}
+
+.reset p {
+  margin-bottom: 12px;
+}

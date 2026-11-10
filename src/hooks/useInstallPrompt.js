@@ -35,3 +35,24 @@ export function useInstallPrompt() {
 
   return { canInstall: Boolean(prompt), installed, install };
 }
+
+/**
+ * Свой хук: сохранена ли игра на устройстве для работы без интернета.
+ * navigator.serviceWorker.ready — Promise, который выполнится, когда сервис-воркер
+ * установился и включился (а он включается только после того, как сохранил все файлы).
+ * В режиме разработки воркера нет — Promise не выполнится, и ответ останется «нет».
+ */
+export function useOfflineReady() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (!('serviceWorker' in navigator)) return undefined;
+    let alive = true; // компонент ещё на экране? (чтобы не менять состояние после ухода со страницы)
+    navigator.serviceWorker.ready.then(() => alive && setReady(true)).catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  return ready;
+}

@@ -28,7 +28,8 @@ createRoot(document.getElementById('root')).render(
 // Регистрируем только в собранной версии (в разработке он бы мешал
 // обновлениям). Внутри предпросмотра claude.ai сервис-воркеры запрещены —
 // ошибку тихо пропускаем, игра просто работает онлайн.
-if (import.meta.env.PROD && !import.meta.env.VITE_ARTIFACT && 'serviceWorker' in navigator) {
+// Копии «всё в одном файле» (VITE_SINGLE) воркер не нужен: она и так целиком на диске.
+if (import.meta.env.PROD && !import.meta.env.VITE_ARTIFACT && !import.meta.env.VITE_SINGLE && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   });

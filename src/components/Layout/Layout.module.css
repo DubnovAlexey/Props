@@ -2,11 +2,22 @@
   position: sticky;
   top: 0;
   z-index: 30;
-  height: var(--header-h);
+  height: var(--header-total);
+  padding-top: var(--safe-top); /* место под строку состояния iPhone */
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+}
+
+/* Строка состояния iPhone в установленной игре всегда с белым текстом —
+   под ней держим тёмную полосу, иначе в дневной теме часы не прочитать */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--safe-top);
+  background: #0a080d;
 }
 
 .inner {
@@ -14,7 +25,7 @@
   height: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 14px;
+  padding: 0 max(14px, var(--safe-right)) 0 max(14px, var(--safe-left));
   display: flex;
   align-items: center;
   gap: 12px;
@@ -156,7 +167,7 @@
    а сами значки делаем чуть плотнее — шапка должна влезать в 360px */
 @media (max-width: 479px) {
   .inner {
-    padding: 0 10px;
+    padding: 0 max(10px, var(--safe-right)) 0 max(10px, var(--safe-left));
     gap: 8px;
   }
 
@@ -193,8 +204,8 @@
   z-index: 35;
   display: flex;
   justify-content: space-around;
-  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  height: calc(var(--tabbar-h) + var(--safe-bottom));
+  padding: 0 var(--safe-right) var(--safe-bottom) var(--safe-left);
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);

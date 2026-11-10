@@ -3,6 +3,13 @@
 // в кэш при установке. Новая сборка = новые имена = новая версия кэша.
 // Шрифты для редких алфавитов (греческий, вьетнамский) не кэшируем заранее:
 // браузер скачает их, только если понадобятся.
+//
+// Как это работает у игрока:
+//  1. Первый заход по сети — воркер устанавливается и сохраняет игру целиком.
+//  2. Дальше игра открывается и без интернета — из сохранённой копии.
+//  3. Вышла новая версия — воркер скачивает её в фоне и включает при следующем
+//     запуске игры. Открытую игру он не трогает: иначе у неё «из-под ног»
+//     пропали бы файлы старой версии (например, ещё не открытые свитки).
 const SKIP = /(greek|vietnamese|latin-ext)/;
 
 export default function serviceWorkerPlugin() {
@@ -33,12 +40,23 @@ function swSource(version, precache) {
   return `// Сервис-воркер «Пещер Графа Пропсулы» (создан сборкой, не правь вручную).
 const CACHE = 'props-${version}';
 const PRECACHE = ${JSON.stringify(precache, null, 2)};
+const NAVIGATION_TIMEOUT = 4000; // сколько ждём сеть при открытии игры, мс
+
+// Адрес самой игры («оболочки»): папка, где лежит sw.js, и index.html в ней
+const SHELL = new URL('./', self.location).pathname;
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting()));
+  // cache: 'reload' — берём файлы с сервера, минуя обычный кэш браузера.
+  // Иначе сразу после обновления сайта в копию могла бы попасть старая
+  // страница со ссылками на файлы, которых уже нет, — и без сети игра не открылась бы.
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => cache.addAll(PRECACHE.map((url) => new Request(url, { cache: 'reload' })))),
+  );
+  // skipWaiting() нарочно не вызываем: новая версия включится при следующем запуске
 });
 
 self.addEventListener('activate', (event) => {
+  // Мы — новая версия, старых вкладок уже нет: чужие кэши можно удалить
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))
@@ -46,15 +64,42 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+/** Запрос в сеть, который не ждёт дольше timeout миллисекунд */
+function fetchWithTimeout(request, timeout) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('timeout')), timeout);
+    fetch(request).then(
+      (response) => {
+        clearTimeout(timer);
+        resolve(response);
+      },
+      (error) => {
+        clearTimeout(timer);
+        reject(error);
+      },
+    );
+  });
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Страница: сначала сеть (свежая версия), без сети — из кэша
-  if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('./', { ignoreVary: true })));
+  // Открытие самой игры: сначала сеть (свежая версия). Сети нет или она «висит» —
+  // показываем сохранённую страницу СВОЕЙ версии: её файлы точно лежат в нашем кэше.
+  const isShell = request.mode === 'navigate' && (url.pathname === SHELL || url.pathname === SHELL + 'index.html');
+  if (isShell) {
+    event.respondWith(
+      fetchWithTimeout(request, NAVIGATION_TIMEOUT).catch(() =>
+        caches.open(CACHE).then((cache) => cache.match('./', { ignoreVary: true })),
+      ),
+    );
     return;
   }
+
+  // Остальные переходы (например, скачивание файла) — обычным путём, через сеть
+  if (request.mode === 'navigate') return;
 
   // Файлы с хэшем в имени не меняются: сначала кэш, потом сеть (и кладём в кэш).
   // ignoreVary: сервер может ответить «Vary: Origin», а скрипты-модули

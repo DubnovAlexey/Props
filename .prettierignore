@@ -4,3 +4,4 @@ package-lock.json
 docs/guide.md
 src/content/library/sections
 dist-artifact
+dist-single

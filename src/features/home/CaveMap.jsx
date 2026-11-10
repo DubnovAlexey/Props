@@ -3,6 +3,7 @@
 // мозг отлично помнит места, и знания, привязанные к месту, вспоминаются легче.
 // Пещеры сгруппированы по ярусам: чем глубже, тем сложнее.
 import { useEffect, useState } from 'react';
+import { dayKey } from '../../utils/dates.js';
 import { CHAPTERS } from '../../content/chapters/index.js';
 import { FACTS } from '../../content/facts.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
@@ -20,6 +21,48 @@ import CaveArt from './CaveArt.jsx';
 import CaveNode from './CaveNode.jsx';
 import styles from './CaveMap.module.css';
 import { to } from '../../app/useHashRoute.js';
+
+/**
+ * «Начать игру заново»: сначала спрашиваем подтверждение — стёртый прогресс не вернуть.
+ * Пока прогресса нет, кнопку не показываем: стирать нечего.
+ */
+function ResetProgress() {
+  const { progress, dispatch } = useProgress();
+  const [asking, setAsking] = useState(false);
+  const hasProgress = progress.xp > 0 || Object.keys(progress.chapters).length > 0 || Object.keys(progress.items).length > 0;
+  if (!hasProgress) return null;
+
+  function reset() {
+    dispatch({ type: 'reset' });
+    dispatch({ type: 'visit', today: dayKey() }); // сегодняшний день в серии остаётся
+    setAsking(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  if (!asking) {
+    return (
+      <button type="button" className="btn btn-ghost btn-small" onClick={() => setAsking(true)}>
+        🗑️ Начать игру заново
+      </button>
+    );
+  }
+
+  return (
+    <div className={styles.reset} role="alertdialog" aria-label="Сброс прогресса">
+      <p>
+        <b>Точно начать заново?</b> Опыт, пройденные пещеры и расписание повторений будут стёрты. Вернуть их нельзя.
+      </p>
+      <div className="row">
+        <button type="button" className="btn" onClick={() => setAsking(false)}>
+          Отмена
+        </button>
+        <button type="button" className="btn btn-danger" onClick={reset}>
+          Да, стереть прогресс
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function CaveMap() {
   const { progress } = useProgress();
@@ -199,6 +242,7 @@ export default function CaveMap() {
           <a href={to.break()}>🦇 Перемена</a>
           <a href={to.install()}>📲 Играть без интернета</a>
         </div>
+        <ResetProgress />
       </section>
     </div>
   );

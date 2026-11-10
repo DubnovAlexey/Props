@@ -15,8 +15,8 @@ html {
   /* Шапка и нижняя панель «приклеены» поверх страницы. Отступы прокрутки говорят
      браузеру: то, к чему прокрутили (scrollIntoView, фокус с клавиатуры, кнопка
      «Дальше» после ответа), не должно оказаться под ними. */
-  scroll-padding-top: calc(var(--header-h) + 12px);
-  scroll-padding-bottom: calc(var(--tabbar-h) + 16px + env(safe-area-inset-bottom, 0px));
+  scroll-padding-top: calc(var(--header-total) + 12px);
+  scroll-padding-bottom: calc(var(--tabbar-h) + 16px + var(--safe-bottom));
 }
 
 @media (min-width: 1000px) {
@@ -103,7 +103,7 @@ li {
   width: 100%;
   max-width: var(--content-w);
   margin: 0 auto;
-  padding: 20px 16px calc(var(--tabbar-h) + 110px);
+  padding: 20px max(16px, var(--safe-right)) calc(var(--tabbar-h) + 110px + var(--safe-bottom)) max(16px, var(--safe-left));
 }
 
 @media (min-width: 1000px) {
@@ -209,6 +209,17 @@ li {
 
 .btn-ghost {
   background: transparent;
+}
+
+/* Опасное действие (стереть прогресс): красная рамка — чтобы не нажать случайно */
+.btn-danger {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.btn-danger:hover {
+  border-color: var(--bad);
+  background: var(--bad-soft);
 }
 
 .btn-small {

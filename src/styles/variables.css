@@ -71,6 +71,17 @@
   --header-h: 60px;
   --tabbar-h: 64px;
 
+  /* Безопасные зоны экрана телефона: строка состояния и вырез сверху, полоска
+     «домой» снизу, скруглённые углы по бокам в альбомной ориентации.
+     В обычном браузере на компьютере все четыре равны нулю. В игре, установленной
+     на iPhone, страница занимает весь экран — без этих отступов шапка попала бы
+     под часы, а нижняя панель — под полоску «домой». */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --header-total: calc(var(--header-h) + var(--safe-top)); /* шапка вместе со строкой состояния */
+
   color-scheme: dark;
 }
 

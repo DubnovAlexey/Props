@@ -16,3 +16,4 @@ Thumbs.db
 .claude/settings.local.json
 coverage/
 dist-artifact/
+dist-single/
