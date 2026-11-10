@@ -64,6 +64,7 @@
   width: 4px;
   height: 9px;
   background: var(--blood);
+  box-shadow: 0 0 6px var(--blood-glow);
 }
 
 /* окровавленные острия сталактитов */

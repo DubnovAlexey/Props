@@ -5,6 +5,7 @@
 //   defeated — пещера пройдена: хозяин повержен и говорит слова поражения.
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import styles from './CaveHost.module.css';
 
 export default function CaveHost({ chapter, defeated = false }) {
@@ -18,9 +19,9 @@ export default function CaveHost({ chapter, defeated = false }) {
       </div>
       <div className={styles.text}>
         <span className="eyebrow">{defeated ? 'Хозяин пещеры повержен' : 'Хозяин пещеры'}</span>
-        <h2 className={styles.name}>
+        <BloodTitle as="h2" className={styles.name}>
           {guardian.name}, <span className={styles.kind}>{guardian.kind}</span>
-        </h2>
+        </BloodTitle>
         <blockquote className={styles.speech}>«{defeated ? guardian.defeat : guardian.threat}»</blockquote>
         <p className={styles.story}>
           <RichText text={defeated ? outro : intro} />

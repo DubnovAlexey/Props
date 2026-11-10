@@ -12,7 +12,7 @@
   overflow: hidden;
   /* кроваво-красная светящаяся рамка вокруг каждого портрета */
   box-shadow:
-    0 0 0 2px var(--blood-ring),
+    0 0 0 2px var(--blood),
     0 0 14px var(--blood-glow);
 }
 

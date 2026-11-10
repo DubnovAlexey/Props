@@ -184,8 +184,8 @@ describe('потёки крови на заголовках', () => {
   it('потёки висят только на буквах без «хвоста» и не выходят за заголовок', () => {
     const title = letters('📲 Пещеры — в кармане, 18 штук!');
     const drips = pickDripLetters(title);
-    expect(drips.length).toBeGreaterThanOrEqual(1);
-    expect(drips.length).toBeLessThanOrEqual(4);
+    expect(drips.length).toBeGreaterThanOrEqual(2);
+    expect(drips.length).toBeLessThanOrEqual(6);
     for (const drip of drips) {
       expect(title[drip.index]).toMatch(/\p{L}/u);
       expect('руфцщдРУФЦЩДqypgjQ').not.toContain(title[drip.index]);
@@ -197,11 +197,11 @@ describe('потёки крови на заголовках', () => {
     expect(new Set(drips.map((drip) => drip.index)).size).toBe(drips.length);
   });
 
-  it('крови немного: от одного до четырёх потёков, длинные чередуются с капельками', () => {
-    expect(pickDripLetters(letters('Словарь'))).toHaveLength(1);
-    expect(pickDripLetters(letters('Пещеры Графа Пропсулы')).length).toBeLessThanOrEqual(3);
+  it('потёков в меру: от двух до шести, длинные чередуются с капельками', () => {
+    expect(pickDripLetters(letters('Словарь Графа'))).toHaveLength(2);
+    expect(pickDripLetters(letters('Пещеры Графа Пропсулы'))).toHaveLength(3);
     const long = pickDripLetters(letters('Функции в пропсах и подъём состояния наверх к самому родителю'));
-    expect(long).toHaveLength(4);
+    expect(long).toHaveLength(6);
     long.forEach((drip, i) => {
       if (i % 2 === 0) expect(drip.length).toBeGreaterThanOrEqual(0.38);
       else expect(drip.length).toBeLessThanOrEqual(0.28);

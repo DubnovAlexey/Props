@@ -345,7 +345,7 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid var(--blood-ring);
+  border: 2px solid var(--blood);
   box-shadow:
     0 0 12px 2px var(--blood-glow),
     inset 0 0 8px var(--blood-glow);

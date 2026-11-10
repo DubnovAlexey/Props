@@ -44,8 +44,9 @@ export function pickDripLetters(chars) {
   if (suitable.length === 0) return [];
 
   const random = seededRandom(hashText(chars.join('')));
-  // Крови немного: примерно один потёк на семь букв, от одного до четырёх на заголовок
-  const count = Math.max(1, Math.min(4, Math.round(suitable.length / 7)));
+  // примерно один потёк на пять букв, но не меньше двух и не больше шести:
+  // кровь украшает заголовок, а не спорит с содержимым страницы
+  const count = Math.min(suitable.length, Math.max(2, Math.min(6, Math.round(suitable.length / 5))));
 
   // делим подходящие буквы на равные отрезки и берём по одной из каждого —
   // так потёки расходятся по всему заголовку, а не сбиваются в кучу
