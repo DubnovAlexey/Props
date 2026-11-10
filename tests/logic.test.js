@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { DAY, INTERVAL_DAYS, boxCounts, dueIds, schedule } from '../src/utils/leitner.js';
 import { groupBlocks, parseInline, stripMarkup } from '../src/utils/richText.js';
 import { checkTask, normalizeCode, normalizeLoose } from '../src/utils/checkAnswer.js';
-import { initialProgress, progressReducer, restore, XP } from '../src/state/progressReducer.js';
+import { initialProgress, isPassed, neededCorrect, progressReducer, restore, XP } from '../src/state/progressReducer.js';
 import { tokenizeLine } from '../src/utils/highlight.js';
 import { rankFor, RANKS } from '../src/utils/ranks.js';
 import { daysBetween } from '../src/utils/dates.js';
@@ -118,6 +118,29 @@ describe('прогресс', () => {
     let state = progressReducer(initialProgress, { type: 'practice', chapterId: 'flow', score: 0.75 });
     state = progressReducer(state, { type: 'practice', chapterId: 'flow', score: 0.5 });
     expect(state.chapters.flow.practiceBest).toBe(0.75);
+    expect(state.xp).toBe(XP.chapter);
+  });
+
+  it('хозяин повержен только при 5 верных из 8', () => {
+    expect(isPassed(4 / 8)).toBe(false);
+    expect(isPassed(5 / 8)).toBe(true);
+    expect(neededCorrect(8)).toBe(5);
+
+    let state = progressReducer(initialProgress, { type: 'practice', chapterId: 'flow', score: 4 / 8 });
+    expect(state.chapters.flow.done).toBe(false);
+    expect(state.chapters.flow.practiceBest).toBe(0.5); // попытка запомнена, но победы нет
+    expect(state.xp).toBe(0);
+
+    state = progressReducer(state, { type: 'practice', chapterId: 'flow', score: 5 / 8 });
+    expect(state.chapters.flow.done).toBe(true);
+    expect(state.xp).toBe(XP.chapter);
+  });
+
+  it('слабая повторная попытка не отнимает победу', () => {
+    let state = progressReducer(initialProgress, { type: 'practice', chapterId: 'flow', score: 1 });
+    state = progressReducer(state, { type: 'practice', chapterId: 'flow', score: 0 });
+    expect(state.chapters.flow.done).toBe(true);
+    expect(state.chapters.flow.practiceBest).toBe(1);
     expect(state.xp).toBe(XP.chapter);
   });
 

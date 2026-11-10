@@ -276,3 +276,30 @@
 .termRu {
   color: var(--text-dim);
 }
+
+/* --- «Хозяин устоял»: портрет и угроза хозяина над итогом попытки --- */
+.standing {
+  border-color: color-mix(in srgb, var(--cave) 45%, var(--border));
+}
+
+.standingHost {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.standingHost svg {
+  flex: none; /* портрет не сжимается, когда реплика длинная */
+}
+
+.standingThreat {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--cave);
+  border-radius: 0 12px 12px 0;
+  background: color-mix(in srgb, var(--cave) 12%, transparent);
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.35;
+}

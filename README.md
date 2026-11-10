@@ -21,8 +21,7 @@ npm run dev      # http://localhost:5173
 ```
 
 Нужен Node.js 20.19+ или 22.12+. Подробно про IntelliJ IDEA и Claude Code — в [docs/INTELLIJ.md](docs/INTELLIJ.md),
-готовый промпт для доработки — в [docs/PROMPT.md](docs/PROMPT.md). Всё о проекте в одном файле — пожелания,
-устройство, идеи по развитию и история создания — в [HANDOFF.md](HANDOFF.md).
+готовый промпт для доработки — в [docs/PROMPT.md](docs/PROMPT.md).
 
 ## Команды
 
