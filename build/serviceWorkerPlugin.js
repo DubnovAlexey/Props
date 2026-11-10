@@ -10,28 +10,36 @@
 //  3. Вышла новая версия — воркер скачивает её в фоне и включает при следующем
 //     запуске игры. Открытую игру он не трогает: иначе у неё «из-под ног»
 //     пропали бы файлы старой версии (например, ещё не открытые свитки).
+//
+// Почему список собираем на шаге writeBundle, а не раньше (generateBundle):
+// раньше в списке ещё числятся «пустые» скрипты — заготовки для стилей шрифтов,
+// которые Vite потом удаляет. Воркер пытался бы сохранить файлы, которых нет,
+// получал ошибку 404 и НЕ устанавливался: офлайн не работал вовсе. Причём
+// «npm run preview» этого не показывает — он вместо отсутствующего файла отдаёт
+// страницу игры с кодом 200. Поэтому каждый файл из списка ещё и проверяем на диске.
+import { existsSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 const SKIP = /(greek|vietnamese|latin-ext)/;
+// Файлы из папки public: значки и описание приложения для установки на телефон
+const PUBLIC_FILES = ['manifest.webmanifest', 'favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 export default function serviceWorkerPlugin() {
   return {
     name: 'props-service-worker',
     apply: 'build',
-    generateBundle(_options, bundle) {
-      const files = Object.keys(bundle).filter((name) => !name.endsWith('.map') && !SKIP.test(name));
-      const precache = [
-        './',
-        ...files.map((name) => `./${name}`),
-        './manifest.webmanifest',
-        './favicon.svg',
-        './icons/icon-192.png',
-        './icons/icon-512.png',
-      ];
+    writeBundle(options, bundle) {
+      const outDir = options.dir;
+      const built = Object.keys(bundle).filter((name) => !name.endsWith('.map') && !name.endsWith('.html') && !SKIP.test(name));
+      const files = [...built, ...PUBLIC_FILES];
+
+      const missing = files.filter((name) => !existsSync(join(outDir, name)));
+      if (missing.length) this.error(`Сервис-воркер: в сборке нет файлов из списка офлайн-копии: ${missing.join(', ')}`);
+
+      const precache = ['./', ...files.map((name) => `./${name}`)];
       const version = Date.now().toString(36);
-      this.emitFile({
-        type: 'asset',
-        fileName: 'sw.js',
-        source: swSource(version, precache),
-      });
+      writeFileSync(join(outDir, 'sw.js'), swSource(version, precache));
+      console.log(`  sw.js: офлайн-копия из ${precache.length} файлов (версия props-${version})`);
     },
   };
 }
