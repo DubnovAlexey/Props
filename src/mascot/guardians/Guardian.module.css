@@ -50,9 +50,19 @@
   animation: drip 3s ease-in infinite;
 }
 
-/* Побеждённый хозяин тускнеет, но не исчезает: его ещё можно навестить */
-.defeated {
-  filter: grayscale(0.75) brightness(0.62) contrast(1.05);
+/* вторая очередь капель — чтобы кровь и яд не капали в такт */
+.guardian :global(.g-drip2) {
+  animation: drip 3.8s ease-in 1.4s infinite;
+}
+
+/* Побеждённый хозяин тускнеет, но не исчезает: его ещё можно навестить.
+   Серый прямоугольник в режиме наложения «цвет» забирает у рисунка под ним
+   оттенок и насыщенность — портрет становится пепельным. Борозды от когтей
+   рисуются поверх и остаются красными (см. Guardian.jsx). */
+.ash {
+  fill: #6a6570;
+  mix-blend-mode: color;
+  opacity: 0.8;
 }
 
 .defeated .body,
@@ -61,7 +71,8 @@
 .defeated :global(.g-flicker),
 .defeated :global(.g-wave),
 .defeated :global(.g-wave2),
-.defeated :global(.g-drip) {
+.defeated :global(.g-drip),
+.defeated :global(.g-drip2) {
   animation: none;
 }
 
@@ -139,7 +150,8 @@
   .guardian :global(.g-flicker),
   .guardian :global(.g-wave),
   .guardian :global(.g-wave2),
-  .guardian :global(.g-drip) {
+  .guardian :global(.g-drip),
+  .guardian :global(.g-drip2) {
     animation: none;
   }
 }

@@ -1,5 +1,7 @@
 // Крысиный король Ключник — хозяин Пещеры ключей (key и ref).
 // У каждой крысы его свиты на хвосте свой ключ — как key у элемента списка.
+import { Drop, Tips, Trail } from '../gore.jsx';
+
 function Key({ x, y, r = 0 }) {
   return (
     <g transform={`translate(${x} ${y}) rotate(${r})`}>
@@ -8,6 +10,16 @@ function Key({ x, y, r = 0 }) {
     </g>
   );
 }
+
+// Свита в темноте: пары красных глаз [x, y]
+const PACK = [
+  [20, 112],
+  [176, 118],
+  [31, 140],
+  [167, 142],
+  [14, 90],
+  [184, 94],
+];
 
 export default function RatKing({ u }) {
   return (
@@ -29,6 +41,16 @@ export default function RatKing({ u }) {
           <stop offset="1" stopColor="#4a2a28" />
         </radialGradient>
       </defs>
+
+      {/* свита следит из темноты: у каждой крысы — пара красных глаз */}
+      <g className="g-eye" fill="#e0222e" filter="url(#g-glow)">
+        {PACK.map(([x, y]) => (
+          <g key={`${x}-${y}`}>
+            <circle cx={x} cy={y} r="1.3" />
+            <circle cx={x + 5.4} cy={y + 0.4} r="1.3" />
+          </g>
+        ))}
+      </g>
 
       {/* узел хвостов внизу, на каждом — ключ */}
       <g stroke="#b98a80" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.9">
@@ -83,6 +105,27 @@ export default function RatKing({ u }) {
           strokeWidth="0.8"
         />
       </g>
+
+      {/* рваное ухо, шрам через глаз, кровь на резцах и зубцах короны */}
+      <path d="M33 43 L45 52 L35 59 Z" fill="#070606" />
+      <Trail d="M35 45 L44 52" width={1.2} opacity={0.85} />
+      <path d="M68 78 L92 108" stroke="#140a0a" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M69.2 77.4 L93.2 107.4" stroke="#b9767a" strokeWidth="0.5" opacity="0.7" />
+      <path
+        d="M93.5 169 L98.5 169 L98.5 177 Q96 179.6 93.5 177 Z M101.5 171 L106.5 171 L106.5 177 Q104 179.6 101.5 177 Z"
+        fill="#99091e"
+        opacity="0.9"
+      />
+      <Trail d="M104 179 C104.6 183.6 103.4 187.6 104 192" width={1.5} />
+      <Drop cx={104} cy={195} r={1.5} />
+      <Tips
+        tips={[
+          [92, 12, 6, 'up'],
+          [130, 18, 5, 'up'],
+        ]}
+        width={3}
+      />
+      <Trail d="M92 18 C91.4 23 92.6 27 92 31" width={1.2} opacity={0.85} />
 
       <g className="g-sway" stroke="#d8d4cc" strokeWidth="0.8" opacity="0.6" fill="none">
         <path d="M88 150 C66 144 46 146 22 154 M88 154 C66 154 48 160 28 170 M112 150 C134 144 154 146 178 154 M112 154 C134 154 152 160 172 170" />

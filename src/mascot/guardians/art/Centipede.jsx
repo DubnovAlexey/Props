@@ -1,11 +1,20 @@
 // Сороконожка Сотня — хозяйка Пещеры стай (массивы).
 // Сегменты тела идут по порядку, как элементы массива: на каждом — свой индекс.
+import { Drop, Splatter, Trail } from '../gore.jsx';
+
 const SEGMENTS = [
   [70, 192, 34, 16],
   [80, 171, 33, 15],
   [90, 151, 31, 15],
   [97, 132, 29, 14],
   [101, 114, 27, 13],
+];
+
+// брызги крови под жвалами: [x, y, радиус]
+const BLOOD_SPOTS = [
+  [96, 131, 1.3],
+  [106, 134, 1],
+  [90, 136, 0.9],
 ];
 
 export default function Centipede({ u }) {
@@ -78,6 +87,18 @@ export default function Centipede({ u }) {
             {i}
           </text>
         ))}
+
+      {/* добыча в жвалах — обглоданная кость; кровь на клешнях */}
+      <path d="M77 123.6 L123 127.6" stroke="#d6ccb6" strokeWidth="3" strokeLinecap="round" />
+      <path d="M77 123.6 L123 127.6" stroke="#8d8370" strokeWidth="0.6" opacity="0.7" transform="translate(0 1.1)" />
+      <circle cx="76" cy="122.2" r="2.2" fill="#d6ccb6" />
+      <circle cx="75.6" cy="125.4" r="2" fill="#d6ccb6" />
+      <circle cx="124" cy="126.2" r="2.2" fill="#d6ccb6" />
+      <circle cx="124.2" cy="129.4" r="2" fill="#d6ccb6" />
+      <Trail d="M78 107 C74 113 71.8 121 71.6 129" width={1.8} opacity={0.9} />
+      <Trail d="M122 107 C126 113 128.2 121 128.4 129" width={1.8} opacity={0.9} />
+      <Splatter spots={BLOOD_SPOTS} />
+      <Drop cx={100} cy={132.5} r={1.5} late />
 
       <path className="g-drip" d="M71 131 l0 8" stroke="#9be36a" strokeWidth="1.6" fill="none" />
       <path className="g-drip" d="M129 131 l0 8" stroke="#9be36a" strokeWidth="1.6" fill="none" />

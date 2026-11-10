@@ -1,5 +1,7 @@
 // Пещерный угорь Стремнина — хозяин Подземного водопада (поток данных вниз).
 // Плывёт только вниз по течению — как данные в React.
+import { Drop, Tips, Trail } from '../gore.jsx';
+
 const UPPER_TEETH = [118, 126, 134, 142, 150, 158, 166];
 const LOWER_TEETH = [122, 130, 138, 146, 154, 162];
 
@@ -82,6 +84,29 @@ export default function Eel({ u }) {
           strokeWidth="0.4"
         />
       </g>
+
+      {/* кровь на иглах зубов; в воде она расходится мутным облаком и уходит вниз по течению */}
+      <Tips
+        tips={[
+          [118, 109.2, 4.5],
+          [134, 105.7, 4.5],
+          [150, 102.2, 4.5],
+          [166, 98.7, 4],
+          [122, 103.8, 4, 'up'],
+          [138, 101, 4, 'up'],
+          [154, 98.1, 4, 'up'],
+        ]}
+        width={2.4}
+      />
+      <g filter="url(#g-blur)" opacity="0.5" fill="none" stroke="#99091e" strokeLinecap="round">
+        <path d="M150 126 C154 140 146 152 150 166 C153 178 148 188 150 200" strokeWidth="6" />
+        <path d="M164 118 C168 130 162 142 166 156" strokeWidth="4" />
+      </g>
+      <Trail d="M140 136 C141 142 139 147 140 153" width={1.8} />
+      <Drop cx={140} cy={156.5} r={1.6} />
+      {/* старый шрам через глаз */}
+      <path d="M115 74 L133 93" stroke="#04100c" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M116 73.4 L134 92.4" stroke="#8fc7b8" strokeWidth="0.5" opacity="0.6" />
 
       {/* мутный глаз */}
       <circle className="g-eye" cx="124" cy="84" r="5.5" fill="#bfeee4" filter="url(#g-glow)" />

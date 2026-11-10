@@ -1,5 +1,7 @@
 // Скорпион-ювелир Жало — хозяин Грота самоцветов (children и композиция).
 // Прячет самоцветы в панцире, как в шкатулке, — как рамка держит children.
+import { Splatter, Tips, Trail } from '../gore.jsx';
+
 const TAIL = [
   [100, 168, 13],
   [118, 150, 12],
@@ -26,6 +28,14 @@ function Claw({ u }) {
     </>
   );
 }
+
+// брызги крови под клешнёй: [x, y, радиус]
+const BLOOD_SPOTS = [
+  [30, 72, 1.3],
+  [46, 82, 1],
+  [60, 97, 1.2],
+  [24, 60, 0.9],
+];
 
 export default function Scorpion({ u }) {
   return (
@@ -106,6 +116,18 @@ export default function Scorpion({ u }) {
         <path d="M96 144 L100 138 L106 144 L100 150 Z" fill={`url(#${u}gem3)`} stroke="#1c0e55" strokeWidth="0.6" />
         <path d="M90 126 L91 128 M108 128 L109 130" stroke="#fff" strokeWidth="1" opacity="0.8" />
       </g>
+
+      {/* кровь на левой клешне и на жале */}
+      <Trail d="M24.6 42 C28.6 54 38 61 50 65" width={1.7} opacity={0.9} />
+      <Tips
+        tips={[
+          [22, 36, 7, 'up'],
+          [52, 32, 6, 'up'],
+          [92, 58.6, 7],
+        ]}
+        width={3}
+      />
+      <Splatter spots={BLOOD_SPOTS} />
 
       {/* капля яда на жале */}
       <circle className="g-drip" cx="92" cy="60" r="2" fill="#b6f06a" filter="url(#g-glow)" />

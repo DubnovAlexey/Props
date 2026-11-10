@@ -1,6 +1,8 @@
 // Паучиха Тенета — хозяйка Пещеры памяти (состояние).
 // Помнит каждую нить паутины — как состояние помнит значения между рендерами.
 // Лапы: [плечо, колено, стопа]; рисуются толстыми штрихами с бликом.
+import { Drop, Tips, Trail } from '../gore.jsx';
+
 const LEGS = [
   ['M86 112', 'C66 82 48 70 30 74', 'C16 88 10 108 4 128'],
   ['M84 120', 'C60 104 36 102 20 112', 'C10 128 8 150 6 172'],
@@ -48,6 +50,14 @@ export default function Spider({ u }) {
         ))}
       </g>
 
+      {/* добыча в коконе висит на нити: паучиха помнит каждого */}
+      <path d="M36 0 L41 30" stroke="#cfc6dc" strokeWidth="0.7" opacity="0.5" />
+      <g transform="rotate(-14 42 44)">
+        <ellipse cx="42" cy="44" rx="7" ry="14" fill="#cfc6dc" opacity="0.5" />
+        <path d="M36 36 L48 39 M35.4 42 L48.6 45 M35.6 48 L48.4 51 M37 54 L47 56" stroke="#efe9f6" strokeWidth="0.7" opacity="0.55" />
+        <path d="M41 46 C40.4 50 41.6 53 41 57" stroke="#99091e" strokeWidth="1.6" strokeLinecap="round" opacity="0.8" />
+      </g>
+
       <g filter="url(#g-flesh)">
         {/* брюшко с алыми «песочными часами» */}
         <circle cx="100" cy="52" r="42" fill={`url(#${u}abd)`} />
@@ -86,6 +96,18 @@ export default function Spider({ u }) {
           strokeWidth="0.6"
         />
       </g>
+
+      {/* кровь на клыках и хелицерах */}
+      <Trail d="M88 132 C86 140 87 147 91 152" width={1.6} opacity={0.9} />
+      <Trail d="M112 132 C114 140 113 147 109 152" width={1.6} opacity={0.9} />
+      <Tips
+        tips={[
+          [96, 171, 6.5],
+          [104, 171, 6.5],
+        ]}
+        width={2.8}
+      />
+      <Drop cx={100} cy={180} r={1.5} late />
 
       {/* капли яда */}
       <circle className="g-drip" cx="96" cy="174" r="1.8" fill="#9be36a" />

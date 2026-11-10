@@ -56,9 +56,9 @@ export default function MascotDock({ routeKey }) {
     const update = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        // Рука Графа примерно в 80px от верха картинки — совмещаем её с серединой блока
+        // Рука Графа примерно в 88px от верха картинки — совмещаем её с серединой блока
         const rect = focus.el.getBoundingClientRect();
-        const desired = rect.top + rect.height / 2 - 80;
+        const desired = rect.top + rect.height / 2 - 88;
         setTop(Math.max(76, Math.min(window.innerHeight - 390, desired)));
       });
     };

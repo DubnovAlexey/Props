@@ -1,5 +1,7 @@
 // Тень-двойник — хозяин Зеркального грота (виртуальный DOM).
 // Копия без плоти, как виртуальный DOM — лёгкая копия страницы в памяти.
+import { Trail } from '../gore.jsx';
+
 const SILHOUETTE =
   'M100 46 C124 46 138 64 138 88 C138 108 128 122 118 128 C140 134 160 146 170 170 L176 200 L24 200 L30 170 C40 146 60 134 82 128 C72 122 62 108 62 88 C62 64 76 46 100 46 Z';
 
@@ -29,6 +31,16 @@ export default function Doppelganger({ u }) {
         fill="none"
       />
 
+      {/* удар по стеклу: лучи трещин и выпавший осколок */}
+      <path d="M146 60 L160 40 L166 58 Z" fill="#020305" />
+      <path
+        d="M146 60 L160 40 M146 60 L174 70 M146 60 L132 44 M146 60 L140 86 M146 60 L164 94 M146 60 L122 62"
+        stroke="#dfe8f5"
+        strokeWidth="0.8"
+        opacity="0.45"
+        fill="none"
+      />
+
       {/* «копия» — призрачное отражение, сдвинутое в сторону */}
       <path d={SILHOUETTE} fill="#9fb2cc" opacity="0.08" transform="translate(9 3)" />
 
@@ -55,6 +67,21 @@ export default function Doppelganger({ u }) {
         stroke="#06070b"
         strokeWidth="1.4"
       />
+
+      {/* кровавый отпечаток ладони на стекле — изнутри зеркала */}
+      <g opacity="0.8">
+        <ellipse cx="54" cy="152" rx="7" ry="8.4" fill="#99091e" />
+        <path
+          d="M49 146 L45.6 134 M53 143.6 L51.6 130 M57.4 143.6 L58.6 131 M61.4 146.4 L65 136.6 M61 153.6 L68.6 149.4"
+          stroke="#99091e"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+        />
+        <path d="M50 148 L50.6 152 M56 149 L56.4 154" stroke="#4a0410" strokeWidth="0.7" />
+      </g>
+      <Trail d="M51.4 160 C52 166 50.8 171 51.6 177" width={1.6} opacity={0.85} />
+      <Trail d="M57.2 160 C57.6 164 56.8 167 57.4 170" width={1.2} opacity={0.8} />
+      <Trail d="M124.6 108 C125.6 113 124.6 118 125.4 123" width={1.3} opacity={0.9} />
 
       {/* пустые светящиеся глаза */}
       <g className="g-eye" filter="url(#g-glow)" fill="#f2f9ff">

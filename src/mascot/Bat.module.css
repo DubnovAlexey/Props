@@ -4,30 +4,59 @@
   vertical-align: middle;
 }
 
-.wingLeft,
-.wingRight {
+/* перепонка крыла */
+.membrane {
   fill: var(--bat-wing);
   stroke: var(--bat);
-  stroke-width: 0.8;
+  stroke-width: 0.7;
   stroke-linejoin: round;
+}
+
+/* тень на крыле у самого тела — крыло выглядит выпуклым */
+.shade {
+  fill: #000;
+  opacity: 0.3;
 }
 
 /* кости-пальцы в крыльях */
 .bone {
   fill: none;
   stroke: var(--bat);
-  stroke-width: 0.7;
-  opacity: 0.75;
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  opacity: 0.9;
 }
 
 .snout {
-  fill: #5a2a3a;
+  fill: #6b2f40;
+}
+
+/* светлая шерсть на груди */
+.chest {
+  fill: var(--bat-wing);
+  opacity: 0.8;
+}
+
+.earInner {
+  fill: #6b2f40;
+  opacity: 0.85;
+}
+
+.brow {
+  fill: none;
+  stroke: #05030a;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.mouth {
+  fill: #2a0610;
 }
 
 .claw {
   fill: none;
-  stroke: #e9e2d6;
-  stroke-width: 0.9;
+  stroke: #cfc6b4;
+  stroke-width: 0.7;
   stroke-linecap: round;
 }
 

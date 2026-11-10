@@ -1,5 +1,7 @@
 // Минотавр-кузнец Наковальня — хозяин Подземной мастерской (формы и паттерны).
 // Куёт в лабиринте-мастерской формы и паттерны — инструменты на все случаи.
+import { Drop, Splatter, Trail } from '../gore.jsx';
+
 function Horn({ u }) {
   return (
     <>
@@ -13,6 +15,14 @@ function Horn({ u }) {
     </>
   );
 }
+
+// брызги крови на фартуке: [x, y, радиус]
+const BLOOD_SPOTS = [
+  [84, 180, 1.8],
+  [112, 186, 1.4],
+  [100, 176, 1.1],
+  [122, 178, 1],
+];
 
 export default function Minotaur({ u }) {
   return (
@@ -81,6 +91,17 @@ export default function Minotaur({ u }) {
       </g>
       <circle cx="100" cy="152" r="9" fill="none" stroke="#8a8f99" strokeWidth="3" />
       <path d="M93 147 A9 9 0 0 1 107 147" stroke="#d6dbe2" strokeWidth="1" fill="none" opacity="0.6" />
+
+      {/* кровь на рогах и из ноздри; на лбу — раскалённое клеймо-лабиринт */}
+      <Trail d="M11 24 C18 34 28 41 40 45" width={2.2} opacity={0.9} />
+      <Trail d="M189 24 C182 34 172 41 160 45" width={1.6} opacity={0.8} />
+      <Trail d="M88 144 C87.4 150 88.6 155 88 160" width={1.6} />
+      <Splatter spots={BLOOD_SPOTS} />
+      <Drop cx={88} cy={163.5} r={1.6} />
+      <Drop cx={22} cy={44} r={1.5} late />
+      <g className="g-flicker" filter="url(#g-glow)" fill="none" stroke="#ff7a3a" strokeWidth="1.3" strokeLinejoin="round">
+        <path d="M93 60 H107 V73 H96 V65 H103 V69 H100" />
+      </g>
 
       {/* пар из ноздрей */}
       <g className="g-sway" fill="#d8d0c8" opacity="0.22" filter="url(#g-blur)">

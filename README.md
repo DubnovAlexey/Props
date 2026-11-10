@@ -7,6 +7,8 @@
 
 ▶ **Играть / Play:** <https://dubnovalexey.github.io/Props/>
 
+📲 **Как установить на iPhone, Android или компьютер / How to install:** [Русский](#install-ru) · [English](#install-en) · [עברית](#install-he) · [Español](#install-es) · [Français](#install-fr)
+
 ---
 
 <a id="ru"></a>
@@ -29,9 +31,46 @@
 «Объясни Лунатику» → перемена → итог. Хозяин пещеры повержен, если в практике верно **5 заданий из 8**. Ошибки
 попадают в «склеп повторения» и возвращаются по системе Лейтнера.
 
-**Играть без интернета.** Игру можно установить как приложение на Android, iPhone и компьютер (страница
-«Играть без интернета» в игре) — после первого открытия она работает офлайн. Там же можно скачать всю игру одним
-файлом `Props.html`: он открывается двойным щелчком на компьютере и не требует ни сервера, ни сети.
+<a id="install-ru"></a>
+
+### 📲 Как установить игру — по шагам
+
+Игра открывается по ссылке **<https://dubnovalexey.github.io/Props/>** в любом браузере — ничего устанавливать не обязательно. Но если её
+установить, она появится значком на экране, как обычное приложение, и будет работать **без интернета**.
+Выберите своё устройство.
+
+#### 1. 📱 iPhone или iPad
+
+1. Откройте ссылку в браузере **Safari** (синий значок с компасом).
+2. Нажмите кнопку **«Поделиться»** — квадрат со стрелкой вверх, обычно внизу экрана.
+3. Прокрутите список и выберите **«На экран „Домой“»**.
+4. Нажмите **«Добавить»** справа вверху.
+5. На экране телефона появится значок **Props**. Откройте игру с него один раз при включённом интернете
+   и подождите полминуты — игра сохранится в телефон.
+
+#### 2. 🤖 Android
+
+1. Откройте ссылку в браузере **Chrome**.
+2. Нажмите **три точки ⋮** справа вверху.
+3. Выберите **«Добавить на гл. экран»** (или **«Установить приложение»**) и подтвердите — **«Установить»**.
+4. Значок **Props** появится на главном экране. Откройте игру с него один раз при включённом интернете.
+
+#### 3. 💻 Компьютер (Windows или Mac)
+
+**Способ А — скачать одним файлом (проще всего):**
+
+1. Откройте игру по ссылке и внизу карты пещер нажмите **«📲 Играть без интернета»**.
+2. Нажмите **«⬇️ Скачать Props.html»**. Файл окажется в папке «Загрузки».
+3. Дважды щёлкните по файлу — игра откроется в браузере. Интернет больше не нужен; файл можно переслать другу
+   или положить на флешку.
+
+**Способ Б — установить как приложение:** откройте ссылку в **Chrome** или **Edge**, нажмите значок установки
+в правой части адресной строки (монитор со стрелкой) и подтвердите — **«Установить»**.
+
+**Как проверить, что всё получилось.** Включите авиарежим (или отключите Wi‑Fi) и откройте игру — она должна
+работать.
+
+**Важно знать.** Ваши успехи хранятся на том устройстве, где вы играете: на телефоне — свои, на компьютере — свои.
 
 **Быстрый старт** (нужен Node.js 20.19+ или 22.12+):
 
@@ -88,9 +127,46 @@ from project setup to patterns — defeat a monster guardian in each, and your t
 bat" → break → summary. The guardian is defeated when **5 of 8** practice tasks are correct. Mistakes go to the
 "crypt of repetition" and come back on a Leitner schedule.
 
-**Play offline.** The game installs as an app on Android, iPhone and desktop (see the "Play offline" page in the
-game) and works without a connection after the first visit. The same page offers the whole game as one file,
-`Props.html`: double-click it on a computer — no server, no network.
+<a id="install-en"></a>
+
+### 📲 How to install the game — step by step
+
+The game opens from the link **<https://dubnovalexey.github.io/Props/>** in any browser — you don't have to install anything. If you do install
+it, it gets an icon on your screen like a normal app and works **without the internet**. Pick your device.
+
+#### 1. 📱 iPhone or iPad
+
+1. Open the link in **Safari** (the blue compass icon).
+2. Tap the **Share** button — a square with an arrow pointing up, usually at the bottom of the screen.
+3. Scroll the list and choose **Add to Home Screen**.
+4. Tap **Add** in the top right corner.
+5. A **Props** icon appears on your Home Screen. Open the game from it once while you are online and wait half
+   a minute — the game saves itself to the phone.
+
+#### 2. 🤖 Android
+
+1. Open the link in **Chrome**.
+2. Tap the **three dots ⋮** in the top right corner.
+3. Choose **Add to Home screen** (or **Install app**) and confirm with **Install**.
+4. The **Props** icon appears on your home screen. Open the game from it once while you are online.
+
+#### 3. 💻 Computer (Windows or Mac)
+
+**Option A — download one file (the easiest):**
+
+1. Open the game from the link and, at the bottom of the cave map, click **«📲 Играть без интернета»**
+   (the game is in Russian for now).
+2. Click **«⬇️ Скачать Props.html»**. The file lands in your Downloads folder.
+3. Double-click the file — the game opens in your browser. No internet needed any more; you can send the file
+   to a friend or put it on a USB stick.
+
+**Option B — install it as an app:** open the link in **Chrome** or **Edge**, click the install icon at the right
+end of the address bar (a monitor with an arrow) and confirm with **Install**.
+
+**How to check it worked.** Turn on airplane mode (or switch Wi‑Fi off) and open the game — it should still work.
+
+**Good to know.** Your progress is stored on the device you play on: the phone keeps its own, the computer keeps
+its own.
 
 **Quick start** (Node.js 20.19+ or 22.12+):
 
@@ -139,9 +215,44 @@ Offline mode is a custom service worker (`build/serviceWorkerPlugin.js`); the si
 **איך לומדים.** כל מערה היא מסלול: חימום ← שיעור ← לחש ← תרגול (8 משימות) ← «הסבר לעטלף» ← הפסקה ← סיכום.
 השומר מובס כאשר **5 מתוך 8** משימות התרגול נכונות. הטעויות עוברות ל«קריפטת החזרה» וחוזרות לפי שיטת לייטנר.
 
-**משחק בלי אינטרנט.** אפשר להתקין את המשחק כאפליקציה ב‑Android, ב‑iPhone ובמחשב (העמוד «לשחק בלי אינטרנט»
-במשחק) — אחרי הפתיחה הראשונה הוא עובד גם בלי חיבור. באותו עמוד אפשר להוריד את כל המשחק כקובץ אחד,
-`Props.html`: במחשב פותחים אותו בלחיצה כפולה, בלי שרת ובלי רשת.
+<a id="install-he"></a>
+
+### 📲 איך מתקינים את המשחק — שלב אחר שלב
+
+המשחק נפתח מהקישור **<https://dubnovalexey.github.io/Props/>** בכל דפדפן — לא חייבים להתקין כלום. אבל אם מתקינים, הוא מופיע כסמל על המסך כמו
+אפליקציה רגילה ועובד **בלי אינטרנט**. בחרו את המכשיר שלכם.
+
+#### 1. 📱 iPhone או iPad
+
+1. פתחו את הקישור בדפדפן **Safari** (הסמל הכחול עם המצפן).
+2. הקישו על כפתור **«שיתוף»** — ריבוע עם חץ למעלה, בדרך כלל בתחתית המסך.
+3. גללו ברשימה ובחרו **«הוסף למסך הבית»**.
+4. הקישו על **«הוסף»** בפינה העליונה.
+5. על מסך הבית יופיע הסמל **Props**. פתחו ממנו את המשחק פעם אחת כשיש אינטרנט וחכו חצי דקה — המשחק יישמר
+   בטלפון.
+
+#### 2. 🤖 Android
+
+1. פתחו את הקישור בדפדפן **Chrome**.
+2. הקישו על **שלוש הנקודות ⋮** בפינה העליונה.
+3. בחרו **«הוספה למסך הבית»** (או **«התקנת האפליקציה»**) ואשרו — **«התקנה»**.
+4. הסמל **Props** יופיע במסך הבית. פתחו ממנו את המשחק פעם אחת כשיש אינטרנט.
+
+#### 3. 💻 מחשב (Windows או Mac)
+
+**דרך א׳ — להוריד קובץ אחד (הכי פשוט):**
+
+1. פתחו את המשחק מהקישור, ובתחתית מפת המערות לחצו על **«📲 Играть без интернета»** (המשחק כרגע ברוסית).
+2. לחצו על **«⬇️ Скачать Props.html»**. הקובץ יישמר בתיקיית «הורדות».
+3. לחצו לחיצה כפולה על הקובץ — המשחק ייפתח בדפדפן. אין יותר צורך באינטרנט; אפשר לשלוח את הקובץ לחבר
+   או לשים אותו על דיסק און קי.
+
+**דרך ב׳ — להתקין כאפליקציה:** פתחו את הקישור ב‑**Chrome** או ב‑**Edge**, לחצו על סמל ההתקנה בקצה שורת
+הכתובת (מסך עם חץ) ואשרו — **«התקנה»**.
+
+**איך בודקים שהצליח.** הפעילו מצב טיסה (או כבו את ה‑Wi‑Fi) ופתחו את המשחק — הוא אמור לעבוד.
+
+**חשוב לדעת.** ההתקדמות נשמרת במכשיר שבו משחקים: לטלפון יש התקדמות משלו, ולמחשב משלו.
 
 **התחלה מהירה** (Node.js 20.19+ או 22.12+):
 
@@ -187,10 +298,49 @@ tipos · 117 términos en el glosario · pergaminos de teoría: 18 resúmenes y 
 «Explícaselo al murciélago» → recreo → resumen. El guardián cae cuando aciertas **5 de 8** tareas de la práctica.
 Los errores van a la «cripta de repaso» y vuelven según el sistema de Leitner.
 
-**Jugar sin conexión.** El juego se instala como aplicación en Android, iPhone y ordenador (página «Jugar sin
-internet» dentro del juego) y funciona sin conexión después de la primera visita. En la misma página se puede
-descargar todo el juego en un solo archivo, `Props.html`: en un ordenador se abre con doble clic, sin servidor ni
-red.
+<a id="install-es"></a>
+
+### 📲 Cómo instalar el juego — paso a paso
+
+El juego se abre con el enlace **<https://dubnovalexey.github.io/Props/>** en cualquier navegador: no hace falta instalar nada. Pero si lo
+instalas, aparece como un icono en la pantalla, igual que una aplicación normal, y funciona **sin internet**.
+Elige tu dispositivo.
+
+#### 1. 📱 iPhone o iPad
+
+1. Abre el enlace en **Safari** (el icono azul con una brújula).
+2. Toca el botón **Compartir**: un cuadrado con una flecha hacia arriba, normalmente en la parte inferior
+   de la pantalla.
+3. Desplázate por la lista y elige **Añadir a pantalla de inicio**.
+4. Toca **Añadir** arriba a la derecha.
+5. En la pantalla aparecerá el icono **Props**. Abre el juego desde él una vez con internet y espera medio
+   minuto: el juego se guardará en el teléfono.
+
+#### 2. 🤖 Android
+
+1. Abre el enlace en **Chrome**.
+2. Toca los **tres puntos ⋮** arriba a la derecha.
+3. Elige **Añadir a pantalla de inicio** (o **Instalar aplicación**) y confirma con **Instalar**.
+4. El icono **Props** aparecerá en la pantalla de inicio. Abre el juego desde él una vez con internet.
+
+#### 3. 💻 Ordenador (Windows o Mac)
+
+**Opción A: descargar un solo archivo (lo más fácil).**
+
+1. Abre el juego con el enlace y, al final del mapa de cuevas, haz clic en **«📲 Играть без интернета»**
+   (por ahora el juego está en ruso).
+2. Haz clic en **«⬇️ Скачать Props.html»**. El archivo quedará en la carpeta Descargas.
+3. Haz doble clic en el archivo: el juego se abrirá en el navegador. Ya no necesitas internet; puedes enviar
+   el archivo a un amigo o guardarlo en una memoria USB.
+
+**Opción B: instalarlo como aplicación.** Abre el enlace en **Chrome** o **Edge**, haz clic en el icono de
+instalación al final de la barra de direcciones (un monitor con una flecha) y confirma con **Instalar**.
+
+**Cómo comprobar que ha funcionado.** Activa el modo avión (o apaga el wifi) y abre el juego: debe seguir
+funcionando.
+
+**Conviene saber.** Tu progreso se guarda en el dispositivo en el que juegas: el teléfono tiene el suyo
+y el ordenador, el suyo.
 
 **Inicio rápido** (Node.js 20.19+ o 22.12+):
 
@@ -233,9 +383,49 @@ pas faire » · 144 exercices de huit types · 117 termes dans le glossaire · 
 « Explique-le à la chauve-souris » → pause → bilan. Le gardien est vaincu quand **5 exercices sur 8** sont justes.
 Les erreurs partent dans la « crypte de révision » et reviennent selon le système de Leitner.
 
-**Jouer hors ligne.** Le jeu s'installe comme une application sur Android, iPhone et ordinateur (page « Jouer sans
-internet » dans le jeu) et fonctionne sans connexion après la première visite. La même page permet de télécharger
-tout le jeu en un seul fichier, `Props.html` : sur un ordinateur, un double-clic suffit, sans serveur ni réseau.
+<a id="install-fr"></a>
+
+### 📲 Comment installer le jeu — pas à pas
+
+Le jeu s'ouvre avec le lien **<https://dubnovalexey.github.io/Props/>** dans n'importe quel navigateur : il n'est pas nécessaire d'installer quoi
+que ce soit. Mais une fois installé, il apparaît comme une icône sur l'écran, comme une application ordinaire,
+et fonctionne **sans internet**. Choisissez votre appareil.
+
+#### 1. 📱 iPhone ou iPad
+
+1. Ouvrez le lien dans **Safari** (l'icône bleue avec une boussole).
+2. Touchez le bouton **Partager** : un carré avec une flèche vers le haut, en général en bas de l'écran.
+3. Faites défiler la liste et choisissez **Sur l'écran d'accueil**.
+4. Touchez **Ajouter** en haut à droite.
+5. L'icône **Props** apparaît sur l'écran d'accueil. Ouvrez le jeu depuis cette icône une première fois avec
+   internet et patientez une demi-minute : le jeu s'enregistre dans le téléphone.
+
+#### 2. 🤖 Android
+
+1. Ouvrez le lien dans **Chrome**.
+2. Touchez les **trois points ⋮** en haut à droite.
+3. Choisissez **Ajouter à l'écran d'accueil** (ou **Installer l'application**) et confirmez avec **Installer**.
+4. L'icône **Props** apparaît sur l'écran d'accueil. Ouvrez le jeu depuis cette icône une première fois avec
+   internet.
+
+#### 3. 💻 Ordinateur (Windows ou Mac)
+
+**Option A — télécharger un seul fichier (le plus simple) :**
+
+1. Ouvrez le jeu avec le lien et, en bas de la carte des grottes, cliquez sur **«📲 Играть без интернета»**
+   (le jeu est en russe pour l'instant).
+2. Cliquez sur **«⬇️ Скачать Props.html»**. Le fichier arrive dans le dossier Téléchargements.
+3. Double-cliquez sur le fichier : le jeu s'ouvre dans le navigateur. Plus besoin d'internet ; vous pouvez
+   envoyer le fichier à un ami ou le mettre sur une clé USB.
+
+**Option B — l'installer comme une application :** ouvrez le lien dans **Chrome** ou **Edge**, cliquez sur
+l'icône d'installation au bout de la barre d'adresse (un écran avec une flèche) et confirmez avec **Installer**.
+
+**Comment vérifier que tout a fonctionné.** Activez le mode avion (ou coupez le Wi‑Fi) et ouvrez le jeu : il doit
+continuer à fonctionner.
+
+**Bon à savoir.** Votre progression est enregistrée sur l'appareil avec lequel vous jouez : le téléphone a la
+sienne, l'ordinateur aussi.
 
 **Démarrage rapide** (Node.js 20.19+ ou 22.12+) :
 

@@ -52,7 +52,7 @@
 }
 
 .arm {
-  transform-origin: 60px 88px;
+  transform-origin: 54px 94.8px; /* плечо под плащом: вокруг него рука поворачивается */
   transform: rotate(-62deg);
   transition: transform 0.45s cubic-bezier(0.5, -0.3, 0.3, 1.4);
 }

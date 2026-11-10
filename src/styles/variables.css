@@ -42,9 +42,9 @@
   --tok-punct: #a99fc4;
 
   /* Летучие мыши и вампир */
-  --bat: #2b1d40;
-  --bat-wing: #3b2a57;
-  --bat-eye: #ff4d6d;
+  --bat: #20162f;
+  --bat-wing: #35264d;
+  --bat-eye: #ff2d3f;
 
   --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.3);
@@ -115,8 +115,8 @@
   --bad: #be123c;
   --bad-soft: rgba(190, 18, 60, 0.08);
 
-  --bat: #3b2a52;
-  --bat-wing: #54407a;
+  --bat: #2f2242;
+  --bat-wing: #4a3868;
 
   --shadow: 0 12px 30px rgba(90, 60, 20, 0.14);
   --shadow-soft: 0 6px 16px rgba(90, 60, 20, 0.1);

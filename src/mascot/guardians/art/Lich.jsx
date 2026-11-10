@@ -1,5 +1,7 @@
 // Лич-чародей Мортис — хозяин Грота заклинаний (функции и замыкания).
 // Хранит заклинания впрок и произносит позже — как функцию передают и вызывают потом.
+import { Drop, Tips, Trail } from '../gore.jsx';
+
 const TOP = [74, 82, 90, 98, 106, 114, 122];
 
 export default function Lich({ u }) {
@@ -70,6 +72,26 @@ export default function Lich({ u }) {
         {TOP.slice(0, 6).map((x) => (
           <rect key={x} x={x + 3} y="149" width="6.5" height="9" rx="1.5" fill="#cfc4a8" stroke="#3a3427" strokeWidth="0.8" />
         ))}
+      </g>
+
+      {/* новые трещины, выбитый зуб, тёмная кровь из глазниц и на зубах */}
+      <path d="M118 54 L114 64 L120 72 L116 80 M134 88 L128 92 L130 100" stroke="#2b2620" strokeWidth="1.3" fill="none" />
+      <rect x="98" y="137" width="6.5" height="10.6" fill="#0a0608" />
+      <Trail d="M76.5 108 C75.4 116 77.4 123 75.8 131" width={2.2} />
+      <Trail d="M124 108 C125.4 114 123.6 120 124.8 126" width={1.8} opacity={0.9} />
+      <Tips
+        tips={[
+          [77.25, 149, 4.4],
+          [93.25, 149, 4],
+          [117.25, 149, 4.4],
+        ]}
+        width={2.6}
+      />
+      <Drop cx={75.8} cy={134.5} r={1.6} />
+      {/* руна на лбу: заклинание, которое лич хранит впрок */}
+      <g className="g-flicker" filter="url(#g-glow)" fill="none" stroke="#b98aff" strokeWidth="1.2" strokeLinejoin="round">
+        <path d="M100 59 L107.4 72 L92.6 72 Z" />
+        <circle cx="100" cy="67.6" r="1.6" fill="#e6d4ff" stroke="none" />
       </g>
 
       {/* фиолетовые огни в глазницах */}

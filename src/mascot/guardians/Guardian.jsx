@@ -1,13 +1,17 @@
 // Портрет хозяина пещеры. Один компонент — восемнадцать чудищ:
 // какого рисовать, решает проп id (это id пещеры).
 //   size  — размер в пикселях;
-//   mood  — 'idle' (дышит и сверлит взглядом) или 'defeated' (побеждён, тускнеет);
+//   mood  — 'idle' (дышит и сверлит взглядом) или 'defeated' (побеждён: тускнеет, поперёк — три борозды от когтей);
 //   label — подпись для экранных читалок; без неё портрет декоративный.
 // Свет падает снизу, как от факела: так лица выглядят страшнее,
 // а сильная эмоция помогает запомнить тему (эмоциональная окраска).
 import { useId } from 'react';
 import { GUARDIANS } from './index.js';
+import { BLOOD, BLOOD_DARK, BLOOD_LIGHT } from './gore.jsx';
 import styles from './Guardian.module.css';
+
+// Три борозды от когтей поперёк портрета поверженного хозяина
+const SLASHES = ['M56 30 Q82 96 102 170', 'M82 24 Q108 92 128 166', 'M108 28 Q134 90 152 154'];
 
 export default function Guardian({ id, size = 120, mood = 'idle', label, className = '' }) {
   // useId даёт уникальный id: градиенты разных портретов не перепутаются
@@ -64,6 +68,23 @@ export default function Guardian({ id, size = 120, mood = 'idle', label, classNa
         <rect width="200" height="200" fill={`url(#${uid}rim)`} className={styles.rim} />
         <rect width="200" height="200" fill={`url(#${uid}fade)`} />
         <rect width="200" height="200" fill={`url(#${uid}vig)`} />
+
+        {/* Поверженный хозяин: цвет уходит в пепел (режим наложения «цвет» в стилях),
+            сверху — тёмная вуаль и кровавые борозды. Сами борозды остаются красными. */}
+        {mood === 'defeated' && (
+          <>
+            <rect width="200" height="200" className={styles.ash} />
+            <rect width="200" height="200" fill="#000" opacity="0.3" />
+            {SLASHES.map((d) => (
+              <g key={d} fill="none" strokeLinecap="round">
+                <path d={d} stroke={BLOOD_DARK} strokeWidth="7.5" opacity="0.9" />
+                <path d={d} stroke={BLOOD} strokeWidth="4.4" />
+                <path d={d} stroke="#120208" strokeWidth="1.6" />
+                <path d={d} stroke={BLOOD_LIGHT} strokeWidth="0.8" opacity="0.5" transform="translate(1.6 0)" />
+              </g>
+            ))}
+          </>
+        )}
       </g>
     </svg>
   );

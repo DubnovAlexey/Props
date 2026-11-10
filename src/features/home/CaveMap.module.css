@@ -51,6 +51,15 @@
   animation: torch 1.6s ease-in-out infinite alternate;
 }
 
+/* окна замка мерцают, как свечи */
+.window {
+  animation: twinkle 2.8s ease-in-out infinite;
+}
+
+.window:nth-of-type(2n) {
+  animation-delay: 0.9s;
+}
+
 @keyframes twinkle {
   0%,
   100% {
@@ -98,6 +107,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .star,
+  .window,
   .drop,
   .flame,
   .torchGlow {

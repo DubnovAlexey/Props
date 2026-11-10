@@ -1,7 +1,17 @@
 // Тролль-привратник Глыба — хозяин Грота у входа (компоненты и JSX).
 // Сложен из каменных глыб — как интерфейс из компонентов.
+import { Drop, Splatter, Trail } from '../gore.jsx';
+
 const lowerY = (x) => 172 - (x - 100) ** 2 * 0.01229;
 const TEETH = [66, 75, 84, 93, 102, 111, 120, 129];
+// брызги крови на подбородке: [x, y, радиус]
+const BLOOD_SPOTS = [
+  [58, 160, 1.8],
+  [146, 158, 1.3],
+  [100, 178, 1.5],
+  [90, 181, 1],
+  [112, 180, 1.2],
+];
 
 export default function Troll({ u }) {
   return (
@@ -79,6 +89,15 @@ export default function Troll({ u }) {
         <path d="M70 152 C63 132 65 114 74 102 C76 118 78 134 81 152 Z" fill={`url(#${u}tusk)`} stroke="#2a2418" strokeWidth="0.8" />
         <path d="M130 152 C137 132 135 114 126 102 C124 118 122 134 119 152 Z" fill={`url(#${u}tusk)`} stroke="#2a2418" strokeWidth="0.8" />
       </g>
+
+      {/* кровь на клыках и нижней губе: привратник уже кого-то не пустил */}
+      <Trail d="M71.4 110 C68.6 122 69.6 136 72.4 149" width={2.4} opacity={0.9} />
+      <Trail d="M128.6 112 C131.2 124 130.2 137 127.8 149" width={2} opacity={0.85} />
+      <Trail d="M63 152 C62 159 64 165 63 172" width={2.2} />
+      <Trail d="M137 153 C138 158 136.6 163 137.4 168" width={1.6} opacity={0.85} />
+      <Splatter spots={BLOOD_SPOTS} />
+      <Drop cx={63} cy={175} r={2} />
+      <Drop cx={137.4} cy={171} r={1.5} late />
 
       <g className="g-eye" filter="url(#g-glow)">
         <ellipse cx="76" cy="101" rx="5.5" ry="3.6" fill="#ff3b2f" />

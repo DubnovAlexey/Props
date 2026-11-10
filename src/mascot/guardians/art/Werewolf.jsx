@@ -1,7 +1,19 @@
 // Оборотень Вихрь — хозяин Пещеры скорости (memo и производительность).
 // Быстрее всех и не тратит сил зря — как memo пропускает лишние рендеры.
+import { Drop, Splatter, Tips, Trail } from '../gore.jsx';
+
 const FUR =
   'M100 30 L110 44 L126 30 L130 50 L150 42 L146 62 L168 66 L154 82 L170 96 L150 104 L162 122 L140 124 L146 146 L124 140 L120 164 L100 150 L80 164 L76 140 L54 146 L60 124 L38 122 L50 104 L30 96 L46 82 L32 66 L54 62 L50 42 L70 50 L74 30 L90 44 Z';
+
+// брызги крови на шерсти у пасти: [x, y, радиус]
+const BLOOD_SPOTS = [
+  [73, 132, 1.6],
+  [127, 134, 1.4],
+  [69, 143, 1.1],
+  [131, 146, 1.2],
+  [100, 163, 1.6],
+  [92, 167, 1],
+];
 
 export default function Werewolf({ u }) {
   return (
@@ -71,6 +83,27 @@ export default function Werewolf({ u }) {
         />
         <path d="M88 154 L90 144 L93 155 Z M112 154 L110 144 L107 155 Z" fill={`url(#${u}fang)`} stroke="#2a2418" strokeWidth="0.5" />
       </g>
+
+      {/* кровь на клыках и морде, шрам через глаз, следы чужих когтей на щеке */}
+      <Tips
+        tips={[
+          [84, 146, 7],
+          [116, 146, 7],
+          [92, 133, 3],
+          [108, 133, 3],
+          [90, 144, 4, 'up'],
+          [110, 144, 4, 'up'],
+        ]}
+        width={3}
+      />
+      <Trail d="M79 134 C76 142 78 150 76 158" width={2} />
+      <Trail d="M121 134 C124 141 122 147 123.6 153" width={1.6} opacity={0.9} />
+      <Splatter spots={BLOOD_SPOTS} />
+      <Drop cx={76} cy={161.5} r={1.7} />
+      <Drop cx={123.6} cy={156.5} r={1.4} late />
+      <path d="M64 72 L90 104" stroke="#08080a" strokeWidth="2" strokeLinecap="round" />
+      <path d="M65.2 71.4 L91.2 103.4" stroke="#a0787c" strokeWidth="0.5" opacity="0.7" />
+      <path d="M138 100 L150 118 M144 98 L156 116 M150 96 L160 112" stroke="#6a0c18" strokeWidth="1.5" strokeLinecap="round" />
 
       {/* нити слюны */}
       <path

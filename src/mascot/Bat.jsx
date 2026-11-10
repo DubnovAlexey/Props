@@ -1,5 +1,6 @@
 // Летучая мышь-вампир (зовут Лунатик) — помощник Графа.
-// Крылья — перепонки на костях-пальцах, глаза горят, клыки торчат.
+// Крылья — рваные перепонки на костях-пальцах, уши торчком, глаза-щели горят,
+// пасть оскалена, на клыке — капля крови.
 // Цвета берутся из CSS-переменных, поэтому мышь подстраивается под тему.
 import styles from './Bat.module.css';
 
@@ -14,25 +15,55 @@ export default function Bat({ size = 48, flapping = true, className = '', label 
       aria-label={label}
       aria-hidden={label ? undefined : true}
     >
+      {/* Крыло: перепонка с прорехами (fillRule="evenodd" вырезает дырки), тень у тела, кости, коготь на сгибе */}
       <g className={styles.wingLeft}>
-        <path d="M30 18 C24 6 12 3 1 8 L5 13 L3 19 L9 18 L9 25 L15 21 L18 27 L22 22 L26 26 L30 23 Z" />
-        <path className={styles.bone} d="M30 18 L4 9 M28 19 L5 13 M27 20 L9 18 M27 21 L15 21 M28 22 L22 22" />
+        <path
+          className={styles.membrane}
+          fillRule="evenodd"
+          d="M29.6 17 C24.5 11 19 8.2 14 8 L1 12.4 Q6.2 15.8 6.6 23.2 Q11.6 21.6 15.2 27.6 Q21.4 22.6 29.2 26.6 Z M9.2 15.4 L10.8 18.2 L8.4 17.4 Z M18.4 20.2 L20.2 23.2 L17.4 22.4 Z"
+        />
+        <path className={styles.shade} d="M29.6 17 C26.2 13 23 10.8 20 9.8 L21.4 24.6 Q25 23.4 29.2 26.6 Z" />
+        <path
+          className={styles.bone}
+          d="M29.6 17 C24.5 11 19 8.2 14 8 M14 8 L1 12.4 M14 8 L6.6 23.2 M14 8 L15.2 27.6 M21.6 11.4 L22.8 24"
+        />
+        <path className={styles.claw} d="M14 8 L13 5.8" />
       </g>
       <g className={styles.wingRight}>
-        <path d="M34 18 C40 6 52 3 63 8 L59 13 L61 19 L55 18 L55 25 L49 21 L46 27 L42 22 L38 26 L34 23 Z" />
-        <path className={styles.bone} d="M34 18 L60 9 M36 19 L59 13 M37 20 L55 18 M37 21 L49 21 M36 22 L42 22" />
+        <path
+          className={styles.membrane}
+          fillRule="evenodd"
+          d="M34.4 17 C39.5 11 45 8.2 50 8 L63 12.4 Q57.8 15.8 57.4 23.2 Q52.4 21.6 48.8 27.6 Q42.6 22.6 34.8 26.6 Z M54.8 15.4 L53.2 18.2 L55.6 17.4 Z M45.6 20.2 L43.8 23.2 L46.6 22.4 Z"
+        />
+        <path className={styles.shade} d="M34.4 17 C37.8 13 41 10.8 44 9.8 L42.6 24.6 Q39 23.4 34.8 26.6 Z" />
+        <path
+          className={styles.bone}
+          d="M34.4 17 C39.5 11 45 8.2 50 8 M50 8 L63 12.4 M50 8 L57.4 23.2 M50 8 L48.8 27.6 M42.4 11.4 L41.2 24"
+        />
+        <path className={styles.claw} d="M50 8 L51 5.8" />
       </g>
-      <ellipse className={styles.fur} cx="32" cy="23" rx="5.5" ry="8" />
-      <circle className={styles.fur} cx="32" cy="14" r="5.5" />
-      {/* высокие острые уши */}
-      <path className={styles.fur} d="M28 11 L26.5 2.5 L31 9.5 Z M36 11 L37.5 2.5 L33 9.5 Z" />
-      {/* морда-«пятачок» и горящие глаза */}
-      <path className={styles.snout} d="M30.4 15.4 Q32 13.8 33.6 15.4 Q32 16.8 30.4 15.4 Z" />
-      <circle className={styles.eye} cx="29.6" cy="13" r="1.4" />
-      <circle className={styles.eye} cx="34.4" cy="13" r="1.4" />
-      <path d="M30.6 17.2 L31.3 20.4 L32 17.2 Z M32 17.2 L32.7 20.4 L33.4 17.2 Z" fill="#f4efe6" />
-      {/* когти на сгибах крыльев */}
-      <path className={styles.claw} d="M1 8 L-0.6 6.2 M63 8 L64.6 6.2" />
+
+      {/* Тело в клочьях шерсти */}
+      <path
+        className={styles.fur}
+        d="M32 15 C35.6 15 37 19 36.6 23.6 C36.2 27.4 34.6 30.4 32 31.6 C29.4 30.4 27.8 27.4 27.4 23.6 C27 19 28.4 15 32 15 Z"
+      />
+      <path className={styles.fur} d="M29.2 28.4 L30.1 33 L31.1 29.8 L32 34 L32.9 29.8 L33.9 33 L34.8 28.4 Z" />
+      <path className={styles.chest} d="M32 19.6 C33.7 21.6 33.9 25 32 27.8 C30.1 25 30.3 21.6 32 19.6 Z" />
+
+      {/* Голова: высокие острые уши, нахмуренные брови */}
+      <circle className={styles.fur} cx="32" cy="13.4" r="5.2" />
+      <path className={styles.fur} d="M27.6 12 L25 1.6 L31.2 8.8 Z M36.4 12 L39 1.6 L32.8 8.8 Z" />
+      <path className={styles.earInner} d="M28 10.4 L26.5 4.8 L29.9 8.8 Z M36 10.4 L37.5 4.8 L34.1 8.8 Z" />
+      <path className={styles.brow} d="M28 10.8 L31 12.3 M36 10.8 L33 12.3" />
+
+      {/* Глаза-щели горят; нос-листок; оскал с клыками, на клыке кровь */}
+      <ellipse className={styles.eye} cx="29.7" cy="13.1" rx="1.5" ry="0.95" transform="rotate(18 29.7 13.1)" />
+      <ellipse className={styles.eye} cx="34.3" cy="13.1" rx="1.5" ry="0.95" transform="rotate(-18 34.3 13.1)" />
+      <path className={styles.snout} d="M31 15 L32 14 L33 15 L32 15.8 Z" />
+      <path className={styles.mouth} d="M29.6 16.5 Q32 20.8 34.4 16.5 Q32 17.6 29.6 16.5 Z" />
+      <path d="M30.2 16.9 L30.9 20.5 L31.6 17.3 Z M32.4 17.3 L33.1 20.5 L33.8 16.9 Z" fill="#f4efe6" />
+      <path d="M30.65 19.4 L30.9 20.9 L31.15 19.4 Z" fill="#b3001d" />
     </svg>
   );
 }

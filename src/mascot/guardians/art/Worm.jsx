@@ -1,6 +1,8 @@
 // Гигантский червь Сквозник — хозяин Тайного хода (Context).
 // Прогрызает ход сквозь все уровни — как Context доставляет значение мимо посредников.
 // Пасть — кольца зубов, как у миноги: каждое кольцо глубже предыдущего.
+import { Drop, Splatter, Trail } from '../gore.jsx';
+
 function ring(r, n, len, offset = 0) {
   return Array.from({ length: n }, (_, i) => {
     const a = ((i + offset) / n) * Math.PI * 2;
@@ -14,6 +16,16 @@ function ring(r, n, len, offset = 0) {
     return `M${(bx + px).toFixed(1)} ${(by + py).toFixed(1)} L${tx.toFixed(1)} ${ty.toFixed(1)} L${(bx - px).toFixed(1)} ${(by - py).toFixed(1)} Z`;
   }).join(' ');
 }
+
+// брызги крови на плоти вокруг пасти: [x, y, радиус]
+const BLOOD_SPOTS = [
+  [152, 90, 1.6],
+  [158, 116, 1.2],
+  [46, 128, 1.8],
+  [62, 162, 1.3],
+  [130, 162, 1.5],
+  [70, 60, 1.1],
+];
 
 export default function Worm({ u }) {
   return (
@@ -53,6 +65,21 @@ export default function Worm({ u }) {
         <path d={ring(36, 16, 10, 0.5)} fill={`url(#${u}tooth)`} stroke="#2a1608" strokeWidth="0.6" opacity="0.92" />
         <path d={ring(23, 11, 8)} fill={`url(#${u}tooth)`} stroke="#2a1608" strokeWidth="0.6" opacity="0.8" />
       </g>
+
+      {/* кровь стекает с верхних зубов, между кольцами тянутся нити слизи */}
+      <Trail d="M94.7 70 C94 79 95.6 88 94.6 97" width={1.5} opacity={0.85} />
+      <Trail d="M110.6 71.4 C111.4 78 110.2 84 111 90" width={1.3} opacity={0.8} />
+      <Trail d="M126 80 C127 86 125.6 91 126.4 96" width={1.2} opacity={0.75} />
+      <path
+        d="M82 76 C85 98 80 122 84 138 M118 74 C114 98 120 120 116 140 M66 100 C86 104 114 104 134 100"
+        stroke="#e8c0a8"
+        strokeWidth="0.8"
+        opacity="0.32"
+        fill="none"
+      />
+      <Splatter spots={BLOOD_SPOTS} />
+      <Drop cx={94.6} cy={100.5} r={1.5} />
+      <Drop cx={76} cy={152} r={1.6} late />
 
       {/* свет из глотки */}
       <circle className="g-eye" cx="100" cy="106" r="9" fill="#ff5a3c" filter="url(#g-glow)" opacity="0.85" />
