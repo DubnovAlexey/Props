@@ -1,0 +1,40 @@
+{
+  "name": "props-caves",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Игра-тренажёр по пропсам в React: 18 пещер, хозяева-чудища, теория со схемами, повторение и офлайн-режим.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "library": "node scripts/build-library.mjs",
+    "check": "npm run lint && npm test && npm run build",
+    "build:artifact": "vite build --mode artifact --outDir dist-artifact"
+  },
+  "dependencies": {
+    "@fontsource-variable/cormorant-garamond": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitejs/plugin-react": "^6.3.0",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "vite": "^8.3.7",
+    "vitest": "^5.1.0"
+  }
+}

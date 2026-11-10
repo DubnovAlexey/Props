@@ -1,0 +1,8 @@
+dist
+node_modules
+package-lock.json
+docs/guide.md
+src/content/library/sections
+dist-artifact
+# дословная история чата: Prettier схлопнул бы пробелы в цитатах
+HANDOFF.md

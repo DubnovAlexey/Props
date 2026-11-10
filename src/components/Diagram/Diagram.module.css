@@ -1,0 +1,235 @@
+.figure {
+  margin: 16px 0;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.figure svg {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
+  font-family: var(--font-body);
+}
+
+.caption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.box {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1.4;
+}
+
+.main {
+  fill: var(--magic-soft);
+  stroke: var(--magic);
+  stroke-width: 2;
+}
+
+.good {
+  fill: var(--good-soft);
+  stroke: var(--good);
+  stroke-width: 2;
+}
+
+.title {
+  fill: var(--text);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.sub {
+  fill: var(--text-dim);
+  font-size: 11.5px;
+}
+
+.small {
+  fill: var(--text-dim);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.mono {
+  fill: var(--tok-attr);
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+  font-size: 11px;
+}
+
+[data-theme='day'] .mono {
+  fill: var(--magic);
+}
+
+.label {
+  fill: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.labelUp {
+  fill: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.labelGood {
+  fill: var(--good);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.labelBad {
+  fill: var(--bad);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.prop {
+  fill: var(--text);
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.propMain {
+  composes: prop;
+  fill: var(--magic);
+}
+
+.edge {
+  fill: none;
+  stroke: var(--text-faint);
+  stroke-width: 1.5;
+}
+
+.edgeUp {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  stroke-dasharray: 5 4;
+}
+
+.tunnel {
+  fill: none;
+  stroke: var(--magic);
+  stroke-width: 1.8;
+  stroke-dasharray: 5 4;
+}
+
+.markerEdge {
+  fill: var(--text-faint);
+}
+
+.markerUp {
+  fill: var(--accent);
+}
+
+.divider {
+  stroke: var(--border);
+  stroke-width: 1.2;
+}
+
+.leader {
+  fill: none;
+  stroke: var(--text-faint);
+  stroke-width: 1.2;
+}
+
+.leaderMain {
+  fill: none;
+  stroke: var(--magic);
+  stroke-width: 1.4;
+}
+
+.backdrop {
+  fill: var(--text-faint);
+  fill-opacity: 0.18;
+}
+
+.dialog {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1.4;
+}
+
+.slot {
+  fill: var(--magic-soft);
+  stroke: var(--magic);
+  stroke-width: 1.6;
+  stroke-dasharray: 5 4;
+}
+
+.dot {
+  fill: var(--gold);
+}
+
+.dotUp {
+  fill: var(--accent);
+}
+
+.parcel {
+  fill: var(--gold-soft);
+  stroke: var(--gold);
+  stroke-width: 1.5;
+}
+
+.parcelText {
+  fill: var(--gold);
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.travelDown {
+  animation: travel-down 2.6s ease-in-out infinite;
+}
+
+.travelUp {
+  animation: travel-up 2.6s ease-in-out infinite;
+  animation-delay: 1.3s;
+}
+
+@keyframes travel-down {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(74px);
+    opacity: 0;
+  }
+}
+
+@keyframes travel-up {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-90px);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,262 @@
+/* Слой антуража: под всем содержимым, клики проходят насквозь */
+.ambience {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* глубина пещеры: далеко впереди — холодный свет из выхода */
+.depth {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 45% at 50% -8%, var(--amb-far), transparent 70%),
+    radial-gradient(120% 70% at 50% 110%, var(--amb-floor), transparent 60%), var(--bg);
+}
+
+/* факелы на стенах: тёплое пятно, которое дышит */
+.torch {
+  position: absolute;
+  top: 18%;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--amb-torch), transparent 62%);
+  animation: torch 3.2s ease-in-out infinite alternate;
+}
+
+.torchLeft {
+  left: -26vmax;
+}
+
+.torchRight {
+  right: -26vmax;
+  top: 52%;
+  animation-delay: 1.3s;
+}
+
+.ceiling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  fill: var(--amb-rock);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* капли с потолка */
+.drop {
+  position: absolute;
+  top: 60px;
+  width: 3px;
+  height: 7px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  background: var(--amb-drop);
+  opacity: 0;
+  animation: drop 6s ease-in infinite;
+}
+
+.drop1 {
+  left: 22.5%;
+  animation-delay: 0.8s;
+}
+
+.drop2 {
+  left: 68%;
+  top: 74px;
+  animation-delay: 3.1s;
+}
+
+.drop3 {
+  left: 45%;
+  top: 66px;
+  animation-delay: 4.6s;
+  animation-duration: 7.5s;
+}
+
+/* каменные стены по краям — видны на широком экране */
+.wall {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: max(0px, calc((100vw - var(--content-w)) / 2 - 40px));
+  max-width: 340px;
+  opacity: 0.9;
+}
+
+.wallLeft {
+  left: 0;
+  background: linear-gradient(90deg, var(--amb-rock) 10%, transparent);
+  clip-path: polygon(0 0, 70% 0, 52% 14%, 78% 30%, 46% 47%, 70% 63%, 40% 80%, 64% 100%, 0 100%);
+}
+
+.wallRight {
+  right: 0;
+  background: linear-gradient(270deg, var(--amb-rock) 10%, transparent);
+  clip-path: polygon(100% 0, 30% 0, 50% 16%, 22% 33%, 56% 50%, 28% 66%, 60% 82%, 36% 100%, 100% 100%);
+}
+
+/* чьи-то глаза в темноте */
+.eyes {
+  position: absolute;
+  display: flex;
+  gap: 9px;
+  opacity: 0;
+  animation: watch 17s ease-in-out infinite;
+}
+
+.eyes i {
+  display: block;
+  width: 7px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--amb-eye);
+  box-shadow: 0 0 8px 2px var(--amb-eye);
+}
+
+.eyes1 {
+  left: 4%;
+  top: 38%;
+}
+
+.eyes2 {
+  right: 5%;
+  top: 72%;
+  gap: 7px;
+  animation-delay: 8.5s;
+}
+
+.eyes2 i {
+  width: 5px;
+  height: 3px;
+}
+
+/* искры и пыль плывут вверх */
+.ember {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: var(--amb-ember);
+  box-shadow: 0 0 6px var(--amb-ember);
+  opacity: 0;
+  animation: rise linear infinite;
+}
+
+/* туман у пола */
+.mist {
+  position: absolute;
+  bottom: -60px;
+  width: 140vw;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--amb-mist), transparent);
+  filter: blur(18px);
+}
+
+.mist1 {
+  left: -30vw;
+  animation: mist 38s ease-in-out infinite alternate;
+}
+
+.mist2 {
+  left: -10vw;
+  bottom: -90px;
+  opacity: 0.7;
+  animation: mist 52s ease-in-out infinite alternate-reverse;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(130% 100% at 50% 40%, transparent 55%, var(--amb-vignette));
+}
+
+@keyframes torch {
+  from {
+    opacity: 0.65;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes drop {
+  0%,
+  70% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  74% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(70vh);
+  }
+}
+
+@keyframes watch {
+  0%,
+  30%,
+  100% {
+    opacity: 0;
+  }
+  36%,
+  52% {
+    opacity: 0.85;
+  }
+  44% {
+    opacity: 0.1;
+  }
+  46% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(40px, -105vh);
+  }
+}
+
+@keyframes mist {
+  from {
+    transform: translateX(-6vw);
+  }
+  to {
+    transform: translateX(6vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .torch,
+  .drop,
+  .eyes,
+  .ember,
+  .mist1,
+  .mist2 {
+    animation: none;
+  }
+
+  .drop,
+  .ember,
+  .eyes {
+    display: none;
+  }
+}

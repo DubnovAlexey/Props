@@ -1,0 +1,162 @@
+.wrap {
+  overflow: hidden;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+}
+
+.hud {
+  display: flex;
+  gap: 8px;
+}
+
+.arena {
+  position: relative;
+  height: 360px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(500px 260px at 80% 0%, rgba(167, 139, 250, 0.25), transparent 70%), linear-gradient(180deg, #1c1233, #0c0814);
+  border: 1px solid var(--border);
+  touch-action: manipulation;
+}
+
+@media (min-width: 700px) {
+  .arena {
+    height: 420px;
+  }
+}
+
+.moon {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff6d6, #f6c453 70%);
+  box-shadow: 0 0 40px rgba(246, 196, 83, 0.5);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+  color: #f3edf9;
+  background: rgba(12, 8, 20, 0.55);
+}
+
+.overlay :global(.muted) {
+  color: #c9bfdc;
+}
+
+.overlay :global(.row) {
+  justify-content: center;
+}
+
+.result {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.flyer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: #f3edf9;
+  font: inherit;
+  cursor: pointer;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  -webkit-tap-highlight-color: transparent;
+  --bat: #0d0716;
+  --bat-wing: #3b2a57;
+}
+
+.ltr {
+  animation-name: fly-ltr;
+}
+
+.rtl {
+  animation-name: fly-rtl;
+}
+
+.still {
+  animation: pop-in 0.3s ease both;
+}
+
+.flip {
+  transform: scaleX(-1);
+}
+
+.batLabel {
+  max-width: 190px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(23, 17, 42, 0.92);
+  border: 1px solid #4b3d6e;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.caught .batLabel {
+  background: #14532d;
+  border-color: #4ade80;
+}
+
+.wrong .batLabel {
+  background: #7f1d1d;
+  border-color: #fb7185;
+}
+
+.caught,
+.wrong {
+  animation-play-state: paused;
+}
+
+.caught :global(svg),
+.wrong :global(svg) {
+  animation: poof 0.45s ease forwards;
+}
+
+@keyframes fly-ltr {
+  from {
+    left: -32%;
+  }
+  to {
+    left: 104%;
+  }
+}
+
+@keyframes fly-rtl {
+  from {
+    left: 104%;
+  }
+  to {
+    left: -32%;
+  }
+}

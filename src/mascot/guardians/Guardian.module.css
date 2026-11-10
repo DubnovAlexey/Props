@@ -1,0 +1,145 @@
+/* Портрет хозяина пещеры.
+   Классы для частей рисунка (глобальные, их ставят файлы art/*):
+     g-eye     — глаза: медленно разгораются и гаснут;
+     g-sway    — щупальца, волосы, усы: покачиваются;
+     g-flicker — огонь и искры: мерцают;
+     g-wave    — волны крика: летят вверх;
+     g-drip    — капли яда и слюны: падают. */
+
+.guardian {
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* цветной отсвет снизу — «экраном», чтобы светлить, а не заливать */
+.rim {
+  mix-blend-mode: screen;
+}
+
+.body {
+  transform-origin: 100px 190px;
+  animation: breathe 4.6s ease-in-out infinite;
+}
+
+.guardian :global(.g-eye) {
+  animation: eyeBurn 3.2s ease-in-out infinite;
+}
+
+.guardian :global(.g-sway) {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: sway 5.5s ease-in-out infinite;
+}
+
+.guardian :global(.g-flicker) {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 0.9s ease-in-out infinite alternate;
+}
+
+.guardian :global(.g-wave) {
+  animation: wave 2.4s ease-out infinite;
+}
+
+.guardian :global(.g-wave2) {
+  animation: wave 2.4s ease-out 0.8s infinite;
+}
+
+.guardian :global(.g-drip) {
+  animation: drip 3s ease-in infinite;
+}
+
+/* Побеждённый хозяин тускнеет, но не исчезает: его ещё можно навестить */
+.defeated {
+  filter: grayscale(0.75) brightness(0.62) contrast(1.05);
+}
+
+.defeated .body,
+.defeated :global(.g-eye),
+.defeated :global(.g-sway),
+.defeated :global(.g-flicker),
+.defeated :global(.g-wave),
+.defeated :global(.g-wave2),
+.defeated :global(.g-drip) {
+  animation: none;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.018, 1.026);
+  }
+}
+
+@keyframes eyeBurn {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.96, 0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.04, 1.08);
+  }
+}
+
+@keyframes wave {
+  0% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-26px);
+  }
+}
+
+@keyframes drip {
+  0%,
+  55% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body,
+  .guardian :global(.g-eye),
+  .guardian :global(.g-sway),
+  .guardian :global(.g-flicker),
+  .guardian :global(.g-wave),
+  .guardian :global(.g-wave2),
+  .guardian :global(.g-drip) {
+    animation: none;
+  }
+}

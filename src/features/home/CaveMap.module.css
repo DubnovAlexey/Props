@@ -1,0 +1,432 @@
+/* --- Первый экран --- */
+.hero {
+  display: grid;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (min-width: 700px) {
+  .hero {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+.heroText h1 {
+  margin-bottom: 10px;
+}
+
+.art {
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.caveArt {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+}
+
+.star {
+  animation: twinkle 3.6s ease-in-out infinite;
+}
+
+.star:nth-of-type(2n) {
+  animation-delay: 1.2s;
+}
+
+.drop {
+  animation: drop 3.4s ease-in infinite;
+}
+
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flame 0.8s ease-in-out infinite alternate;
+}
+
+.torchGlow {
+  animation: torch 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes drop {
+  0%,
+  60% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  65% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(70px);
+  }
+}
+
+@keyframes flame {
+  from {
+    transform: scale(0.94, 0.9);
+    opacity: 0.85;
+  }
+  to {
+    transform: scale(1.05, 1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes torch {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star,
+  .drop,
+  .flame,
+  .torchGlow {
+    animation: none;
+  }
+}
+
+/* --- Пролог, ярусы, бестиарий --- */
+.prologue {
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border));
+  background: radial-gradient(120% 80% at 0% 0%, var(--gold-soft), transparent 60%), var(--surface);
+}
+
+.tier {
+  margin-top: 22px;
+}
+
+.tierHead {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.tierHead p {
+  margin: 0;
+}
+
+.tierNum {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: var(--surface-2);
+}
+
+.tierTitle {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.bestiary {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bestiaryFaces {
+  display: flex;
+}
+
+.bestiaryFaces > svg + svg {
+  margin-left: -14px;
+}
+
+.bestiaryFaces > svg {
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+.bestiaryTitle {
+  margin: 2px 0 4px;
+}
+
+.artMoon {
+  filter: drop-shadow(0 0 14px rgba(246, 226, 160, 0.55));
+}
+
+.artBat1,
+.artBat2 {
+  position: absolute;
+  animation: float 3s ease-in-out infinite;
+}
+
+.artBat1 {
+  top: 6%;
+  left: 18%;
+}
+
+.artBat2 {
+  top: 2%;
+  left: 52%;
+  animation-delay: 1.2s;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* --- Ранг --- */
+.rankHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.rankIcon {
+  font-size: 2.4rem;
+}
+
+.rankTitle {
+  margin: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 16px 0 0;
+}
+
+.stats div {
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+
+.stats dt {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+/* --- Тропа пещер (зигзаг) --- */
+.path {
+  position: relative;
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.path::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 50%;
+  border-left: 3px dotted var(--border);
+}
+
+/* Зигзаг: ширина + сдвиг никогда не превышают 100% */
+.node {
+  position: relative;
+  width: 86%;
+}
+
+.node:nth-child(4n + 1) {
+  margin-left: 0;
+}
+
+.node:nth-child(4n + 2),
+.node:nth-child(4n + 4) {
+  margin-left: 7%;
+}
+
+.node:nth-child(4n + 3) {
+  margin-left: 14%;
+}
+
+@media (min-width: 700px) {
+  .node {
+    width: min(64%, 420px);
+  }
+
+  .node:nth-child(4n + 2),
+  .node:nth-child(4n + 4) {
+    margin-left: 18%;
+  }
+
+  .node:nth-child(4n + 3) {
+    margin-left: 36%;
+  }
+}
+
+.nodeLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px 10px 10px;
+  /* слева «полукруг» под кольцо, справа мягкие углы (не 999px: браузер
+     пропорционально ужал бы все радиусы и правые углы стали бы острыми) */
+  border-radius: 48px 22px 22px 48px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.nodeLink:hover {
+  transform: translateX(4px);
+  border-color: var(--cave);
+}
+
+.ringWrap {
+  position: relative;
+  flex: none;
+  width: 64px;
+  height: 64px;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ringTrack {
+  fill: color-mix(in srgb, var(--cave) 16%, transparent);
+  stroke: var(--surface-3);
+  stroke-width: 6;
+}
+
+.ringFill {
+  fill: none;
+  stroke: var(--cave);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.6s ease;
+}
+
+.nodePortrait {
+  position: absolute;
+  inset: 7px;
+  display: grid;
+  place-items: center;
+}
+
+.nodeGuardian {
+  color: var(--text-faint);
+}
+
+.nodeIcon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.7rem;
+}
+
+.nodeText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nodeNum {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cave);
+  letter-spacing: 0.02em;
+}
+
+.nodeTitle {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.nodeStatus {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.next .nodeLink {
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 4px var(--gold-soft),
+    var(--shadow-soft);
+}
+
+.next .ringWrap::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+.nextBadge {
+  position: absolute;
+  top: -10px;
+  right: 14px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #2a1a00;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* --- Факт --- */
+.fact {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.fact p {
+  margin-bottom: 10px;
+}

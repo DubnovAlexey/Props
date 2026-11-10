@@ -1,0 +1,94 @@
+.runner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  scroll-margin-top: calc(var(--header-h) + 12px);
+}
+
+.taskCard {
+  animation: fade-in-up 0.35s ease both;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.hintZone {
+  margin-top: 14px;
+}
+
+.hintBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--magic-soft);
+  border: 1px solid var(--magic);
+}
+
+.feedback {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1.5px solid;
+  animation: pop-in 0.3s ease both;
+}
+
+.feedback p:last-child,
+.feedback ul:last-child {
+  margin-bottom: 0;
+}
+
+.ok {
+  border-color: var(--good);
+  background: var(--good-soft);
+}
+
+.no {
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}
+
+.feedbackHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.ok .feedbackHead strong {
+  color: var(--good);
+}
+
+.no .feedbackHead strong {
+  color: var(--bad);
+}
+
+.nextRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.nextRow :global(.btn) {
+  min-width: 160px;
+}
+
+@media (max-width: 520px) {
+  .nextRow :global(.btn) {
+    width: 100%;
+  }
+}
+
+.level {
+  color: var(--gold);
+  border-color: color-mix(in srgb, var(--gold) 40%, var(--border));
+}

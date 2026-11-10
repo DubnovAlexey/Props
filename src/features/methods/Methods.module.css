@@ -1,0 +1,32 @@
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.method p:last-child {
+  margin-bottom: 0;
+}
+
+.icon {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.name {
+  font-size: 1.15rem;
+}
+
+.plan {
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.plan li {
+  margin-bottom: 6px;
+}

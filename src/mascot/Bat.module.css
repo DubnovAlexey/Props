@@ -1,0 +1,98 @@
+.bat {
+  display: inline-block;
+  overflow: visible;
+  vertical-align: middle;
+}
+
+.wingLeft,
+.wingRight {
+  fill: var(--bat-wing);
+  stroke: var(--bat);
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
+
+/* кости-пальцы в крыльях */
+.bone {
+  fill: none;
+  stroke: var(--bat);
+  stroke-width: 0.7;
+  opacity: 0.75;
+}
+
+.snout {
+  fill: #5a2a3a;
+}
+
+.claw {
+  fill: none;
+  stroke: #e9e2d6;
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+.fur {
+  fill: var(--bat);
+}
+
+.eye {
+  fill: var(--bat-eye);
+  filter: drop-shadow(0 0 1.6px var(--bat-eye));
+}
+
+.wingLeft {
+  transform-origin: 30px 20px;
+}
+
+.wingRight {
+  transform-origin: 34px 20px;
+}
+
+.flapping .wingLeft,
+.flapping .wingRight {
+  animation: flap 0.32s ease-in-out infinite;
+}
+
+.flapping .wingRight {
+  animation-delay: 0.02s;
+}
+
+/* --- Мыши, пролетающие по небу в шапке --- */
+
+.sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.drifter {
+  position: absolute;
+  left: -60px;
+  animation: drift linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(28vw, -10px);
+  }
+  50% {
+    transform: translate(56vw, 8px);
+  }
+  75% {
+    transform: translate(84vw, -6px);
+  }
+  100% {
+    transform: translate(calc(100vw + 120px), 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drifter {
+    display: none;
+  }
+}

@@ -1,0 +1,76 @@
+.count {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.countName {
+  margin: 2px 0 6px;
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+  gap: 14px;
+}
+
+.item {
+  padding: 0;
+  border-color: color-mix(in srgb, var(--cave) 40%, var(--border));
+  overflow: hidden;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 14px;
+  color: var(--text);
+  text-decoration: none;
+  text-align: center;
+  height: 100%;
+  background: radial-gradient(90% 60% at 50% 0%, color-mix(in srgb, var(--cave) 14%, transparent), transparent 70%);
+}
+
+.link:hover {
+  background: radial-gradient(90% 60% at 50% 0%, color-mix(in srgb, var(--cave) 24%, transparent), transparent 70%);
+}
+
+.link > svg {
+  margin-bottom: 8px;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--cave) 50%, transparent),
+    0 0 22px color-mix(in srgb, var(--cave) 30%, transparent);
+}
+
+.meta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cave);
+}
+
+.name {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+}
+
+.topic {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+.why {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+
+.status {
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}

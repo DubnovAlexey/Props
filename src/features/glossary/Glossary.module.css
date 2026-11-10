@@ -1,0 +1,23 @@
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.entry {
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+
+.entry p:last-child {
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.focused {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px var(--gold-soft);
+}
