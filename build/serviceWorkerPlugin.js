@@ -22,7 +22,14 @@ import { join } from 'node:path';
 
 const SKIP = /(greek|vietnamese|latin-ext)/;
 // Файлы из папки public: значки и описание приложения для установки на телефон
-const PUBLIC_FILES = ['manifest.webmanifest', 'favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
+const PUBLIC_FILES = [
+  'manifest.webmanifest',
+  'favicon.webp',
+  'favicon.png',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+  'icons/apple-touch-icon.png',
+];
 
 export default function serviceWorkerPlugin() {
   return {

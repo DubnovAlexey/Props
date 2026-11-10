@@ -10,6 +10,7 @@ import Guardian from '../../mascot/guardians/Guardian.jsx';
 import Vampire from '../../mascot/Vampire.jsx';
 import { to } from '../../app/useHashRoute.js';
 import styles from './Bestiary.module.css';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 export default function BestiaryPage() {
   const { progress } = useProgress();
@@ -25,7 +26,7 @@ export default function BestiaryPage() {
     <div className="stack">
       <header>
         <span className="eyebrow">Бестиарий</span>
-        <h1>Хозяева пещер</h1>
+        <BloodTitle>Хозяева пещер</BloodTitle>
         <p className="muted">
           У каждой пещеры свой хозяин, и его облик подсказывает тему. Повержено: <b>{defeated}</b> из <b>{CHAPTERS.length}</b>.
         </p>

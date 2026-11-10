@@ -59,6 +59,19 @@
   animation: drop 6s ease-in infinite;
 }
 
+/* капля крови: крупнее и темнее воды */
+.blood {
+  width: 4px;
+  height: 9px;
+  background: var(--blood);
+}
+
+/* окровавленные острия сталактитов */
+.bloodTip {
+  fill: var(--blood);
+  opacity: 0.9;
+}
+
 .drop1 {
   left: 22.5%;
   animation-delay: 0.8s;
@@ -75,6 +88,13 @@
   top: 66px;
   animation-delay: 4.6s;
   animation-duration: 7.5s;
+}
+
+.drop4 {
+  left: 91%;
+  top: 68px;
+  animation-delay: 2.2s;
+  animation-duration: 9s;
 }
 
 /* каменные стены по краям — видны на широком экране */

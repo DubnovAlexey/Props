@@ -1,11 +1,16 @@
 <!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<!-- ↑ Пометка для редактора кода (IntelliJ). Значки и манифест лежат в папке public: сборщик Vite
+     отдаёт её содержимое из корня сайта, а редактор об этом не знает и считал бы ссылки ниже ошибкой. -->
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="Игра-тренажёр по пропсам в React: 18 пещер, хозяева-чудища, теория со схемами и повторение." />
     <meta name="theme-color" content="#0a080d" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <!-- Значок вкладки — картинка из коллекции владельца. Оживляет её src/app/liveFavicon.js -->
+    <link rel="icon" type="image/webp" sizes="192x192" href="./favicon.webp" />
+    <link rel="icon" type="image/png" sizes="64x64" href="./favicon.png" />
     <!-- Установка на телефон и работа без интернета (PWA) -->
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
@@ -18,7 +23,7 @@
       // Тему ставим ДО загрузки приложения: иначе при дневной теме страница
       // на мгновение мигала бы тёмной. Ключ тот же, что в src/utils/storage.js.
       try {
-        var saved = JSON.parse(localStorage.getItem('props-castle/progress/v1') || '{}');
+        const saved = JSON.parse(localStorage.getItem('props-castle/progress/v1') || '{}');
         if (saved.theme === 'day') {
           document.documentElement.dataset.theme = 'day';
           document.querySelector('meta[name="theme-color"]').content = '#f5efe4';

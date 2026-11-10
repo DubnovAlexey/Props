@@ -14,11 +14,27 @@
 }
 
 .portrait {
+  position: relative;
   justify-self: center;
   border-radius: 50%;
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--cave) 55%, transparent),
-    0 0 28px color-mix(in srgb, var(--cave) 35%, transparent);
+}
+
+/* широкое кровавое зарево вокруг большого портрета. Оно живёт в отдельном
+   псевдоэлементе, чтобы пульсировало только зарево, а не сам портрет;
+   тонкую рамку рисует сам портрет (Guardian.module.css) */
+.portrait::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 34px 4px var(--blood-glow);
+  animation: blood-pulse 3.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait::before {
+    animation: none;
+  }
 }
 
 .text {
@@ -40,7 +56,7 @@
   border-left: 3px solid var(--cave);
   border-radius: 0 12px 12px 0;
   background: color-mix(in srgb, var(--cave) 10%, var(--surface-2));
-  font-family: var(--font-title);
+  font-family: var(--font-title), serif;
   font-size: 1.08rem;
   font-style: italic;
 }
@@ -58,4 +74,17 @@
 
 .defeated .speech {
   border-left-color: var(--good);
+}
+
+/* Анимации этого файла. В модульных стилях (*.module.css) сборщик переименовывает имена
+   анимаций вместе с классами, поэтому @keyframes описывают в том же файле, где используют. */
+
+@keyframes blood-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
 }

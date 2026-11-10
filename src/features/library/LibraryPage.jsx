@@ -16,6 +16,7 @@ import { to } from '../../app/useHashRoute.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { PHRASES } from '../../mascot/phrases.js';
 import styles from './Library.module.css';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const LOADERS = import.meta.glob('../../content/library/sections/*.md', { query: '?raw', import: 'default' });
 const cache = new Map();
@@ -57,7 +58,7 @@ function LibraryIndex() {
     <div className="stack">
       <header>
         <span className="eyebrow">Свитки Графа</span>
-        <h1>Теория со схемами</h1>
+        <BloodTitle>Теория со схемами</BloodTitle>
         <p className="muted">
           Для тех, кто хочет просто прочитать. Свитки разложены по пещерам — по тем же темам, что и в игре. А ниже — полное руководство по
           пропсам целиком, по разделам.
@@ -120,7 +121,7 @@ function CaveScroll({ chapter }) {
           <span className="eyebrow">
             Свиток пещеры {chapter.order} · {chapter.cave}
           </span>
-          <h1>{chapter.title}</h1>
+          <BloodTitle>{chapter.title}</BloodTitle>
           <p className="muted">{chapter.goal}</p>
         </div>
       </header>
@@ -172,7 +173,7 @@ function SectionScroll({ section }) {
         <span className="eyebrow">
           Полное руководство · раздел {section.num} из {SECTIONS.length} · {minutes(section.size)} мин
         </span>
-        <h1>{section.title}</h1>
+        <BloodTitle>{section.title}</BloodTitle>
         {caves.length > 0 && (
           <div className="row small">
             <span className="muted">Тренироваться:</span>

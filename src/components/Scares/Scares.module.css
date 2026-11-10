@@ -1,0 +1,613 @@
+/* «Неожиданности»: слой поверх всей игры. Клики и нажатия проходят сквозь него —
+   тот, кто пролетает, никогда не мешает нажать кнопку.
+   Откуда, куда и как долго лететь, приходит из utils/scares.js CSS-переменными
+   (--x0, --dur…): одни и те же правила рисуют каждый раз новую траекторию. */
+
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 45; /* выше шапки, нижней панели и Графа; ниже подсказки термина */
+  pointer-events: none;
+  overflow: hidden;
+  /* «пол», по которому бегут гоблин, тролль и крысы: на телефоне — верх нижней панели */
+  --floor: calc(var(--tabbar-h) + var(--safe-bottom));
+
+  /* Переменные траекторий. Настоящие значения каждому существу ставит Scares.jsx
+     (атрибут style), а здесь — значения по умолчанию и заодно полный список:
+     так видно, какие переменные вообще бывают, и редактор кода их узнаёт. */
+  --dur: 4s; /* сколько длится пролёт */
+  --delay: 0ms; /* пауза перед стартом (стая мышей, крысы) */
+  --x0: 0px; /* откуда летит или бежит… */
+  --y0: 0px;
+  --x1: 0px; /* …и куда */
+  --y1: 0px;
+  --s1: 0px; /* четыре броска мыши вверх-вниз по дороге */
+  --s2: 0px;
+  --s3: 0px;
+  --s4: 0px;
+  --tilt: 0deg; /* крен мыши, наклон пары глаз */
+  --sx: 0px; /* мышь с пересадками: старт, */
+  --sy: 0px;
+  --ax: 0px; /* первое место, */
+  --ay: 0px;
+  --bx: 0px; /* второе место, */
+  --by: 0px;
+  --ex: 0px; /* куда улетает */
+  --ey: 0px;
+  --x: 0px; /* место на экране: глаза, паук, лицо из темноты */
+  --y: 0px;
+  --w: 12px; /* ширина одного глаза */
+  --depth: 30vh; /* на сколько спускается паук */
+  --size: 300px; /* размер лица из темноты */
+  --dx: 0px; /* с какой стороны налетает банши */
+}
+
+@media (min-width: 1000px) {
+  .layer {
+    --floor: 0px;
+  }
+}
+
+.creature {
+  display: block;
+  overflow: visible;
+}
+
+/* --- Мышь летит через экран ---
+   Три вложенных движения: вперёд по прямой (across), большие броски вверх-вниз (swoop)
+   и мелкая дрожь от взмахов (flutter). Вместе получается рваный полёт летучей мыши. */
+
+.across {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  animation: across var(--dur) linear var(--delay, 0ms) both;
+}
+
+.swoop {
+  display: block;
+  animation: swoop var(--dur) ease-in-out var(--delay, 0ms) both;
+}
+
+.flutter {
+  display: block;
+  animation: flutter 0.42s ease-in-out infinite alternate;
+}
+
+@keyframes across {
+  from {
+    transform: translate(var(--x0), var(--y0));
+  }
+  to {
+    transform: translate(var(--x1), var(--y1));
+  }
+}
+
+@keyframes swoop {
+  0% {
+    transform: translateY(0) rotate(var(--tilt));
+  }
+  20% {
+    transform: translateY(var(--s1)) rotate(calc(var(--tilt) * -0.6));
+  }
+  42% {
+    transform: translateY(var(--s2)) rotate(var(--tilt));
+  }
+  63% {
+    transform: translateY(var(--s3)) rotate(calc(var(--tilt) * -1));
+  }
+  84% {
+    transform: translateY(var(--s4)) rotate(calc(var(--tilt) * 0.5));
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes flutter {
+  from {
+    transform: translateY(-5px);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+/* --- Мышь перелетает с места на место ---
+   Прилетела — тело тает в темноте (perch-body), горят одни глаза и моргают (perch-eyes);
+   перелетела — глаза горят уже там; улетела. */
+
+.percher {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  animation: perch var(--dur) both;
+}
+
+.percherBody {
+  display: block;
+  animation: perch-body var(--dur) both;
+}
+
+.percherEyes {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 33%;
+  animation: perch-eyes var(--dur) both;
+}
+
+/* горящие глаза поверх глаз мыши: остаются, когда тело растворилось */
+.percherEyes i {
+  position: absolute;
+  top: 28.2%;
+  width: 7.5%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe2b4 0 18%, var(--bat-eye) 58%);
+  box-shadow:
+    0 0 8px 2px var(--bat-eye),
+    0 0 22px 7px var(--blood-glow);
+}
+
+.percherEyes i:first-child {
+  left: 42.6%;
+  rotate: 18deg;
+}
+
+.percherEyes i:last-child {
+  left: 49.9%;
+  rotate: -18deg;
+}
+
+@keyframes perch {
+  0% {
+    transform: translate(var(--sx), var(--sy));
+    animation-timing-function: cubic-bezier(0.3, 0.1, 0.3, 1);
+  }
+  16% {
+    transform: translate(var(--ax), var(--ay));
+  }
+  40% {
+    transform: translate(var(--ax), var(--ay));
+    animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1);
+  }
+  56% {
+    transform: translate(var(--bx), var(--by));
+  }
+  82% {
+    transform: translate(var(--bx), var(--by));
+    animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.4);
+  }
+  100% {
+    transform: translate(var(--ex), var(--ey));
+  }
+}
+
+@keyframes perch-body {
+  0%,
+  15% {
+    opacity: 1;
+  }
+  20%,
+  38% {
+    opacity: 0.1;
+  }
+  42%,
+  55% {
+    opacity: 1;
+  }
+  60%,
+  80% {
+    opacity: 0.1;
+  }
+  84%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes perch-eyes {
+  0%,
+  24%,
+  28%,
+  33%,
+  36%,
+  64%,
+  68%,
+  73%,
+  76%,
+  100% {
+    transform: scaleY(1);
+  }
+  26%,
+  34.5%,
+  66%,
+  74.5% {
+    transform: scaleY(0.08);
+  }
+}
+
+/* --- Глаза в темноте: открываются, моргают, косятся, закрываются --- */
+
+.lurker {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: flex;
+  gap: calc(var(--w) * 0.85);
+  rotate: var(--tilt);
+  opacity: 0;
+  animation: lurk var(--dur) ease-in-out var(--delay) both;
+}
+
+.lurker i {
+  position: relative;
+  width: var(--w);
+  height: calc(var(--w) * 0.56);
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe2b4 0 16%, var(--bat-eye) 60%);
+  box-shadow:
+    0 0 9px 2px var(--bat-eye),
+    0 0 20px 6px var(--blood-glow);
+}
+
+/* зрачок-щель */
+.lurker i::after {
+  content: '';
+  position: absolute;
+  left: 41%;
+  top: 4%;
+  width: 18%;
+  height: 92%;
+  border-radius: 50%;
+  background: #14020a;
+}
+
+@keyframes lurk {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.08);
+  }
+  9%,
+  38%,
+  44% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  41% {
+    opacity: 1;
+    transform: scaleY(0.08);
+  }
+  62%,
+  74% {
+    opacity: 1;
+    transform: translateX(calc(var(--w) * 0.5)) scaleY(1);
+  }
+  88% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0.08);
+  }
+}
+
+/* --- Бегуны вдоль нижнего края: гоблин, тролль, крысы --- */
+
+.runner {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--floor) - 2px);
+  will-change: transform;
+  animation: run var(--dur) linear var(--delay, 0ms) both;
+}
+
+/* нарисованы мордой вправо; бегут влево — зеркалим */
+.flip {
+  display: block;
+  transform: scaleX(-1);
+}
+
+.facing {
+  display: block;
+}
+
+@keyframes run {
+  from {
+    transform: translateX(var(--x0));
+  }
+  to {
+    transform: translateX(var(--x1));
+  }
+}
+
+/* Шаг: нога качается вокруг бедра, вторая — в противофазе.
+   --step — время одного маха, --stride — размах, --bob — насколько тело подпрыгивает. */
+.goblin {
+  --step: 0.16s;
+  --stride: 36deg;
+  --bob: -3px;
+}
+
+.troll {
+  --step: 0.42s;
+  --stride: 20deg;
+  --bob: -5px;
+}
+
+.rat {
+  --step: 0.07s;
+  --stride: 30deg;
+  --bob: -1px;
+}
+
+.legA,
+.legB {
+  animation: stride var(--step) ease-in-out infinite alternate;
+}
+
+.legB {
+  animation-direction: alternate-reverse;
+}
+
+.swingArm {
+  animation: swing-arm var(--step) ease-in-out infinite alternate-reverse;
+}
+
+/* рука с факелом почти неподвижна: огонь несут бережно */
+.torchArm {
+  animation: torch-arm var(--step) ease-in-out infinite alternate;
+}
+
+.bob {
+  animation: bob var(--step) ease-in-out infinite alternate;
+}
+
+/* дубина волочится и подпрыгивает на камнях */
+.drag {
+  animation: drag var(--step) ease-in-out infinite alternate;
+}
+
+.tail {
+  transform-origin: 12px 21px;
+  animation: tail 0.18s ease-in-out infinite alternate;
+}
+
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flame 0.15s ease-in-out infinite alternate;
+}
+
+.flameGlow {
+  animation: flame-glow 0.21s ease-in-out infinite alternate;
+}
+
+@keyframes stride {
+  from {
+    transform: rotate(calc(var(--stride) * -1));
+  }
+  to {
+    transform: rotate(var(--stride));
+  }
+}
+
+@keyframes swing-arm {
+  from {
+    transform: rotate(-14deg);
+  }
+  to {
+    transform: rotate(16deg);
+  }
+}
+
+@keyframes torch-arm {
+  from {
+    transform: rotate(-3deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--bob));
+  }
+}
+
+@keyframes drag {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-2px, -3px);
+  }
+}
+
+@keyframes tail {
+  from {
+    transform: rotate(-9deg);
+  }
+  to {
+    transform: rotate(10deg);
+  }
+}
+
+/* пламя на бегу отклоняется назад и трепещет */
+@keyframes flame {
+  from {
+    transform: scale(0.92, 0.86) skewX(8deg);
+  }
+  to {
+    transform: scale(1.06, 1.14) skewX(17deg);
+  }
+}
+
+@keyframes flame-glow {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Паук на нити: падает сверху, качается, уползает обратно --- */
+
+.dropper {
+  position: absolute;
+  left: var(--x);
+  top: 0;
+  will-change: transform;
+  animation: drop-in var(--dur) both;
+}
+
+/* маятник: ось качания — у потолка, поэтому origin вынесен вверх на длину нити */
+.dangle {
+  display: block;
+  transform-origin: 50% calc(var(--depth) * -1);
+  animation: dangle 1.9s ease-in-out infinite alternate;
+}
+
+.thread {
+  position: absolute;
+  left: calc(50% - 0.75px);
+  bottom: calc(100% - 14px);
+  width: 1.5px;
+  height: 100vh;
+  background: linear-gradient(to top, var(--text-dim), transparent);
+  opacity: 0.6;
+}
+
+.twitch {
+  animation: twitch 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes drop-in {
+  0% {
+    transform: translateY(calc(-100% - 12px));
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  17% {
+    transform: translateY(var(--depth));
+  }
+  23% {
+    transform: translateY(calc(var(--depth) - 16px));
+  }
+  30%,
+  68% {
+    transform: translateY(var(--depth));
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translateY(calc(-100% - 12px));
+  }
+}
+
+@keyframes dangle {
+  from {
+    transform: rotate(-2.4deg);
+  }
+  to {
+    transform: rotate(2.4deg);
+  }
+}
+
+@keyframes twitch {
+  from {
+    transform: rotate(-6deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
+}
+
+/* --- Лицо из темноты: хозяин пещеры (loom) и банши, которая бросается в лицо (lunge) ---
+   Маска — круг, тающий к краям: портрет не обрывается рамкой, а выступает из тьмы. */
+
+.ghost {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  -webkit-mask-image: radial-gradient(circle closest-side, #000 50%, transparent 96%);
+  mask-image: radial-gradient(circle closest-side, #000 50%, transparent 96%);
+  will-change: transform, opacity;
+}
+
+/* Портрет внутри не «дышит»: иначе телефон на каждом кадре заново считал бы его тяжёлые
+   фильтры в большом размере. Двигается и тает весь портрет целиком — это дёшево. */
+.ghost svg,
+.ghost svg * {
+  animation: none !important;
+}
+
+.loom {
+  animation: loom var(--dur) ease-in-out both;
+}
+
+.lunge {
+  animation: lunge var(--dur) both;
+}
+
+@keyframes loom {
+  0% {
+    opacity: 0;
+    transform: scale(0.84);
+  }
+  20% {
+    opacity: 0.95;
+    transform: scale(0.96);
+  }
+  72% {
+    opacity: 0.95;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.14);
+  }
+}
+
+@keyframes lunge {
+  0% {
+    opacity: 0;
+    transform: translate(var(--dx), 0) scale(0.3);
+    animation-timing-function: ease-out;
+  }
+  34% {
+    opacity: 0.9;
+    transform: translate(calc(var(--dx) * 0.35), -12px) scale(0.6);
+    animation-timing-function: ease-in-out;
+  }
+  64% {
+    opacity: 0.96;
+    transform: translate(0, 6px) scale(0.92);
+    animation-timing-function: cubic-bezier(0.7, 0, 1, 0.6);
+  }
+  84% {
+    opacity: 0.96;
+    transform: translate(0, 0) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(2.7);
+  }
+}
+
+/* Попросили систему уменьшить движение — слой не показываем вовсе
+   (Scares.jsx его и не рисует; это запасная защита). */
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    display: none;
+  }
+}

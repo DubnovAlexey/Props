@@ -10,6 +10,10 @@
   display: block;
   border-radius: 50%;
   overflow: hidden;
+  /* кроваво-красная светящаяся рамка вокруг каждого портрета */
+  box-shadow:
+    0 0 0 2px var(--blood-ring),
+    0 0 14px var(--blood-glow);
 }
 
 /* цветной отсвет снизу — «экраном», чтобы светлить, а не заливать */
@@ -28,7 +32,7 @@
 
 .guardian :global(.g-sway) {
   transform-box: fill-box;
-  transform-origin: 50% 0%;
+  transform-origin: 50% 0;
   animation: sway 5.5s ease-in-out infinite;
 }
 

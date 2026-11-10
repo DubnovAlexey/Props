@@ -13,7 +13,7 @@
   height: auto;
   margin: 0 auto;
   overflow: visible;
-  font-family: var(--font-body);
+  font-family: var(--font-body), sans-serif;
 }
 
 .caption {
@@ -60,7 +60,7 @@
 
 .mono {
   fill: var(--tok-attr);
-  font-family: var(--font-code);
+  font-family: var(--font-code), monospace;
   font-variant-ligatures: none;
   font-size: 11px;
 }
@@ -95,7 +95,7 @@
 
 .prop {
   fill: var(--text);
-  font-family: var(--font-code);
+  font-family: var(--font-code), monospace;
   font-variant-ligatures: none;
   font-size: 12px;
   font-weight: 700;
@@ -185,7 +185,7 @@
 
 .parcelText {
   fill: var(--gold);
-  font-family: var(--font-code);
+  font-family: var(--font-code), monospace;
   font-variant-ligatures: none;
   font-size: 11px;
   font-weight: 700;

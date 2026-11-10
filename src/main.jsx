@@ -15,6 +15,7 @@ import './styles/animations.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
+import { startLiveFavicon } from './app/liveFavicon.js';
 
 // StrictMode — «строгий учитель» режима разработки: дважды вызывает
 // компоненты, чтобы поймать нечистый код. В собранной версии не работает.
@@ -23,6 +24,9 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 );
+
+// Значок вкладки оживает: мышь моргает, машет крыльями, с клыков падает капля крови
+startLiveFavicon();
 
 // Офлайн-режим: сервис-воркер кэширует игру после первого открытия.
 // Регистрируем только в собранной версии (в разработке он бы мешал

@@ -11,6 +11,7 @@ import PracticeRunner from '../practice/PracticeRunner.jsx';
 import Bat from '../../mascot/Bat.jsx';
 import styles from './Exam.module.css';
 import { to } from '../../app/useHashRoute.js';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const EXTRA_TASKS = 2;
 
@@ -58,7 +59,7 @@ export default function ExamPage() {
   if (phase === 'run') {
     return (
       <div className="stack">
-        <h1>👑 Испытание Графа</h1>
+        <BloodTitle>👑 Испытание Графа</BloodTitle>
         <PracticeRunner tasks={tasks} onFinish={finish} allowHints={false} showChapter />
       </div>
     );
@@ -78,7 +79,7 @@ export default function ExamPage() {
           </div>
         )}
         <span className="eyebrow">Результат</span>
-        <h1>{title}</h1>
+        <BloodTitle>{title}</BloodTitle>
         <p className={styles.score}>
           {summary.correct} / {summary.total} · {Math.round(summary.score * 100)}%
         </p>
@@ -101,7 +102,7 @@ export default function ExamPage() {
   return (
     <div className="card stack">
       <span className="eyebrow">Логово Графа</span>
-      <h1>👑 Испытание Графа</h1>
+      <BloodTitle>👑 Испытание Графа</BloodTitle>
       <p>
         {CHAPTERS.length + EXTRA_TASKS} заданий из всех пещер вперемешку. Подсказок Лунатика не будет, но пояснения после каждого ответа
         останутся — испытание тоже учит.

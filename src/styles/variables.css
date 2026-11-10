@@ -41,6 +41,14 @@
   --tok-number: #fca5a5;
   --tok-punct: #a99fc4;
 
+  /* Кровь в интерфейсе. Сама кровь (потёки, капли) — тёмная и густая, как настоящая:
+     --blood и запёкшийся край --blood-dark. Светящаяся рамка вокруг значков пещер —
+     отдельный, более яркий цвет --blood-ring и её зарево --blood-glow. */
+  --blood: #7d0c19;
+  --blood-dark: #3a050b;
+  --blood-ring: #b3122b;
+  --blood-glow: rgba(214, 22, 50, 0.55);
+
   /* Летучие мыши и вампир */
   --bat: #20162f;
   --bat-wing: #35264d;
@@ -114,6 +122,11 @@
   --good-soft: rgba(21, 128, 61, 0.1);
   --bad: #be123c;
   --bad-soft: rgba(190, 18, 60, 0.08);
+
+  --blood: #7a0b18;
+  --blood-dark: #3a050b;
+  --blood-ring: #a10e25;
+  --blood-glow: rgba(170, 14, 38, 0.42);
 
   --bat: #2f2242;
   --bat-wing: #4a3868;

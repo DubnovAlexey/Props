@@ -1,0 +1,84 @@
+/* Заголовок «в крови»: неровные буквы и редкие потёки под ними */
+
+.title {
+  position: relative; /* потёки позиционируются относительно заголовка */
+}
+
+/* Мягкая тень под буквами: заголовок чуть приподнят над страницей.
+   Сплошной красной кромки у букв нет нарочно — кровь только там, где висят капли. */
+.rough {
+  text-shadow: 0 0.06em 0.14em rgba(0, 0, 0, 0.4);
+}
+
+/* Слово — неразрывный блок: буквы внутри стали отдельными элементами,
+   и без этого строка могла бы перенестись посреди слова */
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Буква — блок в строке: только такой элемент можно повернуть и сдвинуть (transform) */
+.letter {
+  display: inline-block;
+}
+
+/* Изъеденные кромки букв — SVG-фильтр t-rough (он описан один раз в GuardianDefs).
+   На iPhone фильтр не включаем: Safari рисует отфильтрованный текст размытым,
+   а чёткость заголовка важнее. Неровность там даёт «пляска» букв — она работает везде.
+   Условие «не iOS» — проверка свойства, которое понимает только Safari
+   на телефонах и планшетах Apple. */
+@supports not (-webkit-touch-callout: none) {
+  .rough {
+    filter: url(#t-rough);
+  }
+}
+
+.drips {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.drip {
+  position: absolute;
+  overflow: visible;
+}
+
+/* Цвет потёка — градиент t-blood (задан атрибутом fill в компоненте); здесь — запёкшийся край */
+.streak {
+  stroke: var(--blood-dark);
+  stroke-width: 0.4;
+}
+
+.glint {
+  fill: #ffc9cf;
+  opacity: 0.6;
+}
+
+/* Капля срывается с потёка и падает; у каждой своя задержка (задаётся в компоненте) */
+.falling {
+  fill: var(--blood);
+  opacity: 0;
+  animation: blood-fall 10s ease-in infinite;
+}
+
+@keyframes blood-fall {
+  0%,
+  86% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  89% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(46px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .falling {
+    animation: none;
+  }
+}

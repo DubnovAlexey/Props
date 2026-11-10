@@ -6,6 +6,7 @@
 //   resetKey — когда он меняется (перешли на другую страницу), пробуем снова.
 import { Component } from 'react';
 import { to } from './useHashRoute.js';
+import BloodTitle from '../components/BloodTitle/BloodTitle.jsx';
 
 export default class ErrorBoundary extends Component {
   state = { error: null };
@@ -29,7 +30,7 @@ export default class ErrorBoundary extends Component {
 
     return (
       <div className="card stack" role="alert">
-        <h1>🪨 Обвал в пещере</h1>
+        <BloodTitle>🪨 Обвал в пещере</BloodTitle>
         <p>Эта страница не смогла открыться. Прогресс не пострадал — он хранится отдельно.</p>
         <p className="muted small">
           Чаще всего так бывает, когда пропал интернет или игра обновилась, пока была открыта. Обновление страницы обычно помогает.

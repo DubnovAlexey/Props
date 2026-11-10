@@ -2,9 +2,16 @@
 // Крылья — рваные перепонки на костях-пальцах, уши торчком, глаза-щели горят,
 // пасть оскалена, на клыке — капля крови.
 // Цвета берутся из CSS-переменных, поэтому мышь подстраивается под тему.
+//   size     — ширина в пикселях;
+//   flapping — машет крыльями (по умолчанию да);
+//   fierce   — «злая»: глаза крупнее и в красном зареве. Такая пролетает в «Неожиданностях»;
+//   label    — подпись для экранных читалок; без неё мышь декоративная.
 import styles from './Bat.module.css';
 
-export default function Bat({ size = 48, flapping = true, className = '', label }) {
+export default function Bat({ size = 48, flapping = true, fierce = false, className = '', label }) {
+  // у злой мыши глаза шире раскрыты
+  const eye = fierce ? { rx: 2, ry: 1.3 } : { rx: 1.5, ry: 0.95 };
+
   return (
     <svg
       className={`${styles.bat} ${flapping ? styles.flapping : ''} ${className}`}
@@ -58,8 +65,14 @@ export default function Bat({ size = 48, flapping = true, className = '', label 
       <path className={styles.brow} d="M28 10.8 L31 12.3 M36 10.8 L33 12.3" />
 
       {/* Глаза-щели горят; нос-листок; оскал с клыками, на клыке кровь */}
-      <ellipse className={styles.eye} cx="29.7" cy="13.1" rx="1.5" ry="0.95" transform="rotate(18 29.7 13.1)" />
-      <ellipse className={styles.eye} cx="34.3" cy="13.1" rx="1.5" ry="0.95" transform="rotate(-18 34.3 13.1)" />
+      {fierce && (
+        <g className={styles.ember}>
+          <circle cx="29.7" cy="13.1" r="5.4" fill="url(#g-ember)" />
+          <circle cx="34.3" cy="13.1" r="5.4" fill="url(#g-ember)" />
+        </g>
+      )}
+      <ellipse className={styles.eye} cx="29.7" cy="13.1" {...eye} transform="rotate(18 29.7 13.1)" />
+      <ellipse className={styles.eye} cx="34.3" cy="13.1" {...eye} transform="rotate(-18 34.3 13.1)" />
       <path className={styles.snout} d="M31 15 L32 14 L33 15 L32 15.8 Z" />
       <path className={styles.mouth} d="M29.6 16.5 Q32 20.8 34.4 16.5 Q32 17.6 29.6 16.5 Z" />
       <path d="M30.2 16.9 L30.9 20.5 L31.6 17.3 Z M32.4 17.3 L33.1 20.5 L33.8 16.9 Z" fill="#f4efe6" />

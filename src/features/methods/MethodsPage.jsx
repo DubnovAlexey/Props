@@ -5,6 +5,7 @@ import { METHODS, STUDY_PLAN } from '../../content/methods.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { PHRASES } from '../../mascot/phrases.js';
 import styles from './Methods.module.css';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 export default function MethodsPage() {
   const { say } = useMascot();
@@ -17,7 +18,7 @@ export default function MethodsPage() {
     <div className="stack">
       <div>
         <span className="eyebrow">Секреты вампирской памяти</span>
-        <h1>Как устроено обучение</h1>
+        <BloodTitle>Как устроено обучение</BloodTitle>
         <p className="muted">
           Каждая механика в пещерах опирается на исследования памяти и внимания. Вот что работает на тебя — и как пользоваться этим за
           пределами игры.

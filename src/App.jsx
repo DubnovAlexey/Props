@@ -20,6 +20,7 @@ import BestiaryPage from './features/bestiary/BestiaryPage.jsx';
 import InstallPage from './features/install/InstallPage.jsx';
 import GuardianDefs from './mascot/guardians/GuardianDefs.jsx';
 import Ambience from './components/Ambience/Ambience.jsx';
+import Scares from './components/Scares/Scares.jsx';
 import NotFound from './app/NotFound.jsx';
 import ErrorBoundary from './app/ErrorBoundary.jsx';
 
@@ -103,6 +104,8 @@ export default function App() {
         </main>
         <TabBar section={section} />
         <MascotDock routeKey={route.path} />
+        {/* «Неожиданности»: в пещере из темноты выглядывает её хозяин — поэтому передаём id пещеры */}
+        <Scares caveId={route.parts[0] === 'chapter' ? route.parts[1] : null} />
       </MascotProvider>
     </ProgressProvider>
   );

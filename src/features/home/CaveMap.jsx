@@ -8,6 +8,7 @@ import { CHAPTERS } from '../../content/chapters/index.js';
 import { FACTS } from '../../content/facts.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
+import { useReducedMotion } from '../../hooks/useMediaQuery.js';
 import { PHRASES, phrase } from '../../mascot/phrases.js';
 import { rankFor } from '../../utils/ranks.js';
 import { dueIds } from '../../utils/leitner.js';
@@ -21,6 +22,7 @@ import CaveArt from './CaveArt.jsx';
 import CaveNode from './CaveNode.jsx';
 import styles from './CaveMap.module.css';
 import { to } from '../../app/useHashRoute.js';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 /**
  * «Начать игру заново»: сначала спрашиваем подтверждение — стёртый прогресс не вернуть.
@@ -64,6 +66,33 @@ function ResetProgress() {
   );
 }
 
+/**
+ * Переключатель «Неожиданностей» — пролетающих мышей, гоблинов и прочих (components/Scares).
+ * Настройка хранится в прогрессе рядом с темой и звуком.
+ */
+function ScaresToggle() {
+  const { progress, dispatch } = useProgress();
+  const reducedMotion = useReducedMotion();
+  const on = progress.scares !== false;
+
+  return (
+    <div className={styles.scares}>
+      <p className="small">
+        <b>Неожиданности.</b> Иногда по экрану кто-то пролетает или пробегает: летучая мышь, гоблин, тролль, банши. Секунда испуга
+        встряхивает мозг — он отвлекается, отдыхает и возвращается к задаче свежим. Мешает — выключи.
+      </p>
+      <button type="button" className="btn btn-small" aria-pressed={on} onClick={() => dispatch({ type: 'scares', scares: !on })}>
+        {on ? '👻 Неожиданности включены' : '🚫 Неожиданности выключены'}
+      </button>
+      {reducedMotion && on && (
+        <p className="muted small">
+          В настройках твоего устройства включено «уменьшение движения», поэтому сейчас никто не появляется: игра уважает эту настройку.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function CaveMap() {
   const { progress } = useProgress();
   const { say } = useMascot();
@@ -87,7 +116,7 @@ export default function CaveMap() {
       <section className={styles.hero}>
         <div className={styles.heroText}>
           <span className="eyebrow">Игра-тренажёр по React</span>
-          <h1>Пещеры Графа Пропсулы</h1>
+          <BloodTitle>Пещеры Графа Пропсулы</BloodTitle>
           <p>
             <RichText
               text={`${CHAPTERS.length} пещер на трёх ярусах — от устройства проекта до паттернов. Всё о [[props|пропсах]] и всём, что рядом: [[component|компоненты]], JavaScript, [[state|состояние]], [[virtual-dom|виртуальный DOM]], [[hook|хуки]], [[context|Context]], [[memo|memo]] и типы. В каждой пещере — свой хозяин-чудище, а над всеми — Граф.`}
@@ -242,6 +271,7 @@ export default function CaveMap() {
           <a href={to.break()}>🦇 Перемена</a>
           <a href={to.install()}>📲 Играть без интернета</a>
         </div>
+        <ScaresToggle />
         <ResetProgress />
       </section>
     </div>

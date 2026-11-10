@@ -31,7 +31,7 @@
 .code {
   display: block;
   min-width: max-content;
-  font-family: var(--font-code);
+  font-family: var(--font-code), monospace;
   font-variant-ligatures: none;
   font-size: 13.5px;
   line-height: 1.65;
@@ -199,7 +199,7 @@
   border-radius: 6px;
   background: #f6c453;
   color: #2a1a00;
-  font-family: var(--font-body);
+  font-family: var(--font-body), sans-serif;
   font-size: 0.62em;
   font-weight: 800;
   vertical-align: super;
@@ -449,4 +449,21 @@
   background: #4b3d6e;
   font-size: 0.72rem;
   font-weight: 800;
+}
+
+/* Анимации этого файла. В модульных стилях (*.module.css) сборщик переименовывает имена
+   анимаций вместе с классами, поэтому @keyframes описывают в том же файле, где используют. */
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

@@ -14,6 +14,7 @@ import PracticeRunner from '../practice/PracticeRunner.jsx';
 import ProgressBar from '../../components/ProgressBar/ProgressBar.jsx';
 import Flashcard from './Flashcard.jsx';
 import styles from './Review.module.css';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const NEW_CARDS_PER_SESSION = 8;
 
@@ -67,7 +68,7 @@ export default function ReviewPage() {
   if (session?.kind === 'tasks') {
     return (
       <div className="stack">
-        <h1>Работа над ошибками</h1>
+        <BloodTitle>Работа над ошибками</BloodTitle>
         <PracticeRunner
           tasks={session.ids.map((id) => TASK_MAP[id])}
           showChapter
@@ -81,7 +82,7 @@ export default function ReviewPage() {
     const entry = GLOSSARY_MAP[session.ids[cardIndex]];
     return (
       <div className="stack">
-        <h1>Карточки терминов</h1>
+        <BloodTitle>Карточки терминов</BloodTitle>
         <ProgressBar value={cardIndex} max={session.ids.length} label={`Карточка ${cardIndex + 1} из ${session.ids.length}`} />
         <Flashcard key={entry.id} entry={entry} onRate={rateCard} />
       </div>
@@ -92,7 +93,7 @@ export default function ReviewPage() {
     <div className="stack">
       <div>
         <span className="eyebrow">Интервальное повторение</span>
-        <h1>Склеп повторения</h1>
+        <BloodTitle>Склеп повторения</BloodTitle>
         <p className="muted">
           Мозг забывает по кривой: сначала быстро, потом медленнее. Повторение «на грани забывания» продлевает память надолго. Поэтому
           каждая задача и каждый термин живут в одном из пяти гробиков.

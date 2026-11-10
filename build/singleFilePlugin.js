@@ -58,9 +58,12 @@ export default function singleFilePlugin({ fileName = 'Props.html', copyToDir = 
 
       // Значок вкладки — тоже внутрь; ссылки на файлы установки (манифест, значок iPhone)
       // убираем: у копии с диска этих файлов нет, а установить её как приложение нельзя
-      const favicon = readFileSync(join(root, 'public/favicon.svg'), 'utf8');
+      // Значок есть в двух размерах (webp 192 и png 64); в один файл кладём маленький png —
+      // вкладке его хватает, а файл не раздувается. Большую картинку из разметки убираем.
+      const favicon = readFileSync(join(root, 'public/favicon.png')).toString('base64');
       html = html
-        .replace(/href="\.\/favicon\.svg"/, () => `href="data:image/svg+xml,${encodeURIComponent(favicon)}"`)
+        .replace(/\s*<link rel="icon"[^>]*href="\.\/favicon\.webp"[^>]*>/, '')
+        .replace(/href="\.\/favicon\.png"/, () => `href="data:image/png;base64,${favicon}"`)
         .replace(/\s*<link rel="(manifest|apple-touch-icon|modulepreload)"[^>]*>/g, '')
         .replace(/\s*<!-- Установка на телефон[^>]*-->/, '');
 

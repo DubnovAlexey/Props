@@ -145,7 +145,7 @@
   border: 1.5px solid var(--magic);
   background: var(--magic-soft);
   color: var(--text);
-  font-family: var(--font-code);
+  font-family: var(--font-code), monospace;
   font-variant-ligatures: none;
   font-size: 0.92rem;
   cursor: pointer;

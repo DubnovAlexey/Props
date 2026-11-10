@@ -2,38 +2,13 @@
    Общие анимации. Движение помогает удерживать внимание,
    но тем, кто попросил систему уменьшить анимацию
    (prefers-reduced-motion), мы её отключаем.
+
+   ВАЖНО. Эти анимации — для общих классов внизу файла (.anim-in, .anim-pop,
+   .anim-shake). Из модульных стилей (*.module.css) на них сослаться нельзя:
+   сборщик переименовывает там имена анимаций так же, как классы, и ссылка
+   ведёт в никуда — анимация молча не работает. Поэтому в модуле @keyframes
+   описывают прямо в его файле. За этим следит тест tests/styles.test.js.
    ========================================================= */
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
-@keyframes blink {
-  0%,
-  92%,
-  100% {
-    transform: scaleY(1);
-  }
-  95% {
-    transform: scaleY(0.1);
-  }
-}
-
-@keyframes flap {
-  0%,
-  100% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(0.35);
-  }
-}
 
 @keyframes fade-in-up {
   from {
@@ -72,38 +47,6 @@
   40%,
   80% {
     transform: translateX(6px);
-  }
-}
-
-@keyframes glow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 var(--gold-soft);
-  }
-  50% {
-    box-shadow: 0 0 0 10px transparent;
-  }
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-@keyframes poof {
-  0% {
-    opacity: 1;
-    transform: scale(1) rotate(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.8) rotate(25deg);
   }
 }
 

@@ -110,7 +110,8 @@
   .window,
   .drop,
   .flame,
-  .torchGlow {
+  .torchGlow,
+  .ringWrap::before {
     animation: none;
   }
 }
@@ -143,7 +144,7 @@
   height: 44px;
   border-radius: 50%;
   border: 2px solid var(--border);
-  font-family: var(--font-title);
+  font-family: var(--font-title), serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--gold);
@@ -337,6 +338,29 @@
   height: 64px;
 }
 
+/* кровавое кольцо вокруг значка пещеры: тлеет и разгорается.
+   Анимируем только прозрачность — это почти бесплатно для телефона */
+.ringWrap::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--blood-ring);
+  box-shadow:
+    0 0 12px 2px var(--blood-glow),
+    inset 0 0 8px var(--blood-glow);
+  animation: blood-pulse 3.2s ease-in-out infinite;
+}
+
+/* соседние значки тлеют не в такт */
+.node:nth-child(2n) .ringWrap::before {
+  animation-delay: 1.1s;
+}
+
+.node:nth-child(3n) .ringWrap::before {
+  animation-delay: 2s;
+}
+
 .ring {
   position: absolute;
   inset: 0;
@@ -366,6 +390,11 @@
   place-items: center;
 }
 
+/* у портрета внутри кольца своя рамка лишняя: её роль играет кровавое кольцо */
+.nodePortrait svg {
+  box-shadow: none;
+}
+
 .nodeGuardian {
   color: var(--text-faint);
 }
@@ -392,7 +421,7 @@
 }
 
 .nodeTitle {
-  font-family: var(--font-title);
+  font-family: var(--font-title), serif;
   font-size: 1.05rem;
   line-height: 1.25;
 }
@@ -442,6 +471,16 @@
 }
 
 /* --- Подтверждение сброса прогресса --- */
+/* переключатель «Неожиданностей» под советами */
+.scares {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin: 16px 0 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
 .reset {
   margin-top: 14px;
   padding: 14px;
@@ -452,4 +491,38 @@
 
 .reset p {
   margin-bottom: 12px;
+}
+
+/* Анимации этого файла. В модульных стилях (*.module.css) сборщик переименовывает имена
+   анимаций вместе с классами, поэтому @keyframes описывают в том же файле, где используют. */
+
+@keyframes blood-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }

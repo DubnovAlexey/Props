@@ -69,21 +69,41 @@
   filter: drop-shadow(0 0 1.6px var(--bat-eye));
 }
 
+/* красное зарево вокруг глаз злой мыши: тлеет и разгорается */
+.ember {
+  animation: blood-pulse 0.9s ease-in-out infinite;
+}
+
+/* Взмах. Крыло поворачивается вокруг плеча (точка, где перепонка сходится с телом):
+   поднимается — и опускается, складываясь (scaleY). У правого крыла поворот в другую
+   сторону, поэтому направление задаёт переменная --side: 1 — левое, −1 — правое. */
 .wingLeft {
-  transform-origin: 30px 20px;
+  transform-origin: 29.6px 17px;
+  --side: 1;
 }
 
 .wingRight {
-  transform-origin: 34px 20px;
+  transform-origin: 34.4px 17px;
+  --side: -1;
 }
 
 .flapping .wingLeft,
 .flapping .wingRight {
-  animation: flap 0.32s ease-in-out infinite;
+  animation: wing-flap 0.2s ease-in-out infinite alternate;
 }
 
+/* правое крыло чуть отстаёт — взмах выглядит живым, а не механическим */
 .flapping .wingRight {
   animation-delay: 0.02s;
+}
+
+@keyframes wing-flap {
+  from {
+    transform: rotate(calc(var(--side) * 16deg)) scaleY(1); /* крыло поднято */
+  }
+  to {
+    transform: rotate(calc(var(--side) * -26deg)) scaleY(0.55); /* опущено и сложено */
+  }
 }
 
 /* --- Мыши, пролетающие по небу в шапке --- */
@@ -123,5 +143,18 @@
 @media (prefers-reduced-motion: reduce) {
   .drifter {
     display: none;
+  }
+}
+
+/* Анимации этого файла. В модульных стилях (*.module.css) сборщик переименовывает имена
+   анимаций вместе с классами, поэтому @keyframes описывают в том же файле, где используют. */
+
+@keyframes blood-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
   }
 }

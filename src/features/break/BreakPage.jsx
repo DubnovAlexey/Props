@@ -5,6 +5,7 @@ import BatCatcher from './BatCatcher.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { PHRASES } from '../../mascot/phrases.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 export default function BreakPage() {
   const { say } = useMascot();
@@ -18,7 +19,7 @@ export default function BreakPage() {
     <div className="stack">
       <div>
         <span className="eyebrow">Перемена</span>
-        <h1>Поймай мышей</h1>
+        <BloodTitle>Поймай мышей</BloodTitle>
         <p className="muted">20 секунд игры — и мозг снова готов учиться. Лучший результат: {progress.breakBest}.</p>
       </div>
       {/* Рекорд записывается сам, когда время вышло: отдельная кнопка для этого не нужна */}

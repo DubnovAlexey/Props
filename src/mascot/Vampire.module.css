@@ -217,3 +217,27 @@
     opacity: 0;
   }
 }
+
+/* Анимации этого файла. В модульных стилях (*.module.css) сборщик переименовывает имена
+   анимаций вместе с классами, поэтому @keyframes описывают в том же файле, где используют. */
+
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}

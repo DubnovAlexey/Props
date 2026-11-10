@@ -38,6 +38,7 @@ export const initialProgress = {
   breakBest: 0,
   theme: 'night',
   sound: true,
+  scares: true, // «неожиданности»: пролетающие мыши, гоблины, банши (components/Scares)
 };
 
 /** Восстанавливаем сохранённый прогресс, подставляя недостающие поля */
@@ -131,8 +132,12 @@ export function progressReducer(state, action) {
     case 'sound':
       return { ...state, sound: action.sound };
 
+    case 'scares':
+      return { ...state, scares: action.scares };
+
     case 'reset':
-      return { ...initialProgress, theme: state.theme, sound: state.sound };
+      // настройки (тема, звук, неожиданности) — не прогресс: при сбросе остаются
+      return { ...initialProgress, theme: state.theme, sound: state.sound, scares: state.scares };
 
     default:
       return state;

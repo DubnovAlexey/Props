@@ -1,5 +1,5 @@
 // Антураж пещеры за всем содержимым: своды со сталактитами, факелы по краям,
-// капли воды, туман у пола, плывущие искры и чьи-то глаза в темноте.
+// капли воды и крови, туман у пола, плывущие искры и чьи-то глаза в темноте.
 // Слой фиксирован, не ловит клики и прячет движение, если пользователь
 // попросил меньше анимаций (prefers-reduced-motion).
 // Ощущение лёгкой угрозы держит внимание — но фон остаётся тёмным и спокойным,
@@ -25,10 +25,13 @@ export default function Ambience() {
 
       <svg className={styles.ceiling} viewBox="0 0 1440 90" preserveAspectRatio="none">
         <path d={STALACTITES} />
+        {/* острия двух сталактитов в крови — с них и капает */}
+        <path className={styles.bloodTip} d="M313 58 L320 74 L326 58 Z M1303 56 L1310 72 L1316 56 Z" />
       </svg>
-      <span className={`${styles.drop} ${styles.drop1}`} />
+      <span className={`${styles.drop} ${styles.blood} ${styles.drop1}`} />
       <span className={`${styles.drop} ${styles.drop2}`} />
       <span className={`${styles.drop} ${styles.drop3}`} />
+      <span className={`${styles.drop} ${styles.blood} ${styles.drop4}`} />
 
       <div className={`${styles.wall} ${styles.wallLeft}`} />
       <div className={`${styles.wall} ${styles.wallRight}`} />

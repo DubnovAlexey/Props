@@ -7,6 +7,7 @@ import { useInstallPrompt, useOfflineReady } from '../../hooks/useInstallPrompt.
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { PHRASES } from '../../mascot/phrases.js';
 import Bat from '../../mascot/Bat.jsx';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const insideFrame = (() => {
   try {
@@ -20,6 +21,8 @@ const insideFrame = (() => {
 const IS_SINGLE_FILE = Boolean(import.meta.env.VITE_SINGLE);
 // Файл для скачивания лежит рядом с игрой только в собранной версии сайта
 const CAN_DOWNLOAD = import.meta.env.PROD && !import.meta.env.VITE_ARTIFACT && !IS_SINGLE_FILE;
+// Адрес файла — константой: он появляется рядом с игрой только после сборки (npm run build)
+const DOWNLOAD_URL = './Props.html';
 
 /** С какого устройства открыта игра: 'ios', 'android' или 'desktop' */
 function detectDevice() {
@@ -82,7 +85,7 @@ export default function InstallPage() {
       <div className="stack">
         <header>
           <span className="eyebrow">Автономная копия</span>
-          <h1>📦 Вся игра — в одном файле</h1>
+          <BloodTitle>📦 Вся игра — в одном файле</BloodTitle>
           <p className="muted">
             Ты играешь в копии, которая целиком лежит на этом устройстве: интернет ей не нужен. Файл можно переслать другу или положить на
             флешку — он откроется в любом современном браузере.
@@ -99,7 +102,7 @@ export default function InstallPage() {
     <div className="stack">
       <header>
         <span className="eyebrow">Офлайн-режим</span>
-        <h1>📲 Пещеры — в кармане</h1>
+        <BloodTitle>📲 Пещеры — в кармане</BloodTitle>
         <p className="muted">
           По ссылке игра работает в любом браузере — ставить ничего не обязательно. Но если её установить, появится значок на экране, как у
           обычного приложения, и игра будет работать без интернета. Ниже — три способа, по шагам.
@@ -148,7 +151,7 @@ export default function InstallPage() {
             удобно переслать одногруппникам или положить на флешку.
           </p>
           <div className="row">
-            <a className="btn" href="./Props.html" download="Props.html">
+            <a className="btn" href={DOWNLOAD_URL} download="Props.html">
               ⬇️ Скачать Props.html
             </a>
           </div>

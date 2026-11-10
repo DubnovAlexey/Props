@@ -9,6 +9,7 @@ import { PHRASES } from '../../mascot/phrases.js';
 import CodeBlock from '../../components/CodeBlock/CodeBlock.jsx';
 import styles from './Glossary.module.css';
 import { to } from '../../app/useHashRoute.js';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const SORTED = [...GLOSSARY].sort((a, b) => a.title.localeCompare(b.title, 'ru'));
 
@@ -40,7 +41,7 @@ export default function GlossaryPage({ focusId }) {
     <div className="stack">
       <div>
         <span className="eyebrow">Словарь</span>
-        <h1>Словарь Графа</h1>
+        <BloodTitle>Словарь Графа</BloodTitle>
         <p className="muted">
           {GLOSSARY.length} терминов. Те же пояснения всплывают, если навести мышь или нажать на подчёркнутое слово в уроке.
         </p>

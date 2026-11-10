@@ -20,6 +20,7 @@ import CaveHost from './CaveHost.jsx';
 import { sfx } from '../../audio/sfx.js';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import { to } from '../../app/useHashRoute.js';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const STEPS = [
   { id: 'warmup', label: 'Разминка', icon: '🕯️' },
@@ -131,7 +132,7 @@ export default function ChapterPage({ chapterId }) {
           <span className="eyebrow">
             Пещера {chapter.order} из {CHAPTERS.length} · ярус {chapter.tier.num} · {chapter.cave}
           </span>
-          <h1 className={styles.title}>{chapter.title}</h1>
+          <BloodTitle className={styles.title}>{chapter.title}</BloodTitle>
           <p className="muted">{chapter.goal}</p>
         </div>
       </header>

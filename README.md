@@ -1,3 +1,5 @@
+<!--suppress MarkdownUnresolvedFileReference -->
+
 # Props — Пещеры Графа Пропсулы 🦇
 
 <a id="top"></a>
@@ -30,6 +32,10 @@
 **Как устроена учёба.** Каждая пещера — это шаги: разминка → урок → заклинание → практика (8 заданий) →
 «Объясни Лунатику» → перемена → итог. Хозяин пещеры повержен, если в практике верно **5 заданий из 8**. Ошибки
 попадают в «склеп повторения» и возвращаются по системе Лейтнера.
+
+**Неожиданности.** Иногда по экрану кто-то пролетает или пробегает: летучая мышь с горящими глазами, гоблин
+с факелом, тролль, банши. Секунда испуга встряхивает внимание — мозг отдыхает и возвращается к задаче свежим.
+Мешает — выключается внизу карты пещер. Тем, кто попросил устройство уменьшить движение, они не показываются.
 
 <a id="install-ru"></a>
 
@@ -82,7 +88,7 @@ npm run dev      # http://localhost:5173
 | Команда                | Что делает                                                    |
 | ---------------------- | ------------------------------------------------------------- |
 | `npm run dev`          | сервер разработки, изменения видны сразу                      |
-| `npm test`             | тесты: целостность контента и логика (347 проверок)           |
+| `npm test`             | тесты: целостность контента и логика (364 проверок)           |
 | `npm run lint`         | ESLint: ошибки и правила хуков                                |
 | `npm run format`       | Prettier: единый стиль кода                                   |
 | `npm run build`        | сборка сайта в `dist/` (+ `sw.js` для офлайна и `Props.html`) |
@@ -126,6 +132,10 @@ from project setup to patterns — defeat a monster guardian in each, and your t
 **How learning works.** Every cave is a path: warm-up → lesson → spell → practice (8 tasks) → "Explain it to the
 bat" → break → summary. The guardian is defeated when **5 of 8** practice tasks are correct. Mistakes go to the
 "crypt of repetition" and come back on a Leitner schedule.
+
+**Surprises.** Now and then something flies or runs across the screen: a bat with burning eyes, a goblin with
+a torch, a troll, a banshee. A second of fright resets your attention, and you return to the task refreshed.
+You can switch them off at the bottom of the cave map. They never appear if your device asks for reduced motion.
 
 <a id="install-en"></a>
 
@@ -178,7 +188,7 @@ npm run dev      # http://localhost:5173
 | Command                | What it does                                                   |
 | ---------------------- | -------------------------------------------------------------- |
 | `npm run dev`          | dev server with instant updates                                |
-| `npm test`             | tests: content integrity and logic (347 checks)                |
+| `npm test`             | tests: content integrity and logic (364 checks)                |
 | `npm run lint`         | ESLint: errors and the rules of hooks                          |
 | `npm run format`       | Prettier: one code style                                       |
 | `npm run build`        | site build in `dist/` (+ `sw.js` for offline and `Props.html`) |
@@ -214,6 +224,10 @@ Offline mode is a custom service worker (`build/serviceWorkerPlugin.js`); the si
 
 **איך לומדים.** כל מערה היא מסלול: חימום ← שיעור ← לחש ← תרגול (8 משימות) ← «הסבר לעטלף» ← הפסקה ← סיכום.
 השומר מובס כאשר **5 מתוך 8** משימות התרגול נכונות. הטעויות עוברות ל«קריפטת החזרה» וחוזרות לפי שיטת לייטנר.
+
+**הפתעות.** מדי פעם משהו עף או רץ על פני המסך: עטלף עם עיניים בוערות, גובלין עם לפיד, טרול, בנשי. שנייה של
+בהלה מרעננת את הקשב, וחוזרים למשימה רעננים. אפשר לכבות אותן בתחתית מפת המערות. אם במכשיר מופעלת «הפחתת
+תנועה», הן לא מופיעות כלל.
 
 <a id="install-he"></a>
 
@@ -265,7 +279,7 @@ npm run dev      # http://localhost:5173
 
 </div>
 
-**פקודות:** `npm run dev` — שרת פיתוח · `npm test` — בדיקות (347) · `npm run lint` — ESLint ·
+**פקודות:** `npm run dev` — שרת פיתוח · `npm test` — בדיקות (364) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — בניית האתר ל‑`dist/` (כולל `sw.js` ו‑`Props.html`) ·
 `npm run build:single` — קובץ אחד בלבד · `npm run preview` — תצוגת הבנייה · `npm run check` — הכול יחד לפני commit.
 
@@ -297,6 +311,11 @@ tipos · 117 términos en el glosario · pergaminos de teoría: 18 resúmenes y 
 **Cómo se aprende.** Cada cueva es un camino: calentamiento → lección → conjuro → práctica (8 tareas) →
 «Explícaselo al murciélago» → recreo → resumen. El guardián cae cuando aciertas **5 de 8** tareas de la práctica.
 Los errores van a la «cripta de repaso» y vuelven según el sistema de Leitner.
+
+**Sobresaltos.** De vez en cuando algo cruza la pantalla volando o corriendo: un murciélago de ojos ardientes,
+un goblin con antorcha, un trol, una banshee. Un segundo de susto despeja la atención y vuelves a la tarea con
+la mente fresca. Se desactivan al final del mapa de cuevas. Si tu dispositivo pide reducir el movimiento, no
+aparecen.
 
 <a id="install-es"></a>
 
@@ -349,7 +368,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-**Comandos:** `npm run dev` — servidor de desarrollo · `npm test` — pruebas (347) · `npm run lint` — ESLint ·
+**Comandos:** `npm run dev` — servidor de desarrollo · `npm test` — pruebas (364) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — compila el sitio en `dist/` (con `sw.js` y `Props.html`) ·
 `npm run build:single` — solo el archivo único · `npm run preview` — vista previa de la compilación ·
 `npm run check` — todo junto antes de cada commit.
@@ -434,7 +453,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-**Commandes :** `npm run dev` — serveur de développement · `npm test` — tests (347) · `npm run lint` — ESLint ·
+**Commandes :** `npm run dev` — serveur de développement · `npm test` — tests (364) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — construit le site dans `dist/` (avec `sw.js` et `Props.html`) ·
 `npm run build:single` — le fichier unique seulement · `npm run preview` — aperçu du build ·
 `npm run check` — tout à la fois avant chaque commit.

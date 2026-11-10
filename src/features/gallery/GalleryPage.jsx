@@ -8,7 +8,10 @@ import Vampire from '../../mascot/Vampire.jsx';
 import Bat from '../../mascot/Bat.jsx';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import CaveArt from '../home/CaveArt.jsx';
+import { GoblinRunner, HangingSpider, Rat, TrollRunner } from '../../components/Scares/creatures.jsx';
+import { SCARE_EVENT, SCARE_KINDS } from '../../utils/scares.js';
 import styles from './Gallery.module.css';
+import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 
 const MOODS = [
   { id: 'idle', label: 'idle — парит' },
@@ -27,7 +30,7 @@ export default function GalleryPage() {
     <div className="stack">
       <header>
         <span className="eyebrow">Только для разработки</span>
-        <h1>🎨 Мастерская художника</h1>
+        <BloodTitle>🎨 Мастерская художника</BloodTitle>
         <p className="muted">Вся графика игры. Тему (ночь / день) переключает кнопка в шапке.</p>
       </header>
 
@@ -64,6 +67,47 @@ export default function GalleryPage() {
           <figure className={styles.cell}>
             <Bat size={140} flapping={false} />
             <figcaption>крылья раскрыты</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="card stack">
+        <h2>Неожиданности</h2>
+        <p className="muted small">
+          Кнопка запускает неожиданность сразу — не дожидаясь расписания. Работает и тогда, когда в настройках они выключены.
+        </p>
+        <div className="row">
+          {SCARE_KINDS.map((item) => (
+            <button
+              key={item.kind}
+              type="button"
+              className="btn btn-small"
+              onClick={() => window.dispatchEvent(new CustomEvent(SCARE_EVENT, { detail: { kind: item.kind } }))}
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
+        <div className={styles.row}>
+          <figure className={styles.cell}>
+            <Bat size={170} fierce />
+            <figcaption>злая мышь (fierce)</figcaption>
+          </figure>
+          <figure className={styles.cell}>
+            <GoblinRunner size={170} />
+            <figcaption>гоблин с факелом</figcaption>
+          </figure>
+          <figure className={styles.cell}>
+            <TrollRunner size={220} />
+            <figcaption>тролль с дубиной</figcaption>
+          </figure>
+          <figure className={styles.cell}>
+            <Rat size={130} />
+            <figcaption>крыса</figcaption>
+          </figure>
+          <figure className={styles.cell}>
+            <HangingSpider size={150} />
+            <figcaption>паук на нити</figcaption>
           </figure>
         </div>
       </section>

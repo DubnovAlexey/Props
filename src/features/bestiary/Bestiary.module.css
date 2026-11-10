@@ -41,10 +41,7 @@
 }
 
 .link > svg {
-  margin-bottom: 8px;
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--cave) 50%, transparent),
-    0 0 22px color-mix(in srgb, var(--cave) 30%, transparent);
+  margin-bottom: 8px; /* рамку рисует сам портрет: кроваво-красная, светится */
 }
 
 .meta {
@@ -54,7 +51,7 @@
 }
 
 .name {
-  font-family: var(--font-title);
+  font-family: var(--font-title), serif;
   font-size: 1.1rem;
 }
 

@@ -32,6 +32,22 @@ function audio() {
   }
 }
 
+/**
+ * Контекст звука — только если он уже работает. Неожиданности появляются сами, без нажатия,
+ * а без нажатия браузер звук не разрешает: поэтому здесь ничего не создаём и не «будим».
+ */
+function running() {
+  return enabled && ctx && ctx.state === 'running' ? ctx : null;
+}
+
+// Первый же щелчок или нажатие клавиши «открывает» звук: браузер не даёт странице звучать,
+// пока человек сам что-нибудь не нажал. Без этого неожиданности молчали бы до первого ответа.
+if (typeof window !== 'undefined') {
+  const unlock = () => audio();
+  window.addEventListener('click', unlock, { once: true, capture: true });
+  window.addEventListener('keydown', unlock, { once: true, capture: true });
+}
+
 /** Одна нота: частота, начало (с), длительность (с), тембр, громкость */
 function tone(ac, { freq, start = 0, dur = 0.4, type = 'sine', gain = 0.5, glide }) {
   const t = ac.currentTime + start;
@@ -109,5 +125,69 @@ export const sfx = {
     const ac = audio();
     if (!ac) return;
     noise(ac, { dur: 0.22, gain: 0.16, from: 900, to: 3200 });
+  },
+  /**
+   * Неожиданность (components/Scares): хлопки крыльев, писк, топот, визг банши.
+   * Звуки тихие — они дополняют испуг, а не оглушают. kind — вид неожиданности.
+   */
+  scare(kind) {
+    const ac = running();
+    if (!ac) return;
+    // хлопки кожистых крыльев: короткие глухие «вух-вух»
+    const flaps = (count, gap, start = 0, gain = 0.1) => {
+      for (let i = 0; i < count; i += 1) noise(ac, { start: start + i * gap, dur: 0.09, gain, from: 520, to: 180 });
+    };
+    const squeak = (start, freq = 5200) => tone(ac, { freq, start, dur: 0.07, type: 'triangle', gain: 0.05, glide: freq * 1.4 });
+
+    switch (kind) {
+      case 'bat':
+        flaps(9, 0.17, 0.3);
+        squeak(0.9);
+        squeak(1.6, 6100);
+        break;
+      case 'perch':
+        flaps(5, 0.17, 0.2);
+        squeak(1.4);
+        flaps(5, 0.17, 3.9);
+        flaps(4, 0.17, 7.9);
+        break;
+      case 'swarm':
+        flaps(14, 0.09, 0.1, 0.08);
+        squeak(0.4);
+        squeak(0.7, 6400);
+        squeak(1.1, 5600);
+        break;
+      case 'eyes': // низкий гул: две близкие ноты «бьются» друг о друга
+        tone(ac, { freq: 82, dur: 2.6, gain: 0.07 });
+        tone(ac, { freq: 87.5, dur: 2.6, gain: 0.06 });
+        break;
+      case 'goblin': // частый топоток и хихиканье
+        for (let i = 0; i < 12; i += 1)
+          noise(ac, { start: 0.1 + i * 0.16, dur: 0.035, gain: 0.07, from: 2600, to: 1400, type: 'highpass' });
+        [760, 690, 620, 560].forEach((freq, i) => tone(ac, { freq, start: 0.5 + i * 0.09, dur: 0.07, type: 'sawtooth', gain: 0.035 }));
+        break;
+      case 'troll': // тяжёлые шаги
+        for (let i = 0; i < 8; i += 1) {
+          tone(ac, { freq: 72, start: 0.2 + i * 0.42, dur: 0.24, gain: 0.3, glide: 38 });
+          noise(ac, { start: 0.2 + i * 0.42, dur: 0.12, gain: 0.1, from: 300, to: 90, type: 'lowpass' });
+        }
+        break;
+      case 'rats':
+        [0.15, 0.4, 0.62, 0.95].forEach((start, i) => squeak(start, 3300 + i * 260));
+        break;
+      case 'spider': // нить со свистом разматывается
+        tone(ac, { freq: 1700, dur: 0.6, gain: 0.03, glide: 520 });
+        break;
+      case 'banshee': // вой нарастает и срывается в визг
+        tone(ac, { freq: 480, start: 0.5, dur: 1.5, type: 'sawtooth', gain: 0.07, glide: 1500 });
+        tone(ac, { freq: 492, start: 0.5, dur: 1.5, type: 'sawtooth', gain: 0.06, glide: 1560 });
+        noise(ac, { start: 1.2, dur: 0.9, gain: 0.09, from: 2400, to: 5200, type: 'highpass' });
+        break;
+      case 'apparition': // утробный рык
+        tone(ac, { freq: 58, dur: 2.2, type: 'sawtooth', gain: 0.07, glide: 46 });
+        tone(ac, { freq: 61, dur: 2.2, type: 'sawtooth', gain: 0.05, glide: 47 });
+        break;
+      default:
+    }
   },
 };
