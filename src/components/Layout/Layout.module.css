@@ -4,7 +4,9 @@
   z-index: 30;
   height: var(--header-total);
   padding-top: var(--safe-top); /* место под строку состояния iPhone */
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  /* почти непрозрачная: там, где браузер не умеет размывать фон (backdrop-filter),
+     текст страницы не должен читаться сквозь шапку */
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
@@ -206,9 +208,7 @@
   justify-content: space-around;
   height: calc(var(--tabbar-h) + var(--safe-bottom));
   padding: 0 var(--safe-right) var(--safe-bottom) var(--safe-left);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--surface); /* непрозрачная: подписи кнопок не смешиваются с текстом под панелью */
   border-top: 1px solid var(--border);
 }
 
