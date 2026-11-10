@@ -1,0 +1,178 @@
+/* Анимации Графа. transform-origin в px — это координаты внутри viewBox SVG. */
+
+.vampire {
+  display: block;
+  overflow: visible;
+}
+
+.shadow {
+  fill: rgba(0, 0, 0, 0.35);
+  animation: shadow 3.2s ease-in-out infinite;
+  transform-origin: 80px 183px;
+}
+
+.body {
+  animation: float 3.2s ease-in-out infinite;
+}
+
+.cape {
+  transform-origin: 80px 78px;
+  animation: sway 4.5s ease-in-out infinite;
+}
+
+.eyes {
+  transform-origin: 80px 56px;
+  animation: blink 5s infinite;
+}
+
+.irises {
+  transition: transform 0.3s ease;
+}
+
+.happyEyes,
+.mouthOpen {
+  opacity: 0;
+}
+
+.browLeft,
+.browRight {
+  transition: transform 0.3s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.arm {
+  transform-origin: 60px 88px;
+  transform: rotate(-62deg);
+  transition: transform 0.45s cubic-bezier(0.5, -0.3, 0.3, 1.4);
+}
+
+/* --- Настроения --- */
+
+.talk .mouthOpen {
+  animation: talk 0.5s steps(1) infinite;
+}
+
+.talk .mouthSmile {
+  animation: talk-inverse 0.5s steps(1) infinite;
+}
+
+.happy .eyes {
+  opacity: 0;
+  animation: none;
+}
+
+.happy .happyEyes {
+  opacity: 1;
+}
+
+.happy .body {
+  animation:
+    hop 0.6s ease 2,
+    float 3.2s ease-in-out 1.2s infinite;
+}
+
+.sad .browLeft {
+  transform: rotate(-24deg);
+}
+
+.sad .browRight {
+  transform: rotate(24deg);
+}
+
+.sad .irises {
+  transform: translateY(1.5px);
+}
+
+.point .arm {
+  transform: rotate(0deg);
+  animation: point 1.2s ease-in-out infinite;
+}
+
+.point .irises {
+  transform: translateX(-1.8px);
+}
+
+.wave .arm {
+  animation: wave 0.9s ease-in-out 3;
+  transform: rotate(-62deg);
+}
+
+@keyframes shadow {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleX(0.85);
+    opacity: 0.7;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: skewX(0deg);
+  }
+  50% {
+    transform: skewX(2deg);
+  }
+}
+
+@keyframes talk {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes talk-inverse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes point {
+  0%,
+  100% {
+    transform: rotate(0deg) translateX(0);
+  }
+  50% {
+    transform: rotate(-4deg) translateX(-3px);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(30deg);
+  }
+  50% {
+    transform: rotate(55deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body,
+  .cape,
+  .eyes,
+  .shadow {
+    animation: none;
+  }
+}

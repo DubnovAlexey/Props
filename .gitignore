@@ -1,0 +1,18 @@
+# Зависимости — ставятся командой npm install, в git их не кладут
+node_modules/
+
+# Результат сборки — создаётся командой npm run build
+dist/
+
+# Логи и служебные файлы
+*.log
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Локальные настройки Claude Code (общие правила — в CLAUDE.md)
+.claude/settings.local.json
+coverage/
+dist-artifact/

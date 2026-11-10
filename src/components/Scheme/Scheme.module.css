@@ -1,0 +1,223 @@
+.figure {
+  margin: 16px 0;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.caption {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* --- Шаги --- */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+.stepNum {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stepTitle {
+  font-weight: 700;
+}
+
+.stepSub {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+.stepCode {
+  align-self: flex-start;
+  margin-top: 4px;
+  max-width: 100%;
+  white-space: pre-wrap;
+}
+
+.arrow {
+  position: absolute;
+  left: 22px;
+  bottom: -28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-faint);
+  font-weight: 800;
+  line-height: 26px;
+}
+
+.arrow em {
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+/* --- Дерево --- */
+.treeRoot,
+.treeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.treeList {
+  margin-left: 14px;
+  padding-left: 14px;
+  border-left: 2px solid var(--border);
+}
+
+.treeItem {
+  position: relative;
+  padding-top: 8px;
+}
+
+.treeList > .treeItem::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 30px;
+  width: 12px;
+  border-top: 2px solid var(--border);
+}
+
+.edge {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-bottom: 4px;
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+  font-size: 0.78rem;
+}
+
+.down {
+  color: var(--text-dim);
+}
+
+.up {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.node {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.nodeName {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.nodeNote {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+/* --- Сравнение --- */
+.compare {
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 560px) {
+  .compare {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.side {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.side ul {
+  margin: 6px 0 0;
+  padding-left: 1.1em;
+}
+
+.side li {
+  font-size: 0.92rem;
+}
+
+.sideTitle {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+}
+
+/* --- Тона --- */
+.main {
+  border-color: var(--magic);
+  background: var(--magic-soft);
+}
+
+.good {
+  border-color: var(--good);
+  background: var(--good-soft);
+}
+
+.bad {
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}
+
+.gold {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+}

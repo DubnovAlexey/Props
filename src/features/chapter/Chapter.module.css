@@ -1,0 +1,278 @@
+.page {
+  display: grid;
+  /* minmax(0, 1fr): колонка не растягивается шире экрана из-за длинного кода */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  --cave: var(--magic);
+}
+
+.topLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.back {
+  justify-self: start;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back:hover {
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.hostMini {
+  flex: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--cave) 60%, transparent),
+    0 0 18px color-mix(in srgb, var(--cave) 35%, transparent);
+}
+
+.roomIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  font-size: 2rem;
+  background: color-mix(in srgb, var(--cave) 22%, transparent);
+  border: 2px solid var(--cave);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--cave) 35%, transparent);
+}
+
+.title {
+  margin-bottom: 4px;
+}
+
+.header p {
+  margin: 0;
+}
+
+/* Шаги: прокручиваются вбок на узком экране */
+.steps {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 700px) {
+  .steps {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+.step {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.stepCurrent {
+  color: var(--text);
+  border-color: var(--cave);
+  background: color-mix(in srgb, var(--cave) 18%, var(--surface));
+}
+
+.stepDone::after {
+  content: '✓';
+  color: var(--good);
+  font-weight: 800;
+}
+
+.lessonCard {
+  animation: fade-in-up 0.35s ease both;
+}
+
+.analogy {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--magic-soft);
+  border: 1px solid color-mix(in srgb, var(--magic) 40%, transparent);
+}
+
+.cardNav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  order: 3;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .dots {
+    order: 0;
+    width: auto;
+  }
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border-radius: 50%;
+  border: 0;
+  background: var(--surface-3);
+  cursor: pointer;
+}
+
+.dotActive {
+  background: var(--gold);
+  transform: scale(1.25);
+}
+
+.warmupResult {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.batHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.batHead h2 {
+  margin: 0;
+}
+
+.explainInput {
+  margin: 12px 0;
+}
+
+.starter {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.3;
+  padding: 6px 12px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.explainResult {
+  margin-top: 4px;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.found {
+  color: var(--good);
+  font-weight: 600;
+}
+
+.missed {
+  color: var(--text-dim);
+}
+
+.model {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--gold);
+  background: var(--gold-soft);
+  border-radius: 0 12px 12px 0;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.depth {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+/* Термины карточки с настоящими написаниями */
+.termStrip {
+  margin: 4px 0 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+  background: var(--surface-2);
+  font-size: 0.86rem;
+}
+
+.termStripTitle {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.termStrip ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.termStrip li {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+}
+
+.termStrip code {
+  overflow-wrap: anywhere;
+}
+
+.termRu {
+  color: var(--text-dim);
+}

@@ -1,0 +1,236 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: var(--header-h);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.inner {
+  position: relative;
+  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+  /* Логотип — «амортизатор» шапки: если опыт и серия дней стали длинными
+     и места не хватает, сжимается название, а не растягивается страница */
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.moon {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff6d6, var(--gold) 70%);
+  box-shadow: 0 0 18px rgba(246, 196, 83, 0.55);
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  min-width: 0;
+}
+
+.logoText b,
+.logoText small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logoText b {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  padding-bottom: 2px; /* чтобы overflow не срезал хвостик буквы «p» */
+}
+
+.logoText small {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.nav {
+  display: none;
+  gap: 2px;
+  margin: 0 auto;
+}
+
+.nav a {
+  padding: 8px 10px;
+  border-radius: 999px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+/* Значки пунктов меню — только на широком экране (см. ниже): на планшете
+   и небольшом ноутбуке шесть пунктов со значками не помещаются в шапку */
+.navIcon {
+  display: none;
+}
+
+.nav a:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.nav .current {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex: none;
+}
+
+.theme {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* 1000–1279px: компактная шапка — меню без значков, логотип без подписи.
+   Так шапка помещается на планшете и не растягивает страницу вбок. */
+@media (min-width: 1000px) {
+  .nav {
+    display: flex;
+  }
+
+  .stats {
+    margin-left: 0;
+  }
+
+  .logoText small {
+    display: none;
+  }
+}
+
+/* От 1280px места хватает на всё: значки в меню и подпись под логотипом */
+@media (min-width: 1280px) {
+  .nav {
+    gap: 4px;
+  }
+
+  .nav a {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+
+  .navIcon {
+    display: inline;
+  }
+
+  .logoText small {
+    display: block;
+  }
+}
+
+/* Телефон: подпись под логотипом не помещается рядом с опытом и серией дней,
+   а сами значки делаем чуть плотнее — шапка должна влезать в 360px */
+@media (max-width: 479px) {
+  .inner {
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
+  .logoText small {
+    display: none;
+  }
+
+  .stats {
+    gap: 6px;
+  }
+
+  .stat {
+    padding: 4px 9px;
+    gap: 4px;
+  }
+
+  .theme {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* --- Нижняя панель (телефон) --- */
+
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  display: flex;
+  justify-content: space-around;
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+}
+
+.tabbar a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tabIcon {
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.tabCurrent {
+  color: var(--text) !important;
+}
+
+.tabCurrent .tabIcon {
+  transform: translateY(-2px) scale(1.12);
+}
+
+@media (min-width: 1000px) {
+  .tabbar {
+    display: none;
+  }
+}

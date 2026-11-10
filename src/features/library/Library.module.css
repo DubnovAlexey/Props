@@ -1,0 +1,186 @@
+.caves {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 10px;
+}
+
+.caveLink {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--cave) 35%, var(--border));
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.caveLink:hover {
+  border-color: var(--cave);
+}
+
+.caveLink > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.caveMeta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cave);
+}
+
+.sections {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.sections a {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.sections a:hover {
+  border-color: var(--gold);
+}
+
+.num {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+}
+
+.time {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.scroll {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  --cave: var(--gold);
+}
+
+.back {
+  justify-self: start;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.scrollHead {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.scrollHead p {
+  margin: 0;
+}
+
+.article {
+  min-width: 0;
+}
+
+.articleTitle {
+  margin-top: 2px;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Текст руководства --- */
+.markdown {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.markdown h3 {
+  margin: 14px 0 0;
+  font-size: 1.3rem;
+}
+
+.markdown h4 {
+  margin: 8px 0 0;
+  font-size: 1.05rem;
+  font-family: var(--font-body);
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol {
+  margin: 0;
+}
+
+.markdown li + li {
+  margin-top: 4px;
+}
+
+.markdown blockquote {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--gold);
+  background: var(--gold-soft);
+  border-radius: 0 12px 12px 0;
+}
+
+.markdown hr {
+  border: 0;
+  border-top: 1px dashed var(--border);
+  width: 100%;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.tableWrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tableWrap th,
+.tableWrap td {
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+  min-width: 120px;
+}
+
+.tableWrap th {
+  background: var(--surface-2);
+  font-weight: 700;
+}
+
+.tableWrap tr:last-child td {
+  border-bottom: 0;
+}

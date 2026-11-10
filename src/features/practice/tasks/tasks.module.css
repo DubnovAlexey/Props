@@ -1,0 +1,324 @@
+/* Общие стили всех типов заданий */
+
+.question {
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.hint {
+  margin: 4px 0 12px;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* --- Варианты ответа --- */
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--magic);
+}
+
+.option:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.marker {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.multi .marker {
+  border-radius: 7px;
+}
+
+.selected {
+  border-color: var(--magic);
+  background: var(--magic-soft);
+}
+
+.selected .marker {
+  background: var(--magic);
+  border-color: var(--magic);
+  color: var(--accent-ink);
+}
+
+.correct {
+  border-color: var(--good);
+  background: var(--good-soft);
+}
+
+.correct .marker {
+  background: var(--good);
+  border-color: var(--good);
+  color: #062b14;
+}
+
+.wrong {
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}
+
+.wrong .marker {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: #2b0610;
+}
+
+/* --- Правда или миф --- */
+.statement {
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px dashed var(--border);
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.duo .option {
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* --- Кусочки кода (сборка) --- */
+.bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.piece {
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--magic);
+  background: var(--magic-soft);
+  color: var(--text);
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.piece:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.slot {
+  display: inline-block;
+  min-width: 3.2em;
+  min-height: 1.5em;
+  padding: 0 6px;
+  margin: 0 2px;
+  border: 0;
+  border-bottom: 2px dashed #a78bfa;
+  border-radius: 6px 6px 0 0;
+  background: rgba(167, 139, 250, 0.16);
+  color: #f3edf9;
+  font: inherit;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+
+.slotActive {
+  outline: 2px solid #f6c453;
+}
+
+.slotGood {
+  background: rgba(74, 222, 128, 0.22);
+  border-bottom-color: #4ade80;
+}
+
+.slotBad {
+  background: rgba(251, 113, 133, 0.24);
+  border-bottom-color: #fb7185;
+}
+
+/* --- Порядок --- */
+.sequence {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: grid;
+  gap: 8px;
+  counter-reset: step;
+}
+
+.sequence .option {
+  counter-increment: step;
+}
+
+.sequence .option::before {
+  content: counter(step);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--magic);
+  color: var(--accent-ink);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.poolTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin: 6px 0;
+}
+
+/* --- Пары --- */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.column {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.columns .option {
+  min-height: 48px;
+  padding: 10px;
+  font-size: 0.93rem;
+}
+
+.badge {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #170d24;
+}
+
+.c0 {
+  background: #a78bfa;
+}
+.c1 {
+  background: #f6c453;
+}
+.c2 {
+  background: #7dd3fc;
+}
+.c3 {
+  background: #f9a8d4;
+}
+.c4 {
+  background: #86efac;
+}
+
+.active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-soft);
+}
+
+/* --- Корзины --- */
+.sortList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.sortItem {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+}
+
+.sortText {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.bins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bin {
+  flex: 1 1 120px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.binChosen {
+  border-color: var(--magic);
+  background: var(--magic-soft);
+}
+
+.sortItem.correct,
+.sortItem.wrong {
+  border-width: 2px;
+}

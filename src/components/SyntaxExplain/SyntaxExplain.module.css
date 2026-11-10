@@ -1,0 +1,75 @@
+.box {
+  margin: 14px 0;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  overflow-x: auto;
+  background: var(--surface-3);
+  scrollbar-width: none;
+}
+
+.tab {
+  flex: none;
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.active {
+  color: var(--text);
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.tab_alt.active {
+  border-color: var(--good);
+}
+
+.tab_wrong.active {
+  border-color: var(--bad);
+}
+
+.panel {
+  padding: 12px 14px 4px;
+}
+
+.variant {
+  margin-bottom: 14px;
+}
+
+.okLabel,
+.badLabel {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.okLabel {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.badLabel {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.bad :global(figure) {
+  border-color: rgba(251, 113, 133, 0.55);
+}

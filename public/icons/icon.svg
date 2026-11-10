@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="78%" r="80%">
+      <stop offset="0" stop-color="#5a1424"/>
+      <stop offset="0.45" stop-color="#1a0f22"/>
+      <stop offset="1" stop-color="#07050b"/>
+    </radialGradient>
+    <radialGradient id="moon" cx="40%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#fff6d6"/>
+      <stop offset="0.7" stop-color="#ead9a0"/>
+      <stop offset="1" stop-color="#b7a26a"/>
+    </radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <circle cx="256" cy="214" r="132" fill="url(#moon)"/>
+  <circle cx="222" cy="186" r="16" fill="#cdb98a" opacity="0.55"/>
+  <circle cx="300" cy="250" r="11" fill="#cdb98a" opacity="0.5"/>
+  <!-- сталактиты -->
+  <path d="M0 0 H512 V36 L486 60 L468 34 L446 96 L424 40 L396 52 L378 28 L356 74 L330 36 L300 44 L282 24 L262 58 L240 30 L214 40 L196 22 L176 84 L154 36 L126 46 L108 26 L88 70 L64 34 L40 44 L22 28 L0 50 Z" fill="#07050b"/>
+  <!-- летучая мышь-вампир -->
+  <g transform="translate(256 262)">
+    <path d="M-8 -6 C-44 -64 -112 -78 -190 -44 L-162 -22 L-176 12 L-132 4 L-136 46 L-94 22 L-80 62 L-52 30 L-26 52 Z" fill="#0b0710"/>
+    <path d="M8 -6 C44 -64 112 -78 190 -44 L162 -22 L176 12 L132 4 L136 46 L94 22 L80 62 L52 30 L26 52 Z" fill="#0b0710"/>
+    <ellipse cx="0" cy="24" rx="34" ry="52" fill="#0b0710"/>
+    <circle cx="0" cy="-34" r="34" fill="#0b0710"/>
+    <path d="M-24 -54 L-34 -100 L-6 -66 Z M24 -54 L34 -100 L6 -66 Z" fill="#0b0710"/>
+    <g filter="url(#glow)" fill="#ff2a3d">
+      <ellipse cx="-13" cy="-38" rx="8" ry="5"/>
+      <ellipse cx="13" cy="-38" rx="8" ry="5"/>
+    </g>
+    <path d="M-9 -16 L-5 4 L-1 -16 Z M1 -16 L5 4 L9 -16 Z" fill="#f4efe6"/>
+  </g>
+  <!-- надпись-скобки пропсов -->
+  <text x="256" y="452" text-anchor="middle" font-family="monospace" font-size="72" font-weight="700" fill="#f1b55c">{props}</text>
+</svg>

@@ -1,0 +1,58 @@
+.term {
+  display: inline;
+  padding: 0 1px;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--magic);
+  font-weight: 600;
+  text-decoration: underline dotted;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: help;
+  border-radius: 4px;
+}
+
+.term:hover,
+.active {
+  background: var(--magic-soft);
+  text-decoration-style: solid;
+}
+
+.tip {
+  position: fixed;
+  z-index: 100;
+  width: min(340px, calc(100vw - 16px));
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--magic);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  animation: pop-in 0.2s ease both;
+}
+
+.tip p {
+  margin: 0 0 8px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+}
+
+.tech {
+  color: var(--text-dim);
+}
+
+.more {
+  font-weight: 600;
+  font-size: 0.88rem;
+}

@@ -1,0 +1,119 @@
+/* =========================================================
+   Переменные оформления (дизайн-токены).
+   Все цвета берутся отсюда — так тема «День/Ночь» меняется
+   одной строкой: атрибутом data-theme на <html>.
+   ========================================================= */
+
+:root {
+  /* --- Ночь (по умолчанию): глубина пещер при свете факелов --- */
+  --bg: #0a080d;
+  --bg-grad-1: #22163a;
+  --bg-grad-2: #0e0a15;
+  --surface: #15111b;
+  --surface-2: #1b1622;
+  --surface-3: #241e2d;
+  --border: #342b40;
+  --text: #eee8f3;
+  --text-dim: #bdb3cb;
+  --text-faint: #8e849c;
+
+  --accent: #e14b66; /* кровь — главные кнопки (приглушённая, не режет глаз) */
+  --accent-ink: #1a0b10; /* текст на акцентной кнопке */
+  --accent-soft: rgba(225, 75, 102, 0.14);
+  --magic: #a993f5; /* фиолетовая магия — термины, ссылки */
+  --magic-soft: rgba(169, 147, 245, 0.16);
+  --gold: #f1b55c; /* факел — ключевые моменты, награды */
+  --gold-soft: rgba(241, 181, 92, 0.13);
+  --good: #4ade80;
+  --good-soft: rgba(74, 222, 128, 0.13);
+  --bad: #fb7185;
+  --bad-soft: rgba(251, 113, 133, 0.13);
+
+  /* Код всегда на тёмном фоне — так привычнее глазу */
+  --code-bg: #0b0812;
+  --code-border: #2c2343;
+  --code-text: #ebe5f7;
+  --tok-comment: #8a80a3;
+  --tok-string: #fbbf77;
+  --tok-keyword: #f472b6;
+  --tok-tag: #7dd3fc;
+  --tok-attr: #c4b5fd;
+  --tok-number: #fca5a5;
+  --tok-punct: #a99fc4;
+
+  /* Летучие мыши и вампир */
+  --bat: #2b1d40;
+  --bat-wing: #3b2a57;
+  --bat-eye: #ff4d6d;
+
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.3);
+  --radius: 18px;
+  --radius-sm: 12px;
+
+  /* Шрифты лежат в проекте (@fontsource-variable) — работают и без интернета */
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-title: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, 'Palatino Linotype', serif;
+  --font-code: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+
+  /* Антураж пещеры (components/Ambience) */
+  --amb-far: rgba(110, 96, 170, 0.22); /* холодный свет из далёкого выхода */
+  --amb-floor: rgba(70, 30, 20, 0.35); /* тёплый отсвет у пола */
+  --amb-torch: rgba(255, 140, 50, 0.16);
+  --amb-rock: #050407;
+  --amb-drop: rgba(160, 210, 255, 0.7);
+  --amb-eye: #ff2d3a;
+  --amb-ember: #ffb35a;
+  --amb-mist: rgba(150, 140, 180, 0.13);
+  --amb-vignette: rgba(0, 0, 0, 0.65);
+
+  --content-w: 760px;
+  --header-h: 60px;
+  --tabbar-h: 64px;
+
+  color-scheme: dark;
+}
+
+/* --- День: утро у выхода из пещеры (Граф недоволен, но терпит) --- */
+[data-theme='day'] {
+  --bg: #f5efe4;
+  --bg-grad-1: #fff9ef;
+  --bg-grad-2: #ece1cd;
+  --surface: #fffaf3;
+  --surface-2: #f7eee0;
+  --surface-3: #efe2cc;
+  --border: #dac9ad;
+  --text: #2a1f35;
+  --text-dim: #5d4f70;
+  --text-faint: #86799a;
+
+  --accent: #c8264a;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(200, 38, 74, 0.1);
+  --magic: #6b3fd6;
+  --magic-soft: rgba(107, 63, 214, 0.1);
+  --gold: #9a6400;
+  --gold-soft: rgba(214, 150, 20, 0.15);
+  --good: #15803d;
+  --good-soft: rgba(21, 128, 61, 0.1);
+  --bad: #be123c;
+  --bad-soft: rgba(190, 18, 60, 0.08);
+
+  --bat: #3b2a52;
+  --bat-wing: #54407a;
+
+  --shadow: 0 12px 30px rgba(90, 60, 20, 0.14);
+  --shadow-soft: 0 6px 16px rgba(90, 60, 20, 0.1);
+
+  --amb-far: rgba(255, 236, 200, 0.6);
+  --amb-floor: rgba(180, 150, 110, 0.25);
+  --amb-torch: rgba(255, 170, 80, 0.12);
+  --amb-rock: #cdbfa8;
+  --amb-drop: rgba(90, 130, 170, 0.6);
+  --amb-eye: rgba(180, 30, 50, 0.55);
+  --amb-ember: rgba(200, 120, 40, 0.5);
+  --amb-mist: rgba(255, 255, 255, 0.35);
+  --amb-vignette: rgba(120, 90, 50, 0.16);
+
+  color-scheme: light;
+}

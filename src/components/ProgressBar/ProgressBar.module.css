@@ -1,0 +1,36 @@
+.wrap {
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.5s ease;
+}
+
+.accent {
+  background: linear-gradient(90deg, var(--magic), var(--accent));
+}
+
+.gold {
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+}
+
+.good {
+  background: var(--good);
+}

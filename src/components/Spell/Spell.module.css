@@ -1,0 +1,25 @@
+.scroll {
+  position: relative;
+  padding: 22px 20px;
+  border-radius: 18px;
+  border: 1px dashed var(--gold);
+  background: radial-gradient(400px 120px at 50% 0%, var(--gold-soft), transparent), var(--surface);
+  text-align: center;
+}
+
+.scroll :global(.row) {
+  justify-content: center;
+}
+
+.text {
+  font-family: var(--font-title);
+  font-size: clamp(1.25rem, 4.2vw, 1.6rem);
+  font-style: italic;
+  line-height: 1.4;
+  margin: 6px 0 12px;
+  color: var(--text);
+}
+
+.meaning {
+  color: var(--text-dim);
+}
