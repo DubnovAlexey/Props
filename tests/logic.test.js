@@ -11,7 +11,7 @@ import { daysBetween } from '../src/utils/dates.js';
 import { parseHash } from '../src/app/useHashRoute.js';
 import { hashText, letterJitter, pickDripLetters, seededRandom } from '../src/utils/bloodDrips.js';
 import { buildScare, nextDelay, pickScare, SCARE_DELAY, SCARE_KINDS } from '../src/utils/scares.js';
-import { FAVICON_FRAMES, FAVICON_SIZE, drawFaviconFrame } from '../src/app/liveFavicon.js';
+import { FAVICON_FRAMES, FAVICON_MAP, FAVICON_SIZE, drawFaviconFrame } from '../src/app/liveFavicon.js';
 
 describe('Лейтнер', () => {
   const now = 1_000_000;
@@ -240,27 +240,38 @@ describe('живой значок вкладки', () => {
     }
   });
 
-  it('раскадровка: числа в разумных пределах, большую часть времени значок спокоен', () => {
-    expect(FAVICON_FRAMES.length).toBeGreaterThanOrEqual(8);
+  it('раскадровка: числа в разумных пределах, большую часть времени значок неподвижен', () => {
     let total = 0;
     let calm = 0;
     for (const frame of FAVICON_FRAMES) {
       expect(frame.ms).toBeGreaterThanOrEqual(100);
-      expect(frame.rim).toBeGreaterThanOrEqual(0);
-      expect(frame.rim).toBeLessThanOrEqual(1);
-      expect(frame.zoom ?? 1).toBeGreaterThanOrEqual(1);
-      expect(frame.zoom ?? 1).toBeLessThanOrEqual(1.3);
-      if ('drop' in frame) {
-        expect(frame.drop).toBeGreaterThan(0);
-        expect(frame.drop).toBeLessThan(1);
+      for (const key of ['eyes', 'candle', 'bat']) {
+        if (key in frame) {
+          expect(frame[key]).toBeGreaterThan(0);
+          expect(frame[key]).toBeLessThanOrEqual(1);
+        }
       }
       total += frame.ms;
-      if (!frame.zoom && !('drop' in frame) && frame.rim <= 0.3) calm += frame.ms;
+      if (!('eyes' in frame) && !('candle' in frame) && !('bat' in frame)) calm += frame.ms;
     }
     expect(calm / total).toBeGreaterThan(0.6); // «немного оживить», а не мигать без остановки
+    expect(total).toBeGreaterThan(12000); // мышь пролетает изредка — раз в круг
+    expect(FAVICON_FRAMES.filter((frame) => 'bat' in frame).length).toBeGreaterThanOrEqual(6);
+    expect(FAVICON_FRAMES.some((frame) => frame.eyes === 1)).toBe(true);
   });
 
-  it('кадр рисуется на холсте: картинка, рамка, капля; при рывке картинка выходит за края', () => {
+  it('разметка картинки: все точки лежат внутри значка', () => {
+    const points = [...FAVICON_MAP.eyes, FAVICON_MAP.candle, ...FAVICON_MAP.body, [FAVICON_MAP.head.x, FAVICON_MAP.head.y]];
+    for (const [x, y] of points) {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(1);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(1);
+    }
+    expect(FAVICON_MAP.eyes).toHaveLength(2);
+  });
+
+  it('кадры рисуются на холсте: картинка — всегда, глаза и мышь — только в своих кадрах', () => {
     // «Холст-шпион»: вместо настоящего холста записываем, какие команды рисования вызваны
     const calls = [];
     const context = new Proxy(
@@ -270,19 +281,27 @@ describe('живой значок вкладки', () => {
         set: () => true,
       },
     );
-    drawFaviconFrame(context, {}, { rim: 1, zoom: 1.24, flash: 0.5, drop: 0.5 }, FAVICON_SIZE);
-    const names = calls.map((call) => call[0]);
-    expect(names).toEqual(expect.arrayContaining(['clearRect', 'drawImage', 'fillRect', 'strokeRect', 'bezierCurveTo', 'arc']));
-    const [, , x, y, width] = calls.find((call) => call[0] === 'drawImage');
-    expect(x).toBeLessThan(0);
-    expect(y).toBeLessThan(0);
-    expect(width).toBeGreaterThan(FAVICON_SIZE);
+    const draw = (frame) => {
+      calls.length = 0;
+      drawFaviconFrame(context, {}, frame, FAVICON_SIZE);
+      return calls.map((call) => call[0]);
+    };
 
-    // спокойный кадр: без капли и без вспышки
-    calls.length = 0;
-    drawFaviconFrame(context, {}, FAVICON_FRAMES[0]);
-    expect(calls.map((call) => call[0])).not.toContain('bezierCurveTo');
-    expect(calls.filter((call) => call[0] === 'fillRect')).toHaveLength(1); // только зарево по краям
+    // спокойный кадр — только сама картинка во весь холст
+    expect(draw({ ms: 1000 })).toEqual(['clearRect', 'drawImage']);
+    expect(calls[1].slice(2)).toEqual([0, 0, FAVICON_SIZE, FAVICON_SIZE]);
+
+    // глаза: по два светящихся пятна на каждый глаз
+    expect(draw({ eyes: 1, ms: 100 }).filter((name) => name === 'fillRect')).toHaveLength(4);
+
+    // свеча: одно пятно
+    expect(draw({ candle: 1, ms: 100 }).filter((name) => name === 'fillRect')).toHaveLength(1);
+
+    // мышь: рисуется под двумя «трафаретами» (голова и плечи), после чего холст возвращается в обычное состояние
+    const bat = draw({ bat: 0.2, wingsUp: true, ms: 100 });
+    expect(bat.filter((name) => name === 'clip')).toHaveLength(2);
+    expect(bat).toEqual(expect.arrayContaining(['save', 'ellipse', 'quadraticCurveTo', 'fill', 'restore']));
+    expect(bat.indexOf('fill')).toBeGreaterThan(bat.lastIndexOf('clip'));
   });
 });
 
