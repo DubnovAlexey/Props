@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_TASKS, CHAPTERS, CHAPTER_MAP } from '../../content/chapters/index.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
-import { XP } from '../../state/progressReducer.js';
+import { XP, isPassed, neededCorrect } from '../../state/progressReducer.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { phrase } from '../../mascot/phrases.js';
 import LessonCard from './LessonCard.jsx';
@@ -84,7 +84,14 @@ export default function ChapterPage({ chapterId }) {
   function finishPractice(result) {
     setSummary(result);
     dispatch({ type: 'practice', chapterId: chapter.id, score: result.score });
-    go('explain');
+    // Порог набран (или хозяин повержен раньше) — идём дальше по шагам.
+    // Не набран — на «Итог»: там хозяин ещё стоит и зовёт на новый бой.
+    if (isPassed(result.score) || done.done) {
+      go('explain');
+    } else {
+      say(phrase('chapterFail'), 'sad');
+      go('done');
+    }
   }
 
   function finishExplain(text) {
@@ -99,6 +106,7 @@ export default function ChapterPage({ chapterId }) {
 
   const card = chapter.lesson[cardIndex];
   const lastCard = cardIndex === chapter.lesson.length - 1;
+  const needed = neededCorrect(tasks.length); // сколько верных ответов нужно для победы
 
   return (
     <div className={styles.page} style={{ '--cave': chapter.color }}>
@@ -200,7 +208,17 @@ export default function ChapterPage({ chapterId }) {
         </div>
       )}
 
-      {step === 'practice' && <PracticeRunner tasks={tasks} onFinish={finishPractice} />}
+      {step === 'practice' && (
+        <div className="stack">
+          {!done.done && (
+            <p className="muted small">
+              ⚔️ Чтобы повергнуть хозяина, ответь верно хотя бы на {needed} из {tasks.length} заданий. Ошибаться можно: каждая ошибка
+              объясняется.
+            </p>
+          )}
+          <PracticeRunner tasks={tasks} onFinish={finishPractice} />
+        </div>
+      )}
 
       {step === 'explain' && (
         <ExplainToBat explain={chapter.explain} initialText={progress.journal[chapter.id] ?? ''} onDone={finishExplain} />
@@ -217,20 +235,41 @@ export default function ChapterPage({ chapterId }) {
 
       {/* Итог открыт всегда (шаги переключаются свободно), но победу показываем только после практики */}
       {step === 'done' && !done.done && (
-        <div className="card stack anim-in">
+        <div className={`card stack anim-in ${styles.standing}`}>
+          <div className={styles.standingHost}>
+            <Guardian id={chapter.id} size={96} label={`${chapter.story.guardian.kind} ${chapter.story.guardian.name}`} />
+            <blockquote className={styles.standingThreat}>«{chapter.story.guardian.threat}»</blockquote>
+          </div>
           <span className="eyebrow">Итог пещеры</span>
-          <h2>Хозяин ещё не повержен</h2>
-          <p>
-            {chapter.story.guardian.name} ждёт боя. Итог появится, когда пройдёшь практику — {tasks.length} заданий. Ошибаться можно:
-            каждая ошибка объясняется и попадает в склеп повторения.
-          </p>
+          {summary ? (
+            <>
+              <h2>Хозяин устоял</h2>
+              <p>
+                В этой попытке верно <b>{summary.correct}</b> из <b>{summary.total}</b>. Чтобы повергнуть хозяина, нужно хотя бы{' '}
+                <b>{needed}</b>. Ошибки уже объяснены и ждут в склепе повторения — загляни в урок и возвращайся в бой.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2>Хозяин ещё не повержен</h2>
+              <p>
+                {chapter.story.guardian.name} ждёт боя. Чтобы его повергнуть, ответь верно хотя бы на <b>{needed}</b> из{' '}
+                <b>{tasks.length}</b> заданий практики.
+              </p>
+            </>
+          )}
           <div className="row">
             <button type="button" className="btn btn-primary" onClick={() => go('practice')}>
-              К практике ⚔️
+              {summary ? 'Ещё раз в бой ⚔️' : 'К практике ⚔️'}
             </button>
-            <button type="button" className="btn btn-ghost" onClick={() => go('lesson')}>
-              Сначала урок 📖
+            <button type="button" className="btn" onClick={() => go('lesson')}>
+              {summary ? 'Перечитать урок 📖' : 'Сначала урок 📖'}
             </button>
+            {summary && (
+              <a className="btn btn-ghost" href={to.review()}>
+                ⚰️ Склеп повторения
+              </a>
+            )}
           </div>
         </div>
       )}

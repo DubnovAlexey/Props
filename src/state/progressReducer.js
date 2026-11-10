@@ -9,9 +9,22 @@ export const XP = {
   correctWithHint: 6, // верно, но с подсказкой
   attempt: 2, // ошибся, но попробовал — смелость тоже награждаем
   step: 5, // пройден этап главы (разминка, урок, заклинание…)
-  chapter: 30, // глава завершена
+  chapter: 30, // хозяин пещеры повержен (практика пройдена на 5 из 8 и лучше)
   explain: 15, // объяснил Лунатику своими словами
 };
+
+/** Порог победы над хозяином пещеры: 5 верных ответов из 8 (доля 0,625) */
+export const PASS_SCORE = 5 / 8;
+
+/** Хватает ли результата практики (доля верных ответов, 0..1), чтобы повергнуть хозяина */
+export function isPassed(score) {
+  return score >= PASS_SCORE;
+}
+
+/** Сколько верных ответов нужно для победы, если в практике total заданий */
+export function neededCorrect(total) {
+  return Math.ceil(PASS_SCORE * total);
+}
 
 export const initialProgress = {
   version: 1,
@@ -85,14 +98,17 @@ export function progressReducer(state, action) {
     }
 
     case 'practice': {
+      // Хозяин повержен, только если набран порог (5 из 8). Победу не отнимаем:
+      // слабая повторная попытка не возвращает хозяина к жизни.
       const { chapterId, score } = action;
       const previous = state.chapters[chapterId] ?? {};
-      const firstTime = !previous.done;
+      const passed = isPassed(score);
+      const firstVictory = passed && !previous.done;
       return {
         ...state,
-        xp: state.xp + (firstTime ? XP.chapter : 0),
+        xp: state.xp + (firstVictory ? XP.chapter : 0),
         chapters: withChapter(state, chapterId, {
-          done: true,
+          done: Boolean(previous.done) || passed,
           practiceBest: Math.max(previous.practiceBest ?? 0, score),
         }),
       };
