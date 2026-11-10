@@ -26,6 +26,11 @@ import ErrorBoundary from './app/ErrorBoundary.jsx';
 // Свитки (теория) грузятся только когда нужны: это отдельный кусок кода
 const LibraryPage = lazy(() => import('./features/library/LibraryPage.jsx'));
 
+// «Мастерская художника» (#gallery) — служебная страница со всей графикой игры.
+// import.meta.env.DEV при сборке превращается в false, и сборщик выбрасывает
+// эту ветку целиком: в игру для игроков страница не попадает.
+const GalleryPage = import.meta.env.DEV ? lazy(() => import('./features/gallery/GalleryPage.jsx')) : null;
+
 /** Какую страницу показать для адреса */
 function Page({ route }) {
   const [section, param] = route.parts;
@@ -53,6 +58,14 @@ function Page({ route }) {
         <Suspense fallback={<p className="muted">🕯️ Граф достаёт свитки…</p>}>
           <LibraryPage key={param ?? 'index'} topic={param} />
         </Suspense>
+      );
+    case 'gallery':
+      return GalleryPage ? (
+        <Suspense fallback={<p className="muted">🎨 Развешиваем картины…</p>}>
+          <GalleryPage />
+        </Suspense>
+      ) : (
+        <NotFound />
       );
     default:
       return <NotFound />;

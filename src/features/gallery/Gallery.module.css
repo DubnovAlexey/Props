@@ -1,0 +1,28 @@
+/* Мастерская художника: рисунки в ряд, подпись под каждым */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px 14px;
+}
+
+.cell {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.cell figcaption {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.pair {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
