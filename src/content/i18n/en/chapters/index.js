@@ -10,53 +10,17 @@ import jsBasics from './03-js-basics.js';
 import functions from './04-functions.js';
 import arrays from './05-arrays.js';
 import passing from './06-passing.js';
+import flow from './07-flow.js';
+import state from './08-state.js';
+import vdom from './09-vdom.js';
+import callbacks from './10-callbacks.js';
+import children from './11-children.js';
+import special from './12-special.js';
+import context from './13-context.js';
+import hooks from './14-hooks.js';
+import async from './15-async.js';
 
 const HEADERS = {
-  flow: {
-    cave: 'Underground Waterfall',
-    title: 'Downward flow and immutability',
-    goal: 'Understand where data flows, why props must not be changed and what a “pure” component means.',
-  },
-  state: {
-    cave: 'Cave of Memory',
-    title: 'Props and state',
-    goal: 'Tell props from state and understand when a component re-renders.',
-  },
-  vdom: {
-    cave: 'Mirror Grotto',
-    title: 'The virtual DOM and reconciliation',
-    goal: 'Understand how props and state turn into changes on the page: the virtual DOM, render, reconciliation, commit and batched updates.',
-  },
-  callbacks: {
-    cave: 'Cave of Echoes',
-    title: 'Functions in props and lifting state up',
-    goal: 'Learn to pass functions in props so that children can tell the parent about events.',
-  },
-  children: {
-    cave: 'Gem Grotto',
-    title: 'children and composition',
-    goal: 'Master children, slots and composition — how to nest components inside each other.',
-  },
-  special: {
-    cave: 'Cave of Keys',
-    title: 'key, ref and DOM attributes',
-    goal: 'Sort out the special props key and ref, as well as className, style and other attributes.',
-  },
-  context: {
-    cave: 'Secret Passage',
-    title: 'Prop drilling and Context',
-    goal: 'Understand when passing props down a chain becomes a burden and how Context solves the problem.',
-  },
-  hooks: {
-    cave: 'Clock Grotto',
-    title: 'Hooks: memory, effects and custom hooks',
-    goal: 'Sort out what hooks are, by what rules they are called and how useState, useEffect, useRef, useReducer and custom hooks work.',
-  },
-  async: {
-    cave: 'Underground River',
-    title: 'Data from a server: Promise, async and loading',
-    goal: 'Understand how data from a server gets into components: Promise, async/await, fetch, loading in an effect without races, and loading and error states in props.',
-  },
   performance: {
     cave: 'Cave of Speed',
     title: 'memo, references and speed',
@@ -82,4 +46,13 @@ export const CHAPTERS = {
   functions,
   arrays,
   passing,
+  flow,
+  state,
+  vdom,
+  callbacks,
+  children,
+  special,
+  context,
+  hooks,
+  async,
 };
