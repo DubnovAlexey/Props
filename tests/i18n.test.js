@@ -239,8 +239,13 @@ describe('словари интерфейса', () => {
     const saved = await bootstrapLanguage('es', ['ru-RU']);
     expect(saved.lang).toBe('es');
     expect(lookup(saved.dictionary, 'nav.map')).toBe('Mapa');
+    // английский переведён целиком (ready) — браузер на английском сразу получает английскую игру
     const auto = await bootstrapLanguage(null, ['en-US']);
-    expect(auto.lang).toBe('ru'); // уроки на английский ещё не переведены
+    expect(auto.lang).toBe('en');
+    expect(lookup(auto.dictionary, 'nav.map')).not.toBe(lookup(ru, 'nav.map'));
+    // испанские уроки ещё не переведены — испанский браузер получает русскую игру
+    const notReady = await bootstrapLanguage(null, ['es-ES']);
+    expect(notReady.lang).toBe('ru');
     expect(await loadDictionary('xx')).toBe(ru);
   });
 });

@@ -3,8 +3,9 @@
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Cave of Keys',
   title: 'key, ref and DOM attributes',
@@ -53,7 +54,12 @@ export default {
           ],
         },
         right: {
-          items: ['before: s Cheese · m Milk · h Bread', 'we remove Cheese', 'after: m Milk · h Bread', 'React: s was removed, the rest are in place'],
+          items: [
+            'before: s Cheese · m Milk · h Bread',
+            'we remove Cheese',
+            'after: m Milk · h Bread',
+            'React: s was removed, the rest are in place',
+          ],
         },
       },
       why: 'An index is a place in a queue, not a name. An item was removed or moved — the indexes “slid”, and React gives the state (for example, the text in a field) to someone else’s item. An index is acceptable only if the list never changes its order and the items have no state.',
@@ -163,7 +169,8 @@ export default {
       question: 'Is this written correctly in JSX?',
       bins: ['Correct', 'Wrong'],
       items: [{}, {}, {}, {}, {}, {}, { text: '`aria-label="Close"`' }],
-      explain: 'JSX uses the names of DOM properties in camelCase. A string in style causes an error, and React does not recognise `onclick` as an event.',
+      explain:
+        'JSX uses the names of DOM properties in camelCase. A string in style causes an error, and React does not recognise `onclick` as an event.',
     },
     {
       question: 'What `type` will the button have?',

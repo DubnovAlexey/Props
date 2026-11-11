@@ -3,8 +3,9 @@
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Gem Grotto',
   title: 'children and composition',
@@ -31,7 +32,10 @@ export default {
       why: '`children` is an ordinary prop with a special way of passing: the content is written between the opening and the closing tag. `{children}` in JSX inserts it in place.',
       alt: [
         { note: 'Without destructuring — `props.children`.' },
-        { code: '<Card children={<h2>Cheese</h2>} />', note: 'You can pass it as an attribute too. It works, but between the tags it reads more naturally.' },
+        {
+          code: '<Card children={<h2>Cheese</h2>} />',
+          note: 'You can pass it as an attribute too. It works, but between the tags it reads more naturally.',
+        },
       ],
       wrong: [
         { why: 'We forgot `{children}` — everything put between the tags silently disappears.' },
@@ -98,7 +102,11 @@ export default {
       scheme: {
         left: {
           title: 'A component in a prop',
-          items: ['`icon={BatIcon}` — without the `<>` brackets', 'the child draws `<Icon />` itself', 'it can give its own props: `<Icon size={16} />`'],
+          items: [
+            '`icon={BatIcon}` — without the `<>` brackets',
+            'the child draws `<Icon />` itself',
+            'it can give its own props: `<Icon size={16} />`',
+          ],
         },
         right: {
           title: 'A render prop',

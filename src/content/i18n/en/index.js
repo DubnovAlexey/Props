@@ -9,6 +9,7 @@ import { BREAK_ROUNDS } from './breakRounds.js';
 import { GLOSSARY } from './glossary.js';
 import { SYNTAX_GUIDE } from './syntaxGuide.js';
 import { DIAGRAM_TEXT } from './diagrams.js';
+import { LIBRARY } from './library.js';
 
 export default {
   tiers: TIERS,
@@ -24,4 +25,5 @@ export default {
   glossary: GLOSSARY,
   syntaxGuide: SYNTAX_GUIDE,
   diagrams: DIAGRAM_TEXT,
+  library: LIBRARY,
 };

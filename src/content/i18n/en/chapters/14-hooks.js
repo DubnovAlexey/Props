@@ -4,8 +4,9 @@
 // В примерах сумма — в долларах, а не в рублях: так понятнее англоязычному игроку.
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Clock Grotto',
   title: 'Hooks: memory, effects and custom hooks',
@@ -19,7 +20,8 @@ export default {
       { text: 'Only in event handlers' },
       { text: 'Only in the App.jsx file' },
     ],
-    explain: 'React recognises hooks by the order of the calls, so they are called at the top of the component, without conditions and loops.',
+    explain:
+      'React recognises hooks by the order of the calls, so they are called at the top of the component, without conditions and loops.',
   },
 
   lesson: [
@@ -183,7 +185,9 @@ export default {
         '[[custom-hook|Your own hook]] is a function `useSomething` that calls other hooks inside. It shares **logic**, not state: every component has its own copy.',
       ],
       code: "// your own hook: the logic of a switch\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  const toggle = () => setOn(value => !value);\n  return [on, toggle];\n}\n\nfunction Menu() {\n  const [open, toggleOpen] = useToggle();\n  return (\n    <button onClick={toggleOpen}>\n      {open ? 'Close' : 'Menu'}\n    </button>\n  );\n}",
-      after: ['This game has its own hooks too: `useProgress()` reads the progress from a context, `useMediaQuery()` watches the width of the screen.'],
+      after: [
+        'This game has its own hooks too: `useProgress()` reads the progress from a context, `useMediaQuery()` watches the width of the screen.',
+      ],
       key: 'Two components with the same custom hook do not share state: every call of the hook is a separate memory.',
       scheme: {
         left: { items: ['a change → a re-render', 'for what is seen on the screen'] },
@@ -249,7 +253,8 @@ export default {
         { text: 'After every render', why: 'That is how an effect with no dependency array at all works.' },
         { text: 'Before the render', why: 'Effects always run after painting.' },
       ],
-      explain: 'React compares the dependencies with the previous render using Object.is and restarts the effect if at least one has changed.',
+      explain:
+        'React compares the dependencies with the previous render using Object.is and restarts the effect if at least one has changed.',
     },
     {
       question: 'Will this trigger a re-render of the component?',

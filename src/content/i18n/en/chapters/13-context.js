@@ -3,8 +3,9 @@
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Secret Passage',
   title: 'Prop drilling and Context',
@@ -45,7 +46,11 @@ export default {
         left: { title: 'Drilling', items: ['App → Page → List → Card', '`user` passes through everyone', 'the go-betweens know too much'] },
         right: {
           title: 'Composition',
-          items: ['App creates `<Card user={user} />` itself', 'Page and List draw `{children}`', 'the go-betweens know nothing about user'],
+          items: [
+            'App creates `<Card user={user} />` itself',
+            'Page and List draw `{children}`',
+            'the go-betweens know nothing about user',
+          ],
         },
       },
       why: '`App` creates `<Card user={user} />` itself and passes the ready element into `Page` and `List` as children. The go-betweens simply insert `{children}` and know nothing about `user`.',

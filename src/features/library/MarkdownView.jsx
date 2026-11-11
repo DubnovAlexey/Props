@@ -8,8 +8,10 @@ import CodeBlock from '../../components/CodeBlock/CodeBlock.jsx';
 import Diagram from '../../components/Diagram/Diagram.jsx';
 import Scheme from '../../components/Scheme/Scheme.jsx';
 import { LIBRARY_SCHEMES } from '../../content/library/schemes.js';
+import { localize } from '../../utils/localize.js';
 import styles from './Library.module.css';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
+import { useMemo } from 'react';
 
 const LIST = /^(-|\*|\d+\.)\s+/;
 const BLOCK_START = /^(```|::|#{3,6}\s|\||>|(-|\*|\d+\.)\s)/;
@@ -145,6 +147,9 @@ const CODE_LANGS = new Set(['jsx', 'js', 'tsx', 'ts']);
 
 export default function MarkdownView({ markdown }) {
   const { t } = useI18n();
+  // Подписи схем на языке игры: накладка языка поверх русских схем (src/content/library/schemes.js)
+  const { LIBRARY } = useContent();
+  const schemes = useMemo(() => localize(LIBRARY_SCHEMES, LIBRARY?.schemes), [LIBRARY]);
   const blocks = parseBlocks(markdown);
   return (
     <div className={styles.markdown}>
@@ -221,7 +226,7 @@ export default function MarkdownView({ markdown }) {
           case 'diagram':
             return <Diagram key={i} name={block.name} />;
           case 'scheme':
-            return LIBRARY_SCHEMES[block.name] ? <Scheme key={i} scheme={LIBRARY_SCHEMES[block.name]} /> : null;
+            return schemes[block.name] ? <Scheme key={i} scheme={schemes[block.name]} /> : null;
           case 'hr':
             return <hr key={i} />;
           default:

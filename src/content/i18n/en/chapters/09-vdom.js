@@ -4,8 +4,9 @@
 // В задании vdom-8 ответы и «банк» слов — английские названия шагов: render, reconciliation, commit.
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Mirror Grotto',
   title: 'The virtual DOM and reconciliation',
@@ -33,10 +34,17 @@ export default {
       code: "// by hand, step by step — imperatively\nconst title = document.querySelector('h1');\ntitle.textContent = 'Hello, Count!';\ntitle.classList.add('active');",
       key: 'By hand you tell the browser HOW to change the page. In React you describe WHAT should be on the screen — this is the [[declarative|declarative]] approach, and React works out the “how” itself.',
       scheme: {
-        left: { title: 'Imperatively — by hand', items: ['find the element', 'change the text', 'add a class', 'do not forget to remove the old one'] },
+        left: {
+          title: 'Imperatively — by hand',
+          items: ['find the element', 'change the text', 'add a class', 'do not forget to remove the old one'],
+        },
         right: {
           title: 'Declaratively — React',
-          items: ['describe the result: `<h1 className="active">{title}</h1>`', 'React finds the difference itself', 'and changes only that'],
+          items: [
+            'describe the result: `<h1 className="active">{title}</h1>`',
+            'React finds the difference itself',
+            'and changes only that',
+          ],
         },
       },
       why: '`document.querySelector` finds the first element by a CSS selector. `textContent` replaces its text, `classList.add` adds a class. Every line is a command “do this”: that is what the imperative style looks like.',
@@ -92,7 +100,9 @@ export default {
         'Props take part in the first step: the parent has rendered — the child gets a new props object, and its part of the tree is recalculated too.',
       ],
       code: 'function Counter() {\n  const [count, setCount] = useState(0);\n  console.log(\'render\'); // step 1: the component is called\n  return (\n    <div className="counter">\n      <h2>Counter</h2>\n      <p>{count}</p>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n    </div>\n  );\n}',
-      after: ['After a click only the text inside `<p>` changes in the DOM: `div`, `h2` and `button` are the same in the new tree as in the old one.'],
+      after: [
+        'After a click only the text inside `<p>` changes in the DOM: `div`, `h2` and `button` are the same in the new tree as in the old one.',
+      ],
       key: 'A render is not yet a change of the page. A component may render, and the DOM may not change at all if the result matched the old one.',
       scheme: {
         title: 'Three steps of an update',
@@ -135,7 +145,12 @@ export default {
         },
         right: {
           title: 'A different type',
-          items: ['`<UserPanel />` → `<AdminPanel />`', 'the old subtree is removed', 'a new one is created from scratch', 'the state is lost'],
+          items: [
+            '`<UserPanel />` → `<AdminPanel />`',
+            'the old subtree is removed',
+            'a new one is created from scratch',
+            'the state is lost',
+          ],
         },
       },
       why: 'In the first line the ternary operator picks the VALUE of a prop — the type stays `Panel`, and React only updates the prop. In the second the COMPONENT itself is picked — different types end up in the same place.',
@@ -196,7 +211,11 @@ export default {
         },
         right: {
           title: 'How it really is',
-          items: ['only the difference gets into the DOM', 'a manual edit is faster, but harder and more dangerous', 'a render may end without any DOM edits'],
+          items: [
+            'only the difference gets into the DOM',
+            'a manual edit is faster, but harder and more dangerous',
+            'a render may end without any DOM edits',
+          ],
         },
       },
     },
@@ -256,7 +275,8 @@ export default {
     {
       question: 'It was `count = 0`. What will `console.log` print after a click?',
       placeholder: 'a number',
-      explain: 'A setter does not change the variable at once: `count` is a snapshot of the current render. The new value `1` appears in the next render.',
+      explain:
+        'A setter does not change the variable at once: `count` is a snapshot of the current render. The new value `1` appears in the next render.',
     },
     {
       question: 'After every click on “+1” the typed name is wiped out. Find the guilty line.',

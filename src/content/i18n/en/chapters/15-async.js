@@ -3,8 +3,9 @@
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Underground River',
   title: 'Data from a server: Promise, async and loading',
@@ -12,8 +13,14 @@ export default {
 
   pretest: {
     question: "What will `fetch('/api/products')` return right after the call?",
-    options: [{ text: 'A Promise — a promise that the answer will come later' }, { text: 'A ready array of products' }, { text: 'A string with JSON' }, {}],
-    explain: 'The network is not instant. `fetch` returns a Promise at once, and the data comes later — you wait for it with `await` or `then`.',
+    options: [
+      { text: 'A Promise — a promise that the answer will come later' },
+      { text: 'A ready array of products' },
+      { text: 'A string with JSON' },
+      {},
+    ],
+    explain:
+      'The network is not instant. `fetch` returns a Promise at once, and the data comes later — you wait for it with `await` or `then`.',
   },
 
   lesson: [
@@ -193,7 +200,8 @@ export default {
   practice: [
     {
       statement: '`fetch` throws an error if the server answered 404.',
-      explain: 'For fetch a 404 answer is a normal answer with a bad status. It considers only a network failure an error. Check `response.ok`.',
+      explain:
+        'For fetch a 404 answer is a normal answer with a bad status. It considers only a network failure an error. Check `response.ok`.',
     },
     {
       question: 'In what order will the lines appear in the console?',
@@ -231,7 +239,8 @@ export default {
     {
       question: 'When products are switched quickly, sometimes the wrong one is shown. Where is the protection missing?',
       fix: 'if (!ignore) setProduct(data); — and in the cleanup return () => { ignore = true; }',
-      explain: 'The old answer may come after the new one and overwrite it. You need an ignore flag that the cleanup of the effect sets to true.',
+      explain:
+        'The old answer may come after the new one and overwrite it. You need an ignore flag that the cleanup of the effect sets to true.',
     },
     {
       question: 'Complete the asynchronous function.',

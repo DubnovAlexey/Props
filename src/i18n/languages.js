@@ -8,7 +8,7 @@
 //           Перевёл уроки — поставь ready: true, и язык начнёт подхватываться из настроек браузера.
 export const LANGUAGES = [
   { code: 'ru', name: 'Русский', dir: 'ltr', ready: true },
-  { code: 'en', name: 'English', dir: 'ltr', ready: false },
+  { code: 'en', name: 'English', dir: 'ltr', ready: true }, // уроки и свитки переведены 11.11.2026
   { code: 'he', name: 'עברית', dir: 'rtl', ready: false },
   { code: 'es', name: 'Español', dir: 'ltr', ready: false },
   { code: 'fr', name: 'Français', dir: 'ltr', ready: false },

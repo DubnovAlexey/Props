@@ -3,8 +3,9 @@
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Underground Waterfall',
   title: 'Downward flow and immutability',
@@ -12,7 +13,11 @@ export default {
 
   pretest: {
     question: 'A child got the prop `title`. Can it change it: `props.title = "New"`?',
-    options: [{ text: 'No, props are read-only' }, { text: 'Yes, it is an ordinary object' }, { text: 'Yes, and the parent will see the change' }],
+    options: [
+      { text: 'No, props are read-only' },
+      { text: 'Yes, it is an ordinary object' },
+      { text: 'Yes, and the parent will see the change' },
+    ],
     explain: 'Props belong to the parent. In development mode React even “freezes” them.',
   },
 
@@ -167,8 +172,14 @@ export default {
       question: 'What happens in development mode?',
       options: [
         { text: 'A TypeError: the property is read-only' },
-        { text: 'The heading turns into capital letters', why: 'In development mode the props object is frozen — the assignment throws an error.' },
-        { text: 'The parent gets capital letters too', why: 'Even if the assignment worked, it would be a mutation of someone else’s data.' },
+        {
+          text: 'The heading turns into capital letters',
+          why: 'In development mode the props object is frozen — the assignment throws an error.',
+        },
+        {
+          text: 'The parent gets capital letters too',
+          why: 'Even if the assignment worked, it would be a mutation of someone else’s data.',
+        },
         {
           text: 'React silently ignores the assignment',
           why: 'Module code runs in JavaScript strict mode, and there writing to a frozen object throws a TypeError.',

@@ -13,6 +13,8 @@ import { BREAK_ROUNDS } from '../src/content/breakRounds.js';
 import { CHAPTER_STORY, EPILOGUE, FINALE, PROLOGUE, TIERS } from '../src/content/story.js';
 import { SYNTAX_GUIDE } from '../src/content/syntaxGuide.js';
 import { DIAGRAM_TEXT } from '../src/content/diagrams.js';
+import LIBRARY_SECTIONS from '../src/content/library/sections.json';
+import { LIBRARY_SCHEMES } from '../src/content/library/schemes.js';
 import { DIAGRAM_NAMES } from '../src/components/Diagram/Diagram.jsx';
 import { explainCode } from '../src/utils/syntaxGuide.js';
 import { languageByCode } from '../src/i18n/languages.js';
@@ -46,6 +48,8 @@ const BASES = {
   breakRounds: BREAK_ROUNDS,
   syntaxGuide: SYNTAX_GUIDE,
   diagrams: DIAGRAM_TEXT,
+  // свитки: заголовки разделов и подписи схем (сами разделы проверяет tests/library.test.js)
+  library: { titles: Object.fromEntries(LIBRARY_SECTIONS.map((section) => [section.id, section.title])), schemes: LIBRARY_SCHEMES },
 };
 
 const CYRILLIC = /[а-яё]/i;
@@ -285,6 +289,8 @@ describe.each(Object.keys(OVERLAYS))('перевод уроков: %s', (lang) =
   it('«анатомия кода»: если переведена, то целиком, и разбор примера идёт на языке перевода', () => {
     if (!overlay.syntaxGuide) return;
     expect(cyrillicIn(content.SYNTAX_GUIDE)).toEqual([]);
+    // пример для разбора — строка, а не код теста: IntelliJ читает её как код и считает Card «неиспользуемой»
+    // noinspection JSUnusedLocalSymbols
     const code =
       'function Card({ title = "x", ...rest }) {\n  const [n, setN] = useState(0);\n  return <li onClick={() => setN(n + 1)}>{items.map(String)}</li>;\n}';
     const explained = explainCode(code, content.SYNTAX_GUIDE);

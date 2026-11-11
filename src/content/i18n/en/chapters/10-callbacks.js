@@ -3,8 +3,9 @@
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Cave of Echoes',
   title: 'Functions in props and lifting state up',
@@ -55,7 +56,11 @@ export default {
       scheme: {
         left: {
           title: '`on…` — the name of a prop',
-          items: ['what happened: `onSearch`, `onClose`', 'that is what the attribute on the child is called', 'like `onClick` on a button'],
+          items: [
+            'what happened: `onSearch`, `onClose`',
+            'that is what the attribute on the child is called',
+            'like `onClick` on a button',
+          ],
         },
         right: {
           title: '`handle…` — the name of a function',

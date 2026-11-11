@@ -4,8 +4,9 @@
 // В примерах сумма — в долларах, а не в рублях: так понятнее англоязычному игроку.
 // Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
 // на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
-// проверки выключены. Код игры они по-прежнему проверяют.
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// проверки выключены. Код игры они по-прежнему проверяют. Текст с `<тегами>` и двоеточиями IntelliJ тоже
+// иногда читает как код («недостижимый код», «метка», «with»): это ложные срабатывания, они выключены здесь же.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnreachableCodeJS,JSDuplicatedDeclaration,CommaExpressionJS,JSVoidFunctionReturnValueUsed,UnnecessaryLabelJS,WithStatementJS,InfiniteLoopJS
 export default {
   cave: 'Cave of Memory',
   title: 'Props and state',
@@ -13,7 +14,12 @@ export default {
 
   pretest: {
     question: 'Where does a component keep what it must “remember” between re-renders?',
-    options: [{ text: 'In state (useState)' }, { text: 'In props' }, { text: 'In an ordinary variable inside the function' }, { text: 'In CSS' }],
+    options: [
+      { text: 'In state (useState)' },
+      { text: 'In props' },
+      { text: 'In an ordinary variable inside the function' },
+      { text: 'In CSS' },
+    ],
     explain: 'An ordinary variable is created anew on every render, and props come from outside. The memory of a component is its state.',
   },
 
@@ -22,14 +28,19 @@ export default {
       title: 'Props come from outside, state lives inside',
       body: ['[[props|Props]] are what a component is **given**. [[state|State]] is what a component **remembers** itself and can change.'],
       code: 'function Counter({ step }) {\n  // step is a prop: it came from the parent\n  // count is state: its own memory\n  const [count, setCount] = useState(0);\n  return (\n    <button onClick={() => setCount(count + step)}>\n      {count}\n    </button>\n  );\n}',
-      analogy: 'Props are a letter from the parent: you may read it but not rewrite it. State is a personal diary: you write whatever you like.',
+      analogy:
+        'Props are a letter from the parent: you may read it but not rewrite it. State is a personal diary: you write whatever you like.',
       why: '`step` comes from the parent and is only read. `count` is the component’s own memory: `useState(0)` creates it on the first render, and `setCount` changes it and triggers a re-render.',
       alt: [
         {
           note: 'An update through the function `c => c + step` takes the freshest value — safer when there are several updates in a row.',
         },
       ],
-      wrong: [{ why: 'A prop must not be changed, and `count++` does not even trigger a re-render. The memory of a component is only `useState`.' }],
+      wrong: [
+        {
+          why: 'A prop must not be changed, and `count++` does not even trigger a re-render. The memory of a component is only `useState`.',
+        },
+      ],
     },
     {
       title: 'When a component re-renders',
@@ -49,7 +60,11 @@ export default {
         },
         right: {
           title: 'Will not re-render',
-          items: ['changing an ordinary variable `let x`', 'mutating an object without a setter', 'a setter with the same value (`Object.is`)'],
+          items: [
+            'changing an ordinary variable `let x`',
+            'mutating an object without a setter',
+            'a setter with the same value (`Object.is`)',
+          ],
         },
         caption: 'What exactly happens during a re-render, we will sort out in the “Mirror Grotto”.',
       },
@@ -108,13 +123,9 @@ export default {
     },
     {
       title: 'Compute, do not store',
-      body: [
-        'If a value can be computed from props and state, compute it right during render. This is a [[derived|derived value]].',
-      ],
+      body: ['If a value can be computed from props and state, compute it right during render. This is a [[derived|derived value]].'],
       code: 'function Cart({ items }) {\n  // no useState needed for total\n  const total = items.reduce(\n    (sum, item) => sum + item.price, 0);\n  return <p>Total: {total} $</p>;\n}',
-      after: [
-        'And do not use [[useeffect|useEffect]] to “sync” a prop with state: it is an extra render and a frequent source of bugs.',
-      ],
+      after: ['And do not use [[useeffect|useEffect]] to “sync” a prop with state: it is an extra render and a frequent source of bugs.'],
       key: 'Every extra piece of state is a chance of a mismatch. Store the minimum, compute the rest.',
       scheme: {
         left: { title: 'Storing — superfluous', items: ['`useState(0)` for the sum', 'update it by hand', 'forget it — a mismatch'] },
@@ -171,7 +182,10 @@ export default {
       code: 'function Label({ color }) {\n  const [c] = useState(color);\n  return <span style={{ color: c }}>Text</span>;\n}',
       options: [
         { text: 'Red: the state remembered the first value' },
-        { text: 'Blue: the prop has been updated, after all', why: 'The prop has been updated, but `c` is taken from state, and state is initialised once.' },
+        {
+          text: 'Blue: the prop has been updated, after all',
+          why: 'The prop has been updated, but `c` is taken from state, and state is initialised once.',
+        },
         { text: 'Black: the style will be reset', why: 'The style is taken from c — and it still holds red.' },
         { text: 'There will be an error', why: 'There is no error — it is a silent bug, and that is why it is dangerous.' },
       ],

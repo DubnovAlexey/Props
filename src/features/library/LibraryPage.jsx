@@ -5,8 +5,10 @@
 // Разделы руководства грузятся по требованию (import.meta.glob): основной
 // код приложения не толстеет. Promise раздела создаётся заранее и кэшируется,
 // а use() + Suspense ждут его — живой пример из пещеры «Подземная река».
-import { Suspense, use, useEffect } from 'react';
-import SECTIONS from '../../content/library/sections.json';
+// Перевод свитков: заголовки разделов и подписи схем — в накладке языка (useContent().LIBRARY),
+// сами разделы — в src/content/i18n/<язык>/library/sNN.md. Чего нет в переводе, то показывается по-русски.
+import { Suspense, use, useEffect, useMemo } from 'react';
+import RU_SECTIONS from '../../content/library/sections.json';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import LessonCard from '../chapter/LessonCard.jsx';
 import NotFound from '../../app/NotFound.jsx';
@@ -18,19 +20,35 @@ import styles from './Library.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
-const LOADERS = import.meta.glob('../../content/library/sections/*.md', { query: '?raw', import: 'default' });
+const LOADERS = import.meta.glob(['../../content/library/sections/*.md', '../../content/i18n/*/library/*.md'], {
+  query: '?raw',
+  import: 'default',
+});
 const cache = new Map();
 
-/** Promise с текстом раздела: один на раздел, создаётся при первом запросе */
-function loadSection(id) {
-  if (!cache.has(id)) {
-    const promise = LOADERS[`../../content/library/sections/${id}.md`]();
+/** Где лежит текст раздела на этом языке; перевода нет — русский оригинал */
+const sectionPath = (id, lang) => {
+  const translated = `../../content/i18n/${lang}/library/${id}.md`;
+  return LOADERS[translated] ? translated : `../../content/library/sections/${id}.md`;
+};
+
+/** Promise с текстом раздела: один на раздел и язык, создаётся при первом запросе */
+function loadSection(id, lang) {
+  const path = sectionPath(id, lang);
+  if (!cache.has(path)) {
+    const promise = LOADERS[path]();
     // Не удалось загрузить (пропала сеть) — забываем неудачную попытку,
     // чтобы после «Попробовать ещё раз» раздел загрузился заново
-    promise.catch(() => cache.delete(id));
-    cache.set(id, promise);
+    promise.catch(() => cache.delete(path));
+    cache.set(path, promise);
   }
-  return cache.get(id);
+  return cache.get(path);
+}
+
+/** Оглавление руководства на языке игры: заголовки — из накладки, остальное — из оригинала */
+function useSections() {
+  const { LIBRARY } = useContent();
+  return useMemo(() => RU_SECTIONS.map((section) => ({ ...section, title: LIBRARY?.titles?.[section.id] ?? section.title })), [LIBRARY]);
 }
 
 /** Граф говорит реплику при входе на страницу свитков */
@@ -44,7 +62,8 @@ function useGrafSays(text) {
 const minutes = (size) => Math.max(1, Math.round(size / 1100));
 
 function SectionText({ id }) {
-  const markdown = use(loadSection(id));
+  const { lang } = useI18n();
+  const markdown = use(loadSection(id, lang));
   return <MarkdownView markdown={markdown} />;
 }
 
@@ -56,6 +75,7 @@ function Loading() {
 function LibraryIndex() {
   const { t } = useI18n();
   const { CHAPTERS } = useContent();
+  const SECTIONS = useSections();
   useGrafSays(t('mascot.route.library'));
   return (
     <div className="stack">
@@ -105,6 +125,7 @@ function LibraryIndex() {
 function CaveScroll({ chapter }) {
   const { t } = useI18n();
   const { CHAPTERS } = useContent();
+  const SECTIONS = useSections();
   const related = SECTIONS.filter((section) => section.caves.includes(chapter.id));
   const index = CHAPTERS.indexOf(chapter);
   const prev = CHAPTERS[index - 1];
@@ -160,7 +181,8 @@ function CaveScroll({ chapter }) {
 function SectionScroll({ section }) {
   const { t } = useI18n();
   const { CHAPTER_MAP } = useContent();
-  const index = SECTIONS.indexOf(section);
+  const SECTIONS = useSections();
+  const index = SECTIONS.findIndex((item) => item.id === section.id);
   const prev = SECTIONS[index - 1];
   const next = SECTIONS[index + 1];
   const caves = section.caves.map((id) => CHAPTER_MAP[id]).filter(Boolean);
@@ -218,6 +240,7 @@ function SectionScroll({ section }) {
 
 export default function LibraryPage({ topic }) {
   const { CHAPTER_MAP } = useContent();
+  const SECTIONS = useSections();
   if (!topic) return <LibraryIndex />;
   if (CHAPTER_MAP[topic]) return <CaveScroll chapter={CHAPTER_MAP[topic]} />;
   const section = SECTIONS.find((item) => item.id === topic);

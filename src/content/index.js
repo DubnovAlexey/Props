@@ -10,6 +10,8 @@
 //   const { CHAPTERS, GLOSSARY_MAP } = useContent();
 //
 // Свитки Графа сюда не входят: они грузятся отдельным куском кода вместе со своей страницей.
+// Из их перевода здесь только маленькая часть накладки (LIBRARY: заголовки разделов и подписи схем) —
+// её применяет сама страница свитков, а переведённые разделы лежат в ./i18n/<язык>/library/sNN.md.
 import { CHAPTERS as RU_CHAPTERS } from './chapters/index.js';
 import { levelOf } from './difficulty.js';
 import { GLOSSARY as RU_GLOSSARY } from './glossary.js';
@@ -31,7 +33,8 @@ const localizeById = (list, overlays) => list.map((item) => localize(item, overl
  *   facts, studyPlan — списки строк той же длины, что в оригинале;
  *   finale, prologue, epilogue — объекты с переведёнными полями;
  *   syntaxGuide — тексты «анатомии кода» (см. ./syntaxGuide.js);
- *   diagrams — подписи внутри схем-картинок (см. ./diagrams.js).
+ *   diagrams — подписи внутри схем-картинок (см. ./diagrams.js);
+ *   library — свитки: titles (id раздела → заголовок) и schemes (подписи схем, см. ./library/schemes.js).
  */
 export function buildContent(overlay = {}) {
   const TIERS = localizeById(RU_TIERS, overlay.tiers);
@@ -67,6 +70,8 @@ export function buildContent(overlay = {}) {
     EPILOGUE: localize(RU_EPILOGUE, overlay.epilogue),
     SYNTAX_GUIDE: localize(RU_SYNTAX_GUIDE, overlay.syntaxGuide),
     DIAGRAM_TEXT: localize(RU_DIAGRAM_TEXT, overlay.diagrams),
+    // Свитки: накладку применяет страница свитков (src/features/library), русские свитки живут там же
+    LIBRARY: overlay.library ?? null,
     // Сколько пещер переведено целиком: пещера считается переведённой, когда у неё есть перевод урока
     translatedCaves: CHAPTERS.filter((chapter) => overlay.chapters?.[chapter.id]?.lesson).length,
   };
