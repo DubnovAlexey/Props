@@ -24,7 +24,7 @@ function leaves(node, prefix = '') {
 
 /** Строки листа: одна строка или все формы числа */
 const textsOf = (value) => (typeof value === 'string' ? [value] : Object.values(value));
-const placeholders = (value) => [...new Set(textsOf(value).flatMap((text) => text.match(/\{\w+\}/g) ?? []))].sort();
+const placeholders = (value) => [...new Set(textsOf(value).flatMap((text) => text.match(/\{\w+}/g) ?? []))].sort();
 const termIds = (value) =>
   [...new Set(textsOf(value).flatMap((text) => [...text.matchAll(/\[\[([\w-]+)/g)].map((match) => match[1])))].sort();
 
@@ -269,7 +269,7 @@ describe('строки интерфейса в коде', () => {
   it('в словаре нет забытых строк, которые никто не показывает', () => {
     const dynamic = [...all.matchAll(/`([\w.]+)\.\$\{/g)].map((match) => `${match[1]}.`);
     const unused = leaves(ru)
-      .map(([key]) => key.replace(/\[\d+\].*$/, '')) // элемент списка → сам список
+      .map(([key]) => key.replace(/\[\d+].*$/, '')) // элемент списка → сам список
       .filter((key, index, list) => list.indexOf(key) === index)
       .filter((key) => !dynamic.some((prefix) => key.startsWith(prefix)))
       // адрес упомянут в коде целиком: 'map.title' — или его раздел берут целиком: t('exam.verdicts')

@@ -20,7 +20,7 @@ export function lookup(dictionary, key) {
 
 /** Подставляет значения в места вида {имя}. Незнакомое место оставляет как есть — так заметнее ошибка */
 export function interpolate(text, params) {
-  return text.replace(/\{(\w+)\}/g, (match, name) => (name in params ? String(params[name]) : match));
+  return text.replace(/\{(\w+)}/g, (match, name) => (name in params ? String(params[name]) : match));
 }
 
 /** Объект с формами числа? У него есть форма other, а все значения — строки */
