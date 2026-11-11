@@ -1,7 +1,7 @@
 {
   "name": "props-caves",
   "private": true,
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Игра-тренажёр по пропсам в React: 18 пещер, хозяева-чудища, теория со схемами, повторение и офлайн-режим.",
   "type": "module",
   "engines": {

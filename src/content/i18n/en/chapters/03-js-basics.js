@@ -1,6 +1,10 @@
 // Английский перевод пещеры 3 «Пещера алхимика» (оригинал — ../../../chapters/03-js-basics.js
 // и 03-js-basics.syntax.js). Здесь только текст и те примеры кода, где были русские слова;
 // порядок карточек, вариантов и шагов — как в оригинале, {} — «переводить нечего».
+// Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
+// на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
+// проверки выключены. Код игры они по-прежнему проверяют.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
 export default {
   cave: 'Alchemist’s Cave',
   title: 'Objects: JS magic for props',

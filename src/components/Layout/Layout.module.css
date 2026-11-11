@@ -304,7 +304,7 @@
    ни на одном из пяти языков начиная с 360px. */
 @media (max-width: 420px) {
   .tabbar a {
-    font-size: clamp(8.4px, 2.6vw, 0.62rem);
+    font-size: clamp(0.525rem, 2.6vw, 0.62rem); /* 0.525rem = 8.4px */
     letter-spacing: -0.02em;
   }
 }

@@ -88,7 +88,7 @@ npm run dev      # http://localhost:5173
 | Команда                | Что делает                                                    |
 | ---------------------- | ------------------------------------------------------------- |
 | `npm run dev`          | сервер разработки, изменения видны сразу                      |
-| `npm test`             | тесты: целостность контента и логика (394 проверок)           |
+| `npm test`             | тесты: целостность контента и логика (429 проверок)           |
 | `npm run lint`         | ESLint: ошибки и правила хуков                                |
 | `npm run format`       | Prettier: единый стиль кода                                   |
 | `npm run build`        | сборка сайта в `dist/` (+ `sw.js` для офлайна и `Props.html`) |
@@ -104,7 +104,8 @@ npm run dev      # http://localhost:5173
 **Settings → Pages → Source: GitHub Actions**).
 
 **Языки.** Интерфейс игры — на пяти языках: русском, английском, иврите, испанском и французском. Язык
-переключает глобус 🌐 в шапке. Уроки, задания и словарь терминов пока на русском — их перевод готовится.
+переключает глобус 🌐 в шапке. Уроки переводятся на английский: словарь терминов и первые шесть пещер уже
+готовы, остальное пока на русском. Следом — иврит, испанский и французский.
 
 Подробнее: [docs/INTELLIJ.md](docs/INTELLIJ.md) (работа в IntelliJ IDEA), [docs/PROMPT.md](docs/PROMPT.md),
 [CHANGELOG.md](CHANGELOG.md), правила проекта — [CLAUDE.md](CLAUDE.md).
@@ -189,7 +190,7 @@ npm run dev      # http://localhost:5173
 | Command                | What it does                                                   |
 | ---------------------- | -------------------------------------------------------------- |
 | `npm run dev`          | dev server with instant updates                                |
-| `npm test`             | tests: content integrity and logic (394 checks)                |
+| `npm test`             | tests: content integrity and logic (429 checks)                |
 | `npm run lint`         | ESLint: errors and the rules of hooks                          |
 | `npm run format`       | Prettier: one code style                                       |
 | `npm run build`        | site build in `dist/` (+ `sw.js` for offline and `Props.html`) |
@@ -205,8 +206,8 @@ Offline mode is a custom service worker (`build/serviceWorkerPlugin.js`); the si
 **Settings → Pages → Source: GitHub Actions**).
 
 **Languages.** The interface is available in five languages: Russian, English, Hebrew, Spanish and French.
-Switch it with the globe 🌐 in the header. The lessons, tasks and glossary are still in Russian — their
-translation is on the way.
+Switch it with the globe 🌐 in the header. The lessons are being translated into English: the glossary and the
+first six caves are ready, the rest is still in Russian. Hebrew, Spanish and French come next.
 
 [↑ top](#top)
 
@@ -282,7 +283,7 @@ npm run dev      # http://localhost:5173
 
 </div>
 
-**פקודות:** `npm run dev` — שרת פיתוח · `npm test` — בדיקות (394) · `npm run lint` — ESLint ·
+**פקודות:** `npm run dev` — שרת פיתוח · `npm test` — בדיקות (429) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — בניית האתר ל‑`dist/` (כולל `sw.js` ו‑`Props.html`) ·
 `npm run build:single` — קובץ אחד בלבד · `npm run preview` — תצוגת הבנייה · `npm run check` — הכול יחד לפני commit.
 
@@ -292,7 +293,8 @@ service worker משלנו (`build/serviceWorkerPlugin.js`); בנייה לקוב�
 פרסום: GitHub Actions ← GitHub Pages (בהגדרות המאגר: **Settings → Pages → Source: GitHub Actions**).
 
 **שפות.** ממשק המשחק זמין בחמש שפות: רוסית, אנגלית, עברית, ספרדית וצרפתית. מחליפים שפה בכפתור הגלובוס 🌐
-שבכותרת. השיעורים, המשימות והמילון עדיין ברוסית — התרגום שלהם בדרך.
+שבכותרת. השיעורים מתורגמים לאנגלית: המילון ושש המערות הראשונות כבר מוכנים, והשאר עדיין ברוסית. אחריה — עברית,
+ספרדית וצרפתית.
 
 </div>
 
@@ -372,7 +374,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-**Comandos:** `npm run dev` — servidor de desarrollo · `npm test` — pruebas (394) · `npm run lint` — ESLint ·
+**Comandos:** `npm run dev` — servidor de desarrollo · `npm test` — pruebas (429) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — compila el sitio en `dist/` (con `sw.js` y `Props.html`) ·
 `npm run build:single` — solo el archivo único · `npm run preview` — vista previa de la compilación ·
 `npm run check` — todo junto antes de cada commit.
@@ -384,7 +386,8 @@ juego también es material de estudio. El modo sin conexión es un service worke
 Actions → GitHub Pages (en el repositorio: **Settings → Pages → Source: GitHub Actions**).
 
 **Idiomas.** La interfaz está en cinco idiomas: ruso, inglés, hebreo, español y francés. Se cambia con el
-globo 🌐 de la cabecera. Las lecciones, las tareas y el glosario siguen en ruso: su traducción está en camino.
+globo 🌐 de la cabecera. Las lecciones se están traduciendo al inglés: el glosario y las seis primeras cuevas ya
+están listos, y lo demás sigue en ruso. Después vendrán el hebreo, el español y el francés.
 
 [↑ arriba](#top)
 
@@ -458,7 +461,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-**Commandes :** `npm run dev` — serveur de développement · `npm test` — tests (394) · `npm run lint` — ESLint ·
+**Commandes :** `npm run dev` — serveur de développement · `npm test` — tests (429) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — construit le site dans `dist/` (avec `sw.js` et `Props.html`) ·
 `npm run build:single` — le fichier unique seulement · `npm run preview` — aperçu du build ·
 `npm run check` — tout à la fois avant chaque commit.
@@ -470,7 +473,7 @@ aussi de support d'étude. Le mode hors ligne repose sur un service worker maiso
 GitHub Actions → GitHub Pages (dans le dépôt : **Settings → Pages → Source: GitHub Actions**).
 
 **Langues.** L'interface existe en cinq langues : russe, anglais, hébreu, espagnol et français. On en
-change avec le globe 🌐 dans l'en-tête. Les leçons, les exercices et le glossaire sont encore en russe :
-leur traduction est en route.
+change avec le globe 🌐 dans l'en-tête. Les leçons sont en cours de traduction en anglais : le glossaire et les
+six premières grottes sont prêts, le reste est encore en russe. Viendront ensuite l'hébreu, l'espagnol et le français.
 
 [↑ haut](#top)

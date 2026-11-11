@@ -1,6 +1,10 @@
 // Английский перевод «анатомии кода» (оригинал — src/content/syntaxGuide.js): объяснения
 // конструкций, которые показывает кнопка «Разобрать синтаксис» под любым примером кода.
 // Переводится title, sample (если в нём русские слова), simple и why; term — из оригинала.
+// Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
+// на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
+// проверки выключены. Код игры они по-прежнему проверяют.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
 export const SYNTAX_GUIDE = {
   constructs: {
     comment: {

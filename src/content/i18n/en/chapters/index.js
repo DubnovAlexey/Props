@@ -8,18 +8,10 @@ import setup from './01-setup.js';
 import components from './02-components.js';
 import jsBasics from './03-js-basics.js';
 import functions from './04-functions.js';
+import arrays from './05-arrays.js';
+import passing from './06-passing.js';
 
 const HEADERS = {
-  arrays: {
-    cave: 'Cave of Swarms',
-    title: 'Arrays, truthiness and template strings',
-    goal: 'Master the array methods that lists in React rest on, see the difference between a mutation and a copy, and sort out “truthy” and “falsy” values.',
-  },
-  passing: {
-    cave: 'Parcel Grotto',
-    title: 'Passing and receiving props',
-    goal: 'Learn to pass any data in props and to receive it correctly.',
-  },
   flow: {
     cave: 'Underground Waterfall',
     title: 'Downward flow and immutability',
@@ -88,4 +80,6 @@ export const CHAPTERS = {
   components,
   'js-basics': jsBasics,
   functions,
+  arrays,
+  passing,
 };

@@ -5,6 +5,10 @@
 //   simple — простыми словами; tech — технически;
 //   example и code — только если в оригинале в них есть русские слова.
 // Чего здесь нет (например, title у useState), то берётся из оригинала: оно и так на латинице.
+// Примеры кода в строках («code», «fix», текст с тегами) IntelliJ проверяет как настоящий код и ругается
+// на «неиспользуемые» функции и картинки без alt. Это учебные фрагменты, а не код игры: для них эти
+// проверки выключены. Код игры они по-прежнему проверяют.
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
 export const GLOSSARY = {
   react: {
     simple: 'A library that builds an interface out of blocks called components and updates the page by itself when the data changes.',
