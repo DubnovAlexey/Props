@@ -114,14 +114,14 @@ describe('функция перевода', () => {
 
 describe('французская типографика', () => {
   it('пробел перед двоеточием, «;», «!», «?» и в кавычках становится неразрывным', () => {
-    expect(frenchSpaces('Rang : {rank} ; « Props » ? Oui !')).toBe('Rang : {rank} ; « Props » ? Oui !');
+    expect(frenchSpaces('Rang : {rank} ; « Props » ? Oui !')).toBe('Rang\u00a0: {rank}\u00a0; «\u00a0Props\u00a0»\u00a0? Oui\u00a0!');
     expect(frenchSpaces('Sans ponctuation double')).toBe('Sans ponctuation double');
   });
 
   it('обходит весь словарь, сохраняя его устройство', () => {
     expect(mapStrings({ a: 'x :', b: ['y !', { c: 'z ?' }], n: 5 }, frenchSpaces)).toEqual({
-      a: 'x :',
-      b: ['y !', { c: 'z ?' }],
+      a: 'x\u00a0:',
+      b: ['y\u00a0!', { c: 'z\u00a0?' }],
       n: 5,
     });
   });
@@ -187,7 +187,7 @@ describe('словари интерфейса', () => {
     const dictionary = new Map(leaves(await loadDictionary('he')));
     const latinOnly = ruLeaves
       .filter(([, ruValue]) => textsOf(ruValue).some((text) => /[А-Яа-яЁё]/.test(text)))
-      .filter(([key]) => !textsOf(dictionary.get(key)).some((text) => /[֐-׿]/.test(text)))
+      .filter(([key]) => !textsOf(dictionary.get(key)).some((text) => /[\u0590-\u05ff]/.test(text)))
       .map(([key]) => key);
     // там, где в русском словаре слова, в ивритском не должно остаться одной латиницы
     expect(latinOnly).toEqual([]);
@@ -203,7 +203,7 @@ describe('словари интерфейса', () => {
     expect(glued).toEqual([]);
 
     const loaded = leaves(await loadDictionary('fr')).flatMap(([, value]) => textsOf(value));
-    expect(loaded.some((text) => text.includes(' :'))).toBe(true);
+    expect(loaded.some((text) => text.includes('\u00a0:'))).toBe(true);
     for (const text of loaded) expect(text).not.toMatch(/ [:;!?»]|« /);
   });
 

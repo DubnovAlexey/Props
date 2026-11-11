@@ -16,6 +16,7 @@
 //   as — какой тег рисовать ('h1' по умолчанию, можно 'h2'); остальные пропсы уходят в тег.
 import { Children, cloneElement, isValidElement, useLayoutEffect, useRef, useState } from 'react';
 import { letterJitter, pickDripLetters } from '../../utils/bloodDrips.js';
+import { textDirection, wordScript } from '../../i18n/direction.js';
 import styles from './BloodTitle.module.css';
 
 // «Обычное слово»: только буквы, цифры и знаки препинания. Всё остальное (эмодзи, значки)
@@ -24,41 +25,88 @@ const PLAIN_WORD = /^[\p{L}\p{M}\p{N}\p{P}]+$/u;
 // «Буква целиком»: сам символ и приставшие к нему знаки (ударение, огласовки в иврите)
 const GRAPHEME = /\P{M}\p{M}*/gu;
 
-/** Текст → слова-блоки с «пляшущими» буквами. Пробелы и эмодзи остаются как есть */
-function roughText(text, keyPrefix) {
-  return text.split(/(\s+)/).map((token, position) => {
-    if (!PLAIN_WORD.test(token)) return token;
-    const chars = token.match(GRAPHEME) ?? [];
-    const jitter = letterJitter(chars, `${token}${position}`);
-    return (
-      <span key={`${keyPrefix}${position}`} className={styles.word}>
-        {chars.map((char, index) => {
-          const move = jitter[index];
-          if (!move) return char;
-          return (
-            <span
-              key={index}
-              className={styles.letter}
-              style={{ transform: `translateY(${move.shift}em) rotate(${move.rotate}deg) scale(${move.scale})` }}
-            >
-              {char}
-            </span>
-          );
-        })}
-      </span>
-    );
-  });
+/** Одно слово: неразрывный блок, внутри — «пляшущие» буквы */
+function wordSpan(token, key) {
+  const chars = token.match(GRAPHEME) ?? [];
+  const jitter = letterJitter(chars, key);
+  return (
+    <span key={key} className={styles.word}>
+      {chars.map((char, index) => {
+        const move = jitter[index];
+        if (!move) return char;
+        return (
+          <span
+            key={index}
+            className={styles.letter}
+            style={{ transform: `translateY(${move.shift}em) rotate(${move.rotate}deg) scale(${move.scale})` }}
+          >
+            {char}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+/**
+ * Текст → слова-блоки с «пляшущими» буквами. Пробелы и эмодзи остаются как есть.
+ * base — направление всего заголовка ('ltr' или 'rtl').
+ *
+ * Тонкость. Буква-блок для браузера — «картинка», а не буква: порядок таких блоков он
+ * выстраивает по направлению строки. Поэтому русское слово в строке на иврите вышло бы
+ * задом наперёд. Чтобы этого не было:
+ *   • слово, где смешаны оба письма («ל‑props»), на буквы не режем — его расставит браузер;
+ *   • в заголовке справа налево идущие подряд «левые» слова собираем в группу dir="ltr":
+ *     внутри неё и буквы, и слова стоят слева направо.
+ */
+function roughText(text, keyPrefix, base) {
+  const tokens = text.split(/(\s+)/);
+  const isWord = (token) => PLAIN_WORD.test(token);
+  const result = [];
+
+  for (let i = 0; i < tokens.length; i += 1) {
+    const token = tokens[i];
+    const script = isWord(token) ? wordScript(token) : 'skip';
+    if (script === 'skip' || script === 'mixed') {
+      result.push(token);
+    } else if (base === 'rtl' && script === 'ltr') {
+      const start = i;
+      const run = [wordSpan(token, `${keyPrefix}${i}`)];
+      while (i + 2 < tokens.length && isWord(tokens[i + 2]) && wordScript(tokens[i + 2]) === 'ltr') {
+        run.push(tokens[i + 1], wordSpan(tokens[i + 2], `${keyPrefix}${i + 2}`));
+        i += 2;
+      }
+      result.push(
+        <span key={`${keyPrefix}run${start}`} dir="ltr">
+          {run}
+        </span>,
+      );
+    } else {
+      result.push(wordSpan(token, `${keyPrefix}${i}`));
+    }
+  }
+  return result;
 }
 
 /** Обходит содержимое заголовка: строки делает «неровными», вложенные теги (например, <span>) — тоже */
-function roughen(children, keyPrefix = 'w') {
+function roughen(children, base, keyPrefix = 'w') {
   return Children.map(children, (child, index) => {
-    if (typeof child === 'string' || typeof child === 'number') return roughText(String(child), `${keyPrefix}${index}-`);
+    if (typeof child === 'string' || typeof child === 'number') return roughText(String(child), `${keyPrefix}${index}-`, base);
     if (isValidElement(child) && typeof child.type === 'string') {
-      return cloneElement(child, undefined, roughen(child.props.children, `${keyPrefix}${index}-`));
+      return cloneElement(child, undefined, roughen(child.props.children, base, `${keyPrefix}${index}-`));
     }
     return child;
   });
+}
+
+/** Весь текст заголовка одной строкой — по нему определяем направление письма */
+function plainText(children) {
+  return Children.toArray(children)
+    .map((child) => {
+      if (typeof child === 'string' || typeof child === 'number') return String(child);
+      return isValidElement(child) ? plainText(child.props.children) : '';
+    })
+    .join('');
 }
 
 /** Насколько шрифт опускается ниже строки (для букв вроде «р» и «у»), в пикселях */
@@ -141,6 +189,9 @@ function dripPath(w, l, flare) {
 export default function BloodTitle({ as: Tag = 'h1', className = '', children, ...rest }) {
   const ref = useRef(null);
   const [drips, setDrips] = useState([]);
+  // Направление заголовка — по его буквам, а не по языку страницы: уроки пока на русском,
+  // и на странице на иврите русский заголовок должен остаться «слева направо»
+  const base = textDirection(plainText(children));
 
   useLayoutEffect(() => {
     const element = ref.current;
@@ -162,8 +213,8 @@ export default function BloodTitle({ as: Tag = 'h1', className = '', children, .
   }, [children]);
 
   return (
-    <Tag ref={ref} className={`${styles.title} ${className}`} {...rest}>
-      <span className={styles.rough}>{roughen(children)}</span>
+    <Tag ref={ref} dir={base} className={`${styles.title} ${className}`} {...rest}>
+      <span className={styles.rough}>{roughen(children, base)}</span>
       <span className={styles.drips} data-drips aria-hidden="true">
         {drips.map((drip) => {
           const flare = drip.width * 0.5;
