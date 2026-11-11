@@ -8,17 +8,19 @@ import KeyPoint from '../../components/KeyPoint/KeyPoint.jsx';
 import Diagram from '../../components/Diagram/Diagram.jsx';
 import Scheme from '../../components/Scheme/Scheme.jsx';
 import SyntaxExplain from '../../components/SyntaxExplain/SyntaxExplain.jsx';
-import { GLOSSARY_MAP } from '../../content/glossary.js';
-import { termIdsIn } from '../../utils/richText.js';
+import { sameWord, termIdsIn } from '../../utils/richText.js';
 import styles from './Chapter.module.css';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 /** Термины карточки с настоящими написаниями: «пропсы → props» */
 function TermStrip({ card }) {
   const { t } = useI18n();
+  const { GLOSSARY_MAP } = useContent();
   const texts = [...(card.body ?? []), ...(card.after ?? []), card.key ?? '', card.analogy ?? ''];
   const ids = [...new Set(texts.flatMap((text) => termIdsIn(text)))];
-  const entries = ids.map((id) => GLOSSARY_MAP[id]).filter((entry) => entry?.en || entry?.code);
+  // Показываем термин, только если есть что добавить к его названию: английское написание или запись в коде.
+  // В английской игре название и написание часто совпадают («React», «Vite») — такие строки не нужны.
+  const entries = ids.map((id) => GLOSSARY_MAP[id]).filter((entry) => (entry?.en && !sameWord(entry.en, entry.title)) || entry?.code);
   if (entries.length === 0) return null;
   return (
     <div className={styles.termStrip}>
@@ -29,8 +31,12 @@ function TermStrip({ card }) {
         {entries.map((entry) => (
           <li key={entry.id}>
             <span className={styles.termRu}>{entry.title}</span>
-            <span aria-hidden="true"> → </span>
-            <span lang="en">{entry.en}</span>
+            {entry.en && !sameWord(entry.en, entry.title) && (
+              <>
+                <span aria-hidden="true"> → </span>
+                <span lang="en">{entry.en}</span>
+              </>
+            )}
             {entry.code && entry.code !== entry.en && <code>{entry.code}</code>}
           </li>
         ))}

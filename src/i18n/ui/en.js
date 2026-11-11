@@ -1,5 +1,5 @@
 // English interface dictionary. It mirrors ru.js key for key (the tests check this).
-// The lessons themselves are not translated yet — see lang.notice.
+// The lessons are translated cave by cave (src/content/i18n/en/) — see lang.partial.
 export default {
   meta: {
     title: 'Props — The Caves of Count Propsula',
@@ -9,11 +9,13 @@ export default {
   lang: {
     choose: 'Game language',
     notice: 'The interface is in English now. The lessons, tasks and glossary are still in Russian — their translation is on the way.',
+    partial: 'Caves translated so far: {done} of {total}. Everything else is still in Russian — the translation goes on.',
   },
 
   common: {
     count: 'Count Propsula',
     bat: 'Lunatik',
+    quote: '“{text}”',
     sections: 'Sections',
     toMap: 'To the cave map',
     toMapShort: 'To the map',

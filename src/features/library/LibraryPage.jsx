@@ -6,7 +6,6 @@
 // код приложения не толстеет. Promise раздела создаётся заранее и кэшируется,
 // а use() + Suspense ждут его — живой пример из пещеры «Подземная река».
 import { Suspense, use, useEffect } from 'react';
-import { CHAPTERS, CHAPTER_MAP } from '../../content/chapters/index.js';
 import SECTIONS from '../../content/library/sections.json';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import LessonCard from '../chapter/LessonCard.jsx';
@@ -17,7 +16,7 @@ import { useMascot } from '../../mascot/MascotContext.jsx';
 
 import styles from './Library.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 const LOADERS = import.meta.glob('../../content/library/sections/*.md', { query: '?raw', import: 'default' });
 const cache = new Map();
@@ -56,6 +55,7 @@ function Loading() {
 
 function LibraryIndex() {
   const { t } = useI18n();
+  const { CHAPTERS } = useContent();
   useGrafSays(t('mascot.route.library'));
   return (
     <div className="stack">
@@ -104,6 +104,7 @@ function LibraryIndex() {
 
 function CaveScroll({ chapter }) {
   const { t } = useI18n();
+  const { CHAPTERS } = useContent();
   const related = SECTIONS.filter((section) => section.caves.includes(chapter.id));
   const index = CHAPTERS.indexOf(chapter);
   const prev = CHAPTERS[index - 1];
@@ -158,6 +159,7 @@ function CaveScroll({ chapter }) {
 
 function SectionScroll({ section }) {
   const { t } = useI18n();
+  const { CHAPTER_MAP } = useContent();
   const index = SECTIONS.indexOf(section);
   const prev = SECTIONS[index - 1];
   const next = SECTIONS[index + 1];
@@ -215,6 +217,7 @@ function SectionScroll({ section }) {
 }
 
 export default function LibraryPage({ topic }) {
+  const { CHAPTER_MAP } = useContent();
   if (!topic) return <LibraryIndex />;
   if (CHAPTER_MAP[topic]) return <CaveScroll chapter={CHAPTER_MAP[topic]} />;
   const section = SECTIONS.find((item) => item.id === topic);

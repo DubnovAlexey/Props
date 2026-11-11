@@ -2,7 +2,6 @@
 // разминка → урок → заклинание → практика → объясни Лунатику → перемена → итог.
 // Шаги можно переключать вручную: свобода выбора поддерживает мотивацию.
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_TASKS, CHAPTERS, CHAPTER_MAP } from '../../content/chapters/index.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { XP, isPassed, neededCorrect } from '../../state/progressReducer.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
@@ -21,7 +20,7 @@ import { sfx } from '../../audio/sfx.js';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 
 const STEPS = [
@@ -46,6 +45,7 @@ function firstStepFor(done) {
 
 export default function ChapterPage({ chapterId }) {
   const { t } = useI18n();
+  const { ALL_TASKS, CHAPTERS, CHAPTER_MAP } = useContent();
   const chapter = CHAPTER_MAP[chapterId];
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
@@ -53,7 +53,7 @@ export default function ChapterPage({ chapterId }) {
   const [step, setStep] = useState(() => firstStepFor(progress.chapters[chapterId] ?? {}));
   const [cardIndex, setCardIndex] = useState(0);
   const [summary, setSummary] = useState(null);
-  const tasks = useMemo(() => ALL_TASKS.filter((task) => task.chapterId === chapterId), [chapterId]);
+  const tasks = useMemo(() => ALL_TASKS.filter((task) => task.chapterId === chapterId), [ALL_TASKS, chapterId]);
 
   useEffect(() => {
     if (chapter) say(t('chapter.greeting', { cave: chapter.cave, goal: chapter.goal }), 'wave');
@@ -237,7 +237,7 @@ export default function ChapterPage({ chapterId }) {
         <div className={`card stack anim-in ${styles.standing}`}>
           <div className={styles.standingHost}>
             <Guardian id={chapter.id} size={96} label={`${chapter.story.guardian.kind} ${chapter.story.guardian.name}`} />
-            <blockquote className={styles.standingThreat}>«{chapter.story.guardian.threat}»</blockquote>
+            <blockquote className={styles.standingThreat}>{t('common.quote', { text: chapter.story.guardian.threat })}</blockquote>
           </div>
           <span className="eyebrow">{t('chapter.summaryEyebrow')}</span>
           {summary ? (
@@ -292,7 +292,7 @@ export default function ChapterPage({ chapterId }) {
               done.practiceBest !== undefined && <p>{t('chapter.bestResult', { percent: Math.round(done.practiceBest * 100) })}</p>
             )}
             <p className="muted">
-              {t('chapter.spellOfCave')} <i>«{chapter.spell.text}»</i>
+              {t('chapter.spellOfCave')} <i>{t('common.quote', { text: chapter.spell.text })}</i>
             </p>
             <div className="row">
               {nextChapter ? (

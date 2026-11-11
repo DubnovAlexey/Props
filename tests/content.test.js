@@ -8,61 +8,14 @@ import { BREAK_ROUNDS } from '../src/content/breakRounds.js';
 import { FACTS } from '../src/content/facts.js';
 import { METHODS } from '../src/content/methods.js';
 import { DIAGRAM_NAMES } from '../src/components/Diagram/Diagram.jsx';
-import { checkTask, checkers } from '../src/utils/checkAnswer.js';
+import { checkTask } from '../src/utils/checkAnswer.js';
+import { correctValue, expectValidTask, wrongValue } from './taskChecks.js';
 import { parseInline, termIdsIn } from '../src/utils/richText.js';
 import { SYNTAX } from '../src/content/chapters/index.js';
 import { CHAPTER_STORY, TIERS } from '../src/content/story.js';
 import { TASK_LEVELS } from '../src/content/difficulty.js';
 import { TERM_CODE } from '../src/content/glossaryCode.js';
 import { SCHEME_TYPES } from '../src/components/Scheme/Scheme.jsx';
-
-/** Правильный ответ, собранный из данных задания */
-function correctValue(task) {
-  switch (task.type) {
-    case 'choice':
-      return task.options.flatMap((option, i) => (option.correct ? [i] : []));
-    case 'truefalse':
-      return task.answer;
-    case 'input':
-      return task.answers[0];
-    case 'fill':
-      return [...task.answers];
-    case 'bug':
-      return task.bugLine;
-    case 'order':
-      return task.items.map((_, i) => i);
-    case 'match':
-      return Object.fromEntries(task.pairs.map((_, i) => [i, i]));
-    case 'sort':
-      return task.items.map((item) => item.bin);
-    default:
-      throw new Error(task.type);
-  }
-}
-
-/** Заведомо неверный ответ */
-function wrongValue(task) {
-  switch (task.type) {
-    case 'choice':
-      return [task.options.findIndex((option) => !option.correct)];
-    case 'truefalse':
-      return !task.answer;
-    case 'input':
-      return 'заведомо неверный ответ';
-    case 'fill':
-      return task.answers.map(() => '???');
-    case 'bug':
-      return task.bugLine === 1 ? 2 : 1;
-    case 'order':
-      return task.items.map((_, i) => i).reverse();
-    case 'match':
-      return Object.fromEntries(task.pairs.map((_, i) => [i, (i + 1) % task.pairs.length]));
-    case 'sort':
-      return task.items.map((item) => (item.bin + 1) % task.bins.length);
-    default:
-      throw new Error(task.type);
-  }
-}
 
 /** Все тексты главы, где может встретиться разметка [[термин]] */
 function textsOf(chapter) {
@@ -145,46 +98,7 @@ describe('задания', () => {
     for (const task of ALL_TASKS) expect(task.id.startsWith(task.chapterId), task.id).toBe(true);
   });
 
-  it.each(ALL_TASKS.map((t) => [t.id, t]))('%s: корректные данные', (_, task) => {
-    expect(Object.keys(checkers)).toContain(task.type);
-    expect(task.explain, 'нужно пояснение').toBeTruthy();
-
-    if (task.type === 'choice') {
-      expect(task.options.length).toBeGreaterThanOrEqual(2);
-      expect(task.options.some((o) => o.correct)).toBe(true);
-      for (const option of task.options.filter((o) => !o.correct)) {
-        expect(option.why, `нет объяснения для «${option.text}»`).toBeTruthy();
-      }
-    }
-    if (task.type === 'truefalse') expect(typeof task.answer).toBe('boolean');
-    if (task.type === 'input') expect(task.answers.length).toBeGreaterThan(0);
-    if (task.type === 'fill') {
-      const blanks = task.code.split('___').length - 1;
-      expect(blanks, 'пропусков столько же, сколько ответов').toBe(task.answers.length);
-      const bank = [...task.bank];
-      for (const answer of task.answers) {
-        const index = bank.indexOf(answer);
-        expect(index, `кусочка «${answer}» нет в банке`).toBeGreaterThanOrEqual(0);
-        bank.splice(index, 1);
-      }
-      expect(bank.length, 'нужен хотя бы один лишний кусочек').toBeGreaterThan(0);
-    }
-    if (task.type === 'bug') {
-      const lines = task.code.split('\n').length;
-      expect(task.bugLine).toBeGreaterThanOrEqual(1);
-      expect(task.bugLine).toBeLessThanOrEqual(lines);
-      expect(task.fix).toBeTruthy();
-    }
-    if (task.type === 'order') expect(task.items.length).toBeGreaterThanOrEqual(3);
-    if (task.type === 'match') {
-      expect(task.pairs.length).toBeGreaterThanOrEqual(3);
-      expect(new Set(task.pairs.map(([, right]) => right)).size).toBe(task.pairs.length);
-    }
-    if (task.type === 'sort') {
-      expect(task.bins.length).toBeGreaterThanOrEqual(2);
-      for (const item of task.items) expect(item.bin).toBeLessThan(task.bins.length);
-    }
-  });
+  it.each(ALL_TASKS.map((t) => [t.id, t]))('%s: корректные данные', (_, task) => expectValidTask(task));
 
   it.each(ALL_TASKS.map((t) => [t.id, t]))('%s: верный ответ принимается, неверный — нет', (_, task) => {
     expect(checkTask(task, correctValue(task))).toBe(true);

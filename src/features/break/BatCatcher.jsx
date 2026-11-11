@@ -4,19 +4,21 @@
 import { sfx } from '../../audio/sfx.js';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import Bat from '../../mascot/Bat.jsx';
-import { BREAK_ROUNDS } from '../../content/breakRounds.js';
 import { pick } from '../../utils/random.js';
 import { useReducedMotion } from '../../hooks/useMediaQuery.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import styles from './BatCatcher.module.css';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 
 // Пропсы: onScore(очки) — вызывается сам, когда время вышло (например, чтобы записать рекорд);
 //         onFinish(очки) — по кнопке «дальше» (её подпись — finishLabel). Оба необязательные.
 export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, finishLabel }) {
   const { t } = useI18n();
-  const [round, setRound] = useState(() => BREAK_ROUNDS[roundId] ?? pick(Object.values(BREAK_ROUNDS)));
+  const { BREAK_ROUNDS } = useContent();
+  // В состоянии — только id раунда: сам раунд (с надписями на языке игрока) берём из содержимого
+  const [currentId, setCurrentId] = useState(() => (BREAK_ROUNDS[roundId] ? roundId : pick(Object.keys(BREAK_ROUNDS))));
+  const round = BREAK_ROUNDS[currentId];
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState('intro'); // intro → play → over
   const [timeLeft, setTimeLeft] = useState(duration);
@@ -101,8 +103,7 @@ export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, 
   }
 
   function another() {
-    const others = Object.values(BREAK_ROUNDS).filter((item) => item !== round);
-    setRound(pick(others));
+    setCurrentId(pick(Object.keys(BREAK_ROUNDS).filter((id) => id !== currentId)));
     setPhase('intro');
   }
 

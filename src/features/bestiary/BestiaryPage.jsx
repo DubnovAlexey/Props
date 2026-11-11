@@ -2,7 +2,6 @@
 // Повторять по картинкам быстро: смотришь на чудище — вспоминаешь тему
 // (двойное кодирование: образ + слово). Побеждённые хозяева тускнеют.
 import { useEffect } from 'react';
-import { CHAPTERS } from '../../content/chapters/index.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 
@@ -11,11 +10,12 @@ import Vampire from '../../mascot/Vampire.jsx';
 import { to } from '../../app/useHashRoute.js';
 import styles from './Bestiary.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 
 export default function BestiaryPage() {
   const { t } = useI18n();
+  const { CHAPTERS } = useContent();
   const { progress } = useProgress();
   const { say } = useMascot();
 

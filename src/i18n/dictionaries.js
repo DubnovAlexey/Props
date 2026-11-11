@@ -1,10 +1,11 @@
-// Загрузка словарей интерфейса.
+// Загрузка языка: словаря интерфейса и уроков.
 // Русский словарь вшит в основной код: он нужен всегда — и как язык по умолчанию, и как
 // запасной (если в другом языке забыли строку). Остальные словари лежат отдельными
 // кусками кода и подгружаются, только когда язык выбран: import.meta.glob — способ сборщика
 // Vite сказать «возьми все файлы по шаблону и грузи каждый по требованию».
 import { pickLanguage } from './languages.js';
 import { frenchSpaces, mapStrings } from './typography.js';
+import { loadContent } from '../content/index.js';
 import ru from './ui/ru.js';
 
 const loaders = import.meta.glob(['./ui/*.js', '!./ui/ru.js']);
@@ -30,12 +31,20 @@ export async function loadDictionary(lang) {
 }
 
 /**
- * Готовит язык к запуску игры: выбирает его и загружает словарь ДО первой отрисовки,
+ * Всё, что нужно для языка: словарь интерфейса и уроки (content — см. src/content/index.js).
+ * Грузим оба сразу и ждём оба: так страница не окажется наполовину на одном языке, наполовину на другом.
+ */
+export async function loadLanguage(lang) {
+  const [dictionary, content] = await Promise.all([loadDictionary(lang), loadContent(lang)]);
+  return { lang, dictionary, content };
+}
+
+/**
+ * Готовит язык к запуску игры: выбирает его и загружает словарь и уроки ДО первой отрисовки,
  * чтобы страница не мигнула русским текстом перед тем, как переключиться.
  * @param {string|null|undefined} saved — язык, сохранённый вместе с прогрессом
  * @param {readonly string[]} [browserLanguages] — языки браузера
  */
-export async function bootstrapLanguage(saved, browserLanguages) {
-  const lang = pickLanguage(saved, browserLanguages);
-  return { lang, dictionary: await loadDictionary(lang) };
+export function bootstrapLanguage(saved, browserLanguages) {
+  return loadLanguage(pickLanguage(saved, browserLanguages));
 }

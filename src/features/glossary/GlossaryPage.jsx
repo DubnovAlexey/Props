@@ -2,20 +2,20 @@
 // Поиск фильтрует список на лету — это «вычисляемое значение»:
 // отфильтрованный список не хранится в состоянии, а считается при рендере.
 import Spelling from '../../components/Spelling/Spelling.jsx';
-import { useEffect, useState } from 'react';
-import { GLOSSARY, GLOSSARY_MAP } from '../../content/glossary.js';
+import { useEffect, useMemo, useState } from 'react';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 
 import CodeBlock from '../../components/CodeBlock/CodeBlock.jsx';
 import styles from './Glossary.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
-
-const SORTED = [...GLOSSARY].sort((a, b) => a.title.localeCompare(b.title, 'ru'));
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function GlossaryPage({ focusId }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const { GLOSSARY, GLOSSARY_MAP } = useContent();
+  // По алфавиту языка игрока. useMemo: сортировать 117 терминов при каждом нажатии клавиши незачем
+  const sorted = useMemo(() => [...GLOSSARY].sort((a, b) => a.title.localeCompare(b.title, lang)), [GLOSSARY, lang]);
   const [query, setQuery] = useState('');
   const { say } = useMascot();
 
@@ -34,10 +34,10 @@ export default function GlossaryPage({ focusId }) {
 
   const needle = query.trim().toLowerCase();
   const list = needle
-    ? SORTED.filter((entry) =>
+    ? sorted.filter((entry) =>
         [entry.title, entry.simple, entry.tech ?? '', entry.en ?? '', entry.code ?? ''].join(' ').toLowerCase().includes(needle),
       )
-    : SORTED;
+    : sorted;
 
   return (
     <div className="stack">

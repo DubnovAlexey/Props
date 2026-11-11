@@ -11,12 +11,16 @@ export function normalizeCode(value) {
     .replace(/;$/, '');
 }
 
-/** Для слов: только буквы и цифры, «ё» = «е» */
+/**
+ * Для слов: только буквы и цифры, «ё» = «е». Буквы — любого алфавита (\p{L}): ответ можно
+ * дать и по-русски, и по-английски, и на иврите. Будь тут только a–z и а–я, ивритский ответ
+ * «стёрся» бы целиком, и верным считался бы любой набор букв.
+ */
 export function normalizeLoose(value) {
   return String(value)
     .toLowerCase()
     .replace(/ё/g, 'е')
-    .replace(/[^a-zа-я0-9]/g, '');
+    .replace(/[^\p{L}\p{N}]/gu, '');
 }
 
 function sameSet(a, b) {

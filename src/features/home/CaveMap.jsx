@@ -4,8 +4,6 @@
 // Пещеры сгруппированы по ярусам: чем глубже, тем сложнее.
 import { useEffect, useState } from 'react';
 import { dayKey } from '../../utils/dates.js';
-import { CHAPTERS } from '../../content/chapters/index.js';
-import { FACTS } from '../../content/facts.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { useReducedMotion } from '../../hooks/useMediaQuery.js';
@@ -14,7 +12,6 @@ import { rankFor } from '../../utils/ranks.js';
 import { dueIds } from '../../utils/leitner.js';
 import { pick } from '../../utils/random.js';
 import { RichBlocks, RichText } from '../../components/RichText/RichText.jsx';
-import { EPILOGUE, FINALE, PROLOGUE, TIERS } from '../../content/story.js';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import ProgressBar from '../../components/ProgressBar/ProgressBar.jsx';
 import Bat from '../../mascot/Bat.jsx';
@@ -23,7 +20,7 @@ import CaveNode from './CaveNode.jsx';
 import styles from './CaveMap.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 /**
  * «Начать игру заново»: сначала спрашиваем подтверждение — стёртый прогресс не вернуть.
@@ -95,7 +92,9 @@ export default function CaveMap() {
   const { t } = useI18n();
   const { progress } = useProgress();
   const { say } = useMascot();
-  const [fact, setFact] = useState(() => pick(FACTS));
+  const { CHAPTERS, FACTS, EPILOGUE, FINALE, PROLOGUE, TIERS, translatedCaves } = useContent();
+  // В состоянии — номер факта, а не текст: сменится язык — тот же факт покажется на новом языке
+  const [factIndex, setFactIndex] = useState(() => pick(FACTS.map((_, i) => i)));
   const isNew = progress.xp === 0;
 
   useEffect(() => {
@@ -133,7 +132,12 @@ export default function CaveMap() {
         <CaveArt />
       </section>
 
-      {t('lang.notice') && <p className="card small">{t('lang.notice')}</p>}
+      {/* Честное предупреждение, пока на языке игрока переведены не все пещеры */}
+      {translatedCaves < CHAPTERS.length && (
+        <p className="card small">
+          {translatedCaves === 0 ? t('lang.notice') : t('lang.partial', { done: translatedCaves, total: CHAPTERS.length })}
+        </p>
+      )}
 
       <section className={`card ${styles.rank}`}>
         <div className={styles.rankHead}>
@@ -246,9 +250,13 @@ export default function CaveMap() {
         <div>
           <span className="eyebrow">{t('map.factEyebrow')}</span>
           <p>
-            <RichText text={fact} />
+            <RichText text={FACTS[factIndex]} />
           </p>
-          <button type="button" className="btn btn-small" onClick={() => setFact(pick(FACTS.filter((item) => item !== fact)))}>
+          <button
+            type="button"
+            className="btn btn-small"
+            onClick={() => setFactIndex(pick(FACTS.map((_, i) => i).filter((i) => i !== factIndex)))}
+          >
             {t('map.factMore')}
           </button>
         </div>

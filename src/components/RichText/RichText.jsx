@@ -3,9 +3,10 @@
 // кнопки варианта ответа: кнопку нельзя вкладывать в кнопку).
 import Term from '../Term/Term.jsx';
 import { groupBlocks, parseInline } from '../../utils/richText.js';
-import { GLOSSARY_MAP } from '../../content/glossary.js';
+import { useContent } from '../../i18n/I18nContext.jsx';
 
 export function RichText({ text, interactive = true }) {
+  const { GLOSSARY_MAP } = useContent();
   return parseInline(text).map((token, i) => {
     if (token.type === 'bold') return <strong key={i}>{token.value}</strong>;
     if (token.type === 'code') return <code key={i}>{token.value}</code>;

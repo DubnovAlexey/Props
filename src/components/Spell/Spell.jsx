@@ -9,13 +9,14 @@ import { useI18n } from '../../i18n/I18nContext.jsx';
 const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
 
 export default function Spell({ spell }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   // Ушли со страницы — замолкаем: функция очистки эффекта выполняется при размонтировании
   useEffect(() => () => window.speechSynthesis?.cancel(), []);
 
   function speak() {
     const utterance = new SpeechSynthesisUtterance(spell.text);
-    utterance.lang = 'ru-RU';
+    // Голос подбираем по языку самого заклинания: непереведённая пещера остаётся русской на любом языке игры
+    utterance.lang = /[а-яё]/i.test(spell.text) ? 'ru' : lang;
     utterance.rate = 0.95;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
@@ -24,7 +25,7 @@ export default function Spell({ spell }) {
   return (
     <div className={styles.scroll}>
       <span className="eyebrow">{t('spell.eyebrow')}</span>
-      <p className={styles.text}>«{spell.text}»</p>
+      <p className={styles.text}>{t('common.quote', { text: spell.text })}</p>
       {spell.meaning && (
         <p className={styles.meaning}>
           <RichText text={spell.meaning} />

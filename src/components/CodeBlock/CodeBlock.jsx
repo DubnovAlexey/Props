@@ -7,10 +7,9 @@
 import { useMemo, useState } from 'react';
 import { splitLines, tokenizeLine } from '../../utils/highlight.js';
 import { explainCode } from '../../utils/syntaxGuide.js';
-import { GLOSSARY_MAP } from '../../content/glossary.js';
 import { to } from '../../app/useHashRoute.js';
 import styles from './CodeBlock.module.css';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 function Tokens({ tokens, picked, onPick }) {
   return tokens.map((token, i) => {
@@ -30,6 +29,7 @@ function Tokens({ tokens, picked, onPick }) {
 
 function AnatomyPanel({ constructs, picked, onPick }) {
   const { t } = useI18n();
+  const { GLOSSARY_MAP } = useContent();
   const current = constructs.find((item) => item.cid === picked);
   const term = current?.term ? GLOSSARY_MAP[current.term] : null;
   return (
@@ -82,10 +82,11 @@ export default function CodeBlock({
   anatomy = false,
 }) {
   const { t } = useI18n();
+  const { SYNTAX_GUIDE } = useContent();
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState(null);
   const canExplain = anatomy && !onLineClick && !renderSlot;
-  const explained = useMemo(() => (open ? explainCode(code) : null), [open, code]);
+  const explained = useMemo(() => (open ? explainCode(code, SYNTAX_GUIDE) : null), [open, code, SYNTAX_GUIDE]);
   const lines = explained ? explained.lines : splitLines(code).map(tokenizeLine);
   const onPick = explained ? setPicked : null;
   let slotCounter = 0;

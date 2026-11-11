@@ -7,20 +7,19 @@ import Bat from '../../mascot/Bat.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { RichText } from '../RichText/RichText.jsx';
 import { stripMarkup } from '../../utils/richText.js';
-import { GLOSSARY_MAP } from '../../content/glossary.js';
 import styles from './KeyPoint.module.css';
-import { useI18n } from '../../i18n/I18nContext.jsx';
-
-const labelFor = (id) => GLOSSARY_MAP[id]?.label ?? id;
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function KeyPoint({ text, label }) {
   const { t } = useI18n();
+  const { GLOSSARY_MAP } = useContent();
   const ref = useRef(null);
   const { pointAt, release } = useMascot();
 
   useEffect(() => {
     const element = ref.current;
-    const plain = stripMarkup(text, labelFor);
+    // Граф произносит текст без разметки: вместо [[id]] — подпись термина из словаря
+    const plain = stripMarkup(text, (id) => GLOSSARY_MAP[id]?.label ?? id);
     const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? pointAt(element, plain) : release(element)), {
       threshold: 0.6,
     });
@@ -29,7 +28,7 @@ export default function KeyPoint({ text, label }) {
       observer.disconnect();
       release(element);
     };
-  }, [text, pointAt, release]);
+  }, [text, pointAt, release, GLOSSARY_MAP]);
 
   return (
     <aside ref={ref} className={styles.key}>

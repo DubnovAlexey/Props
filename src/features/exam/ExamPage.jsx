@@ -1,8 +1,7 @@
 // Испытание Графа: по заданию из каждой пещеры и ещё пара случайных — вперемешку, без подсказок.
 // Смешанная проверка (чередование) показывает, понимаешь ли ты темы
 // настолько, чтобы различать их, а не только решать «по главе».
-import { useEffect, useState } from 'react';
-import { ALL_TASKS, CHAPTERS } from '../../content/chapters/index.js';
+import { useEffect, useMemo, useState } from 'react';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 
@@ -12,16 +11,19 @@ import Bat from '../../mascot/Bat.jsx';
 import styles from './Exam.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { interpolate } from '../../i18n/translate.js';
 
 const EXTRA_TASKS = 2;
 
-/** По одному случайному заданию из каждой пещеры и ещё несколько любых */
-export function buildExam() {
-  const perCave = CHAPTERS.map((chapter) => pick(ALL_TASKS.filter((task) => task.chapterId === chapter.id)));
-  const rest = shuffle(ALL_TASKS.filter((task) => !perCave.includes(task))).slice(0, EXTRA_TASKS);
-  return shuffle([...perCave, ...rest]);
+/**
+ * По одному случайному заданию из каждой пещеры и ещё несколько любых.
+ * Возвращает id заданий: по ним страница достаёт задания на языке игрока.
+ */
+export function buildExam(chapters, tasks) {
+  const perCave = chapters.map((chapter) => pick(tasks.filter((task) => task.chapterId === chapter.id)));
+  const rest = shuffle(tasks.filter((task) => !perCave.includes(task))).slice(0, EXTRA_TASKS);
+  return shuffle([...perCave, ...rest]).map((task) => task.id);
 }
 
 /** Номер вердикта в словаре (exam.verdicts): 0 — лучший результат, 3 — самый слабый */
@@ -34,18 +36,20 @@ function verdictIndex(score) {
 
 export default function ExamPage() {
   const { t } = useI18n();
+  const { ALL_TASKS, CHAPTERS, TASK_MAP } = useContent();
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
   const [phase, setPhase] = useState('intro');
-  const [tasks, setTasks] = useState([]);
+  const [taskIds, setTaskIds] = useState([]);
   const [summary, setSummary] = useState(null);
+  const tasks = useMemo(() => taskIds.map((id) => TASK_MAP[id]), [taskIds, TASK_MAP]);
 
   useEffect(() => {
     say(t('mascot.route.exam'), 'talk');
   }, [say, t]);
 
   function start() {
-    setTasks(buildExam());
+    setTaskIds(buildExam(CHAPTERS, ALL_TASKS));
     setSummary(null);
     setPhase('run');
   }

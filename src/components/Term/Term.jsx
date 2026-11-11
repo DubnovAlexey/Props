@@ -11,15 +11,14 @@
 import Spelling from '../Spelling/Spelling.jsx';
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { GLOSSARY_MAP } from '../../content/glossary.js';
 import { useHoverCapable } from '../../hooks/useMediaQuery.js';
 import styles from './Term.module.css';
 import { to } from '../../app/useHashRoute.js';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function Term({ id, children }) {
   const { t } = useI18n();
-  const entry = GLOSSARY_MAP[id];
+  const entry = useContent().GLOSSARY_MAP[id];
   const hoverCapable = useHoverCapable();
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState(null);

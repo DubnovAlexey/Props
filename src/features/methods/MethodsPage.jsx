@@ -1,15 +1,15 @@
 // «Методика»: какие психологические приёмы встроены в игру и почему.
 // Знать, КАК ты учишься (метапознание), — само по себе ускоряет обучение.
 import { useEffect } from 'react';
-import { METHODS, STUDY_PLAN } from '../../content/methods.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 
 import styles from './Methods.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function MethodsPage() {
   const { t } = useI18n();
+  const { METHODS, STUDY_PLAN } = useContent();
   const { say } = useMascot();
 
   useEffect(() => {

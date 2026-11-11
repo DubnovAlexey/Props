@@ -81,6 +81,14 @@ describe('проверка ответов', () => {
     expect(normalizeLoose('Подъём  состояния!')).toBe(normalizeLoose('подъем состояния'));
   });
 
+  it('«свободная» нормализация понимает буквы любого алфавита', () => {
+    expect(normalizeLoose('Lifting state up!')).toBe('liftingstateup');
+    expect(normalizeLoose('¿Elevación del estado?')).toBe('elevacióndelestado');
+    // ивритские буквы не стираются: разные слова остаются разными
+    expect(normalizeLoose('הרמת מצב')).toBe('הרמתמצב');
+    expect(normalizeLoose('הרמת מצב')).not.toBe(normalizeLoose('מילה אחרת'));
+  });
+
   it('множественный выбор требует ровно верный набор', () => {
     const task = { type: 'choice', options: [{ correct: true }, { correct: true }, {}] };
     expect(checkTask(task, [1, 0])).toBe(true);

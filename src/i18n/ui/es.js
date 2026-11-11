@@ -10,11 +10,13 @@ export default {
   lang: {
     choose: 'Idioma del juego',
     notice: 'La interfaz ya está en español. Las lecciones, las tareas y el glosario siguen en ruso: su traducción está en camino.',
+    partial: 'Cuevas traducidas por ahora: {done} de {total}. Lo demás sigue en ruso: la traducción continúa.',
   },
 
   common: {
     count: 'Conde Propsula',
     bat: 'Lunatik',
+    quote: '«{text}»',
     sections: 'Secciones',
     toMap: 'Al mapa de cuevas',
     toMapShort: 'Al mapa',

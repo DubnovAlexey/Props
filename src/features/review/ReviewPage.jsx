@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 
-import { TASK_MAP } from '../../content/chapters/index.js';
-import { GLOSSARY, GLOSSARY_MAP } from '../../content/glossary.js';
 import { boxCounts, dueIds } from '../../utils/leitner.js';
 import { shuffle } from '../../utils/random.js';
 import PracticeRunner from '../practice/PracticeRunner.jsx';
@@ -15,13 +13,14 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar.jsx';
 import Flashcard from './Flashcard.jsx';
 import styles from './Review.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 
 const NEW_CARDS_PER_SESSION = 8;
 
 export default function ReviewPage() {
   const { t } = useI18n();
+  const { TASK_MAP, GLOSSARY, GLOSSARY_MAP } = useContent();
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
   // «Сейчас» запоминаем в состоянии: список к повторению не должен меняться прямо во время сеанса.

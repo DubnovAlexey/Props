@@ -32,6 +32,18 @@ export function termIdsIn(text) {
     .map((token) => token.id);
 }
 
+/** Одно и то же слово? Регистр и пробелы по краям не важны: «Bundler» и «bundler» — одно слово */
+export function sameWord(a, b) {
+  return (
+    String(a ?? '')
+      .trim()
+      .toLowerCase() ===
+    String(b ?? '')
+      .trim()
+      .toLowerCase()
+  );
+}
+
 /** Текст без разметки — для реплик Графа и подписей */
 export function stripMarkup(text, labelFor = (id) => id) {
   return parseInline(text)

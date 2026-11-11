@@ -14,12 +14,12 @@ import { XP } from '../../state/progressReducer.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { phrase } from '../../mascot/phrases.js';
 import { checkTask } from '../../utils/checkAnswer.js';
-import { CHAPTER_MAP } from '../../content/chapters/index.js';
 import styles from './Practice.module.css';
-import { useI18n } from '../../i18n/I18nContext.jsx';
+import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function PracticeRunner({ tasks, onFinish, allowHints = true, showChapter = false }) {
   const { t } = useI18n();
+  const { CHAPTER_MAP } = useContent();
   const { dispatch } = useProgress();
   const { say } = useMascot();
   const [index, setIndex] = useState(0);

@@ -1,13 +1,15 @@
 // «Мастерская художника» — вся графика игры на одной странице: Граф во всех
-// настроениях и размерах, летучая мышь, заставка, хозяева пещер (живые и поверженные).
+// настроениях и размерах, летучая мышь, заставка, хозяева пещер (живые и поверженные),
+// схемы-картинки к урокам (на языке игры — так проверяют, что переведённые подписи влезли в рамки).
 // Нужна, чтобы править рисунки и сразу видеть результат, не проходя пещеры.
 // Страница служебная: открывается по адресу #gallery только в режиме разработки
 // (npm run dev) и в сборку для игроков не попадает — см. src/App.jsx.
-import { CHAPTERS } from '../../content/chapters/index.js';
+import { useContent } from '../../i18n/I18nContext.jsx';
 import Vampire from '../../mascot/Vampire.jsx';
 import Bat from '../../mascot/Bat.jsx';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import CaveArt from '../home/CaveArt.jsx';
+import Diagram, { DIAGRAM_NAMES } from '../../components/Diagram/Diagram.jsx';
 import { GoblinRunner, HangingSpider, Rat, TrollRunner } from '../../components/Scares/creatures.jsx';
 import { SCARE_EVENT, SCARE_KINDS } from '../../utils/scares.js';
 import styles from './Gallery.module.css';
@@ -26,6 +28,7 @@ const MOODS = [
 const GRAF_SIZES = [150, 86, 52, 34];
 
 export default function GalleryPage() {
+  const { CHAPTERS } = useContent();
   return (
     <div className="stack">
       <header>
@@ -129,6 +132,21 @@ export default function GalleryPage() {
               <figcaption>
                 {chapter.order}. {chapter.story.guardian.name}, {chapter.story.guardian.kind}
               </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section className="card stack">
+        <h2>Схемы к урокам</h2>
+        <p className="muted small">
+          Подписи — на языке игры (переключи язык глобусом в шапке). Ни одна надпись не должна вылезать за рамку рисунка.
+        </p>
+        <div className={styles.row}>
+          {DIAGRAM_NAMES.map((name) => (
+            <figure key={name} className={styles.cell} data-diagram={name}>
+              <Diagram name={name} />
+              <figcaption>{name}</figcaption>
             </figure>
           ))}
         </div>

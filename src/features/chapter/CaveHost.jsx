@@ -24,7 +24,7 @@ export default function CaveHost({ chapter, defeated = false }) {
         <BloodTitle as="h2" className={styles.name}>
           {guardian.name}, <span className={styles.kind}>{guardian.kind}</span>
         </BloodTitle>
-        <blockquote className={styles.speech}>«{defeated ? guardian.defeat : guardian.threat}»</blockquote>
+        <blockquote className={styles.speech}>{t('common.quote', { text: defeated ? guardian.defeat : guardian.threat })}</blockquote>
         <p className={styles.story}>
           <RichText text={defeated ? outro : intro} />
         </p>

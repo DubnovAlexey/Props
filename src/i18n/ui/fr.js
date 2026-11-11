@@ -14,11 +14,13 @@ export default {
     choose: 'Langue du jeu',
     notice:
       "L'interface est maintenant en français. Les leçons, les exercices et le glossaire sont encore en russe : leur traduction est en route.",
+    partial: "Grottes traduites pour l'instant : {done} sur {total}. Le reste est encore en russe : la traduction continue.",
   },
 
   common: {
     count: 'Comte Propsula',
     bat: 'Lunatik',
+    quote: '« {text} »',
     sections: 'Rubriques',
     toMap: 'Vers la carte des grottes',
     toMapShort: 'Vers la carte',
