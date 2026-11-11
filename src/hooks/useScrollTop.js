@@ -6,19 +6,24 @@
 // Почему useLayoutEffect, а не useEffect: он срабатывает после того, как React обновил
 // страницу, но до того, как браузер её показал. Игрок сразу видит новый экран сверху,
 // без скачка. И содержимое к этому моменту уже новое — прокрутке нечему помешать.
+//
+// Почему сравниваем с прошлым значением, а не просто «пропускаем первый раз»: в режиме
+// разработки StrictMode запускает эффекты дважды, и «второй первый раз» прокручивал страницу
+// при простом открытии. Сравнение с прошлым ключом работает одинаково в разработке и в игре.
 import { useLayoutEffect, useRef } from 'react';
-import { scrollToTop } from '../utils/scroll.js';
+import { scrollToElement, scrollToTop } from '../utils/scroll.js';
 
-/** key — значение, которое меняется вместе с экраном: например, `${step}:${cardIndex}` */
-export function useScrollTopOnChange(key) {
-  const isFirst = useRef(true);
+/**
+ * Прокрутить, когда меняется key — значение, которое меняется вместе с экраном
+ * (например, `${step}:${cardIndex}`). targetRef — к чему прокрутить; без него — к началу страницы.
+ */
+export function useScrollTopOnChange(key, targetRef) {
+  const shownKey = useRef(key);
 
   useLayoutEffect(() => {
-    // При первом показе страницы наверх уже прокрутил App — когда сменился адрес
-    if (isFirst.current) {
-      isFirst.current = false;
-      return;
-    }
-    scrollToTop();
-  }, [key]);
+    if (shownKey.current === key) return; // экран тот же — при открытии страницы наверх уже прокрутил App
+    shownKey.current = key;
+    if (targetRef) scrollToElement(targetRef.current);
+    else scrollToTop();
+  }, [key, targetRef]);
 }
