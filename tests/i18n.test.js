@@ -9,6 +9,7 @@ import { DEFAULT_LANGUAGE, LANGUAGES, languageByCode, pickLanguage } from '../sr
 import { createTranslator, interpolate, isPluralForms, lookup } from '../src/i18n/translate.js';
 import { frenchSpaces, mapStrings } from '../src/i18n/typography.js';
 import { bootstrapLanguage, loadDictionary } from '../src/i18n/dictionaries.js';
+import { textDirection, wordScript } from '../src/i18n/direction.js';
 import ru from '../src/i18n/ui/ru.js';
 
 const SRC = fileURLToPath(new URL('../src/', import.meta.url));
@@ -124,6 +125,25 @@ describe('французская типографика', () => {
       b: ['y\u00a0!', { c: 'z\u00a0?' }],
       n: 5,
     });
+  });
+});
+
+describe('направление письма', () => {
+  it('текст с ивритскими буквами идёт справа налево, остальные — слева направо', () => {
+    expect(textDirection('Пещеры Графа Пропсулы')).toBe('ltr');
+    expect(textDirection('The Caves of Count Propsula')).toBe('ltr');
+    expect(textDirection('המערות של הרוזן פרופסולה')).toBe('rtl');
+    expect(textDirection('Props — המערות של הרוזן')).toBe('rtl');
+    expect(textDirection('18 · 📲')).toBe('ltr');
+  });
+
+  it('слово бывает «левым», «правым», смешанным или вовсе без букв', () => {
+    expect(wordScript('Пропсулы,')).toBe('ltr');
+    expect(wordScript('React')).toBe('ltr');
+    expect(wordScript('המערות')).toBe('rtl');
+    expect(wordScript('ל-props')).toBe('mixed');
+    expect(wordScript('18')).toBe('none');
+    expect(wordScript('—')).toBe('none');
   });
 });
 
