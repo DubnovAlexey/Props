@@ -103,7 +103,8 @@ npm run dev      # http://localhost:5173
 `build/singleFilePlugin.js`. Публикация — GitHub Actions → GitHub Pages (в настройках репозитория:
 **Settings → Pages → Source: GitHub Actions**).
 
-**Языки.** Сейчас игра на русском. Интерфейс и уроки на английском, иврите, испанском и французском — в работе.
+**Языки.** Интерфейс игры — на пяти языках: русском, английском, иврите, испанском и французском. Язык
+переключает глобус 🌐 в шапке. Уроки, задания и словарь терминов пока на русском — их перевод готовится.
 
 Подробнее: [docs/INTELLIJ.md](docs/INTELLIJ.md) (работа в IntelliJ IDEA), [docs/PROMPT.md](docs/PROMPT.md),
 [CHANGELOG.md](CHANGELOG.md), правила проекта — [CLAUDE.md](CLAUDE.md).
@@ -203,7 +204,9 @@ Offline mode is a custom service worker (`build/serviceWorkerPlugin.js`); the si
 `build/singleFilePlugin.js`. Deployment: GitHub Actions → GitHub Pages (repository
 **Settings → Pages → Source: GitHub Actions**).
 
-**Languages.** The game is in Russian for now. English, Hebrew, Spanish and French are in progress.
+**Languages.** The interface is available in five languages: Russian, English, Hebrew, Spanish and French.
+Switch it with the globe 🌐 in the header. The lessons, tasks and glossary are still in Russian — their
+translation is on the way.
 
 [↑ top](#top)
 
@@ -288,7 +291,8 @@ npm run dev      # http://localhost:5173
 service worker משלנו (`build/serviceWorkerPlugin.js`); בנייה לקובץ אחד — `build/singleFilePlugin.js`.
 פרסום: GitHub Actions ← GitHub Pages (בהגדרות המאגר: **Settings → Pages → Source: GitHub Actions**).
 
-**שפות.** כרגע המשחק ברוסית. אנגלית, עברית, ספרדית וצרפתית — בעבודה.
+**שפות.** ממשק המשחק זמין בחמש שפות: רוסית, אנגלית, עברית, ספרדית וצרפתית. מחליפים שפה בכפתור הגלובוס 🌐
+שבכותרת. השיעורים, המשימות והמילון עדיין ברוסית — התרגום שלהם בדרך.
 
 </div>
 
@@ -379,7 +383,8 @@ juego también es material de estudio. El modo sin conexión es un service worke
 (`build/serviceWorkerPlugin.js`); el archivo único lo genera `build/singleFilePlugin.js`. Publicación: GitHub
 Actions → GitHub Pages (en el repositorio: **Settings → Pages → Source: GitHub Actions**).
 
-**Idiomas.** Por ahora el juego está en ruso. Inglés, hebreo, español y francés están en preparación.
+**Idiomas.** La interfaz está en cinco idiomas: ruso, inglés, hebreo, español y francés. Se cambia con el
+globo 🌐 de la cabecera. Las lecciones, las tareas y el glosario siguen en ruso: su traducción está en camino.
 
 [↑ arriba](#top)
 
@@ -464,6 +469,8 @@ aussi de support d'étude. Le mode hors ligne repose sur un service worker maiso
 (`build/serviceWorkerPlugin.js`) ; le fichier unique est produit par `build/singleFilePlugin.js`. Publication :
 GitHub Actions → GitHub Pages (dans le dépôt : **Settings → Pages → Source: GitHub Actions**).
 
-**Langues.** Pour l'instant, le jeu est en russe. L'anglais, l'hébreu, l'espagnol et le français sont en cours.
+**Langues.** L'interface existe en cinq langues : russe, anglais, hébreu, espagnol et français. On en
+change avec le globe 🌐 dans l'en-tête. Les leçons, les exercices et le glossaire sont encore en russe :
+leur traduction est en route.
 
 [↑ haut](#top)
