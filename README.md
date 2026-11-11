@@ -104,8 +104,8 @@ npm run dev      # http://localhost:5173
 **Settings → Pages → Source: GitHub Actions**).
 
 **Языки.** Интерфейс игры — на пяти языках: русском, английском, иврите, испанском и французском. Язык
-переключает глобус 🌐 в шапке. Уроки переводятся на английский: словарь терминов и первые шесть пещер уже
-готовы, остальное пока на русском. Следом — иврит, испанский и французский.
+переключает глобус 🌐 в шапке. Уроки и свитки переведены на английский целиком (с версии 2.6.0): браузер на
+английском сразу откроет английскую игру. Следом — иврит, испанский и французский.
 
 Подробнее: [docs/INTELLIJ.md](docs/INTELLIJ.md) (работа в IntelliJ IDEA), [docs/PROMPT.md](docs/PROMPT.md),
 [CHANGELOG.md](CHANGELOG.md), правила проекта — [CLAUDE.md](CLAUDE.md).
@@ -206,8 +206,8 @@ Offline mode is a custom service worker (`build/serviceWorkerPlugin.js`); the si
 **Settings → Pages → Source: GitHub Actions**).
 
 **Languages.** The interface is available in five languages: Russian, English, Hebrew, Spanish and French.
-Switch it with the globe 🌐 in the header. The lessons are being translated into English: the glossary and the
-first six caves are ready, the rest is still in Russian. Hebrew, Spanish and French come next.
+Switch it with the globe 🌐 in the header. The lessons and the scrolls are fully translated into English (since
+version 2.6.0): a browser set to English opens the English game right away. Hebrew, Spanish and French come next.
 
 [↑ top](#top)
 
@@ -293,7 +293,7 @@ service worker משלנו (`build/serviceWorkerPlugin.js`); בנייה לקוב�
 פרסום: GitHub Actions ← GitHub Pages (בהגדרות המאגר: **Settings → Pages → Source: GitHub Actions**).
 
 **שפות.** ממשק המשחק זמין בחמש שפות: רוסית, אנגלית, עברית, ספרדית וצרפתית. מחליפים שפה בכפתור הגלובוס 🌐
-שבכותרת. השיעורים מתורגמים לאנגלית: המילון ושש המערות הראשונות כבר מוכנים, והשאר עדיין ברוסית. אחריה — עברית,
+שבכותרת. השיעורים והמגילות תורגמו לאנגלית במלואם (מגרסה 2.6.0): דפדפן באנגלית יפתח מיד את המשחק באנגלית. אחריה — עברית,
 ספרדית וצרפתית.
 
 </div>
@@ -386,8 +386,8 @@ juego también es material de estudio. El modo sin conexión es un service worke
 Actions → GitHub Pages (en el repositorio: **Settings → Pages → Source: GitHub Actions**).
 
 **Idiomas.** La interfaz está en cinco idiomas: ruso, inglés, hebreo, español y francés. Se cambia con el
-globo 🌐 de la cabecera. Las lecciones se están traduciendo al inglés: el glosario y las seis primeras cuevas ya
-están listos, y lo demás sigue en ruso. Después vendrán el hebreo, el español y el francés.
+globo 🌐 de la cabecera. Las lecciones y los pergaminos están traducidos al inglés por completo (desde la
+versión 2.6.0): un navegador en inglés abre directamente el juego en inglés. Después vendrán el hebreo, el español y el francés.
 
 [↑ arriba](#top)
 
@@ -473,7 +473,7 @@ aussi de support d'étude. Le mode hors ligne repose sur un service worker maiso
 GitHub Actions → GitHub Pages (dans le dépôt : **Settings → Pages → Source: GitHub Actions**).
 
 **Langues.** L'interface existe en cinq langues : russe, anglais, hébreu, espagnol et français. On en
-change avec le globe 🌐 dans l'en-tête. Les leçons sont en cours de traduction en anglais : le glossaire et les
-six premières grottes sont prêts, le reste est encore en russe. Viendront ensuite l'hébreu, l'espagnol et le français.
+change avec le globe 🌐 dans l'en-tête. Les leçons et les parchemins sont entièrement traduits en anglais (depuis la
+version 2.6.0) : un navigateur en anglais ouvre directement le jeu en anglais. Viendront ensuite l'hébreu, l'espagnol et le français.
 
 [↑ haut](#top)
