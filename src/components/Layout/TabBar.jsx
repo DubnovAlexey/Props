@@ -7,7 +7,7 @@ export default function TabBar({ section }) {
   const { t } = useI18n();
 
   return (
-    <nav className={styles.tabbar} aria-label={t('common.sections')}>
+    <nav className={styles.tabbar} aria-label={t('common.sections')} data-fixed="bottom">
       {TAB_NAV.map((item) => (
         <a
           key={item.href}

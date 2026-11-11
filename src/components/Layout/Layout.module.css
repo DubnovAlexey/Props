@@ -286,6 +286,24 @@
   font-size: 0.7rem;
   font-weight: 600;
   -webkit-tap-highlight-color: transparent;
+  /* кнопок шесть: колонка может стать уже своей подписи, тогда подпись обрезается многоточием */
+  min-width: 0;
+}
+
+.tabLabel {
+  max-width: 100%;
+  padding: 0 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Узкий телефон: шесть подписей («Повторение», «Parchemins») помещаются только шрифтом помельче */
+@media (max-width: 420px) {
+  .tabbar a {
+    font-size: 0.62rem;
+    letter-spacing: -0.01em;
+  }
 }
 
 .tabIcon {

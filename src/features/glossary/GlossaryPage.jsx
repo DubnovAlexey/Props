@@ -10,6 +10,7 @@ import styles from './Glossary.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
+import { scrollToElement } from '../../utils/scroll.js';
 
 export default function GlossaryPage({ focusId }) {
   const { t, lang } = useI18n();
@@ -28,7 +29,7 @@ export default function GlossaryPage({ focusId }) {
     setQuery('');
     // ждём следующий кадр, чтобы список успел отрисоваться
     requestAnimationFrame(() => {
-      document.getElementById(`term-${focusId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      scrollToElement(document.getElementById(`term-${focusId}`), 'center');
     });
   }, [focusId]);
 

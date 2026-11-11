@@ -13,6 +13,7 @@ import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { interpolate } from '../../i18n/translate.js';
+import { useScrollTopOnChange } from '../../hooks/useScrollTop.js';
 
 const EXTRA_TASKS = 2;
 
@@ -43,6 +44,8 @@ export default function ExamPage() {
   const [taskIds, setTaskIds] = useState([]);
   const [summary, setSummary] = useState(null);
   const tasks = useMemo(() => taskIds.map((id) => TASK_MAP[id]), [taskIds, TASK_MAP]);
+  // Начало испытания и его итог — новые экраны: показываем их сверху
+  useScrollTopOnChange(phase);
 
   useEffect(() => {
     say(t('mascot.route.exam'), 'talk');

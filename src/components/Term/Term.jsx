@@ -3,6 +3,8 @@
 // Телефон: при нажатии; закрывается повторным нажатием, тапом мимо или прокруткой.
 // Окно рисуется через портал (createPortal) прямо в <body>, чтобы его
 // не обрезали родители с overflow: hidden.
+// Место для окна считает placeTip (src/utils/placeTip.js): над термином, под ним или — если
+// текст длинный, а экран маленький — с ограничением высоты и прокруткой внутри окна.
 // Почему термин — <span role="button">, а не <button>: кнопка в строке текста —
 // неразрывный блок. Она не переносится по словам (длинный термин вылезал бы
 // за край карточки на телефоне), а точка или запятая после неё могла уехать
@@ -14,7 +16,23 @@ import { createPortal } from 'react-dom';
 import { useHoverCapable } from '../../hooks/useMediaQuery.js';
 import styles from './Term.module.css';
 import { to } from '../../app/useHashRoute.js';
+import { placeTip } from '../../utils/placeTip.js';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
+
+/**
+ * Свободная часть экрана: между шапкой и нижней панелью телефона.
+ * Шапка и панель помечены атрибутом data-fixed; скрытая панель (на компьютере) имеет нулевую высоту.
+ */
+function freeArea() {
+  const header = document.querySelector('[data-fixed="top"]')?.getBoundingClientRect();
+  const tabbar = document.querySelector('[data-fixed="bottom"]')?.getBoundingClientRect();
+  return {
+    top: header?.height ? Math.max(0, header.bottom) : 0,
+    bottom: tabbar?.height ? Math.min(window.innerHeight, tabbar.top) : window.innerHeight,
+    // clientWidth — ширина без полосы прокрутки: окно не залезет под неё
+    width: document.documentElement.clientWidth,
+  };
+}
 
 export default function Term({ id, children }) {
   const { t } = useI18n();
@@ -35,13 +53,11 @@ export default function Term({ id, children }) {
     }
     // Термин может переноситься на две строки — привязываем окно к первой
     const anchor = anchorRef.current.getClientRects()[0] ?? anchorRef.current.getBoundingClientRect();
-    const tip = tipRef.current.getBoundingClientRect();
-    const gap = 8;
-    let top = anchor.top - tip.height - gap;
-    if (top < gap) top = anchor.bottom + gap; // сверху нет места — показываем снизу
-    let left = anchor.left + anchor.width / 2 - tip.width / 2;
-    left = Math.max(gap, Math.min(window.innerWidth - tip.width - gap, left));
-    setPosition({ top, left });
+    // Размер окна берём из offsetWidth / offsetHeight, а не из getBoundingClientRect: окно появляется
+    // с анимацией и в первый миг уменьшено на 15%. getBoundingClientRect вернул бы уменьшенный размер,
+    // и окно, выросши до настоящего, вылезало бы за правый край экрана (так и было на телефоне).
+    const tip = { width: tipRef.current.offsetWidth, height: tipRef.current.offsetHeight };
+    setPosition(placeTip(anchor, tip, freeArea()));
   }, [open]);
 
   // Закрытие: тап мимо, Escape, прокрутка, изменение размера окна
@@ -51,7 +67,11 @@ export default function Term({ id, children }) {
       if (!anchorRef.current?.contains(event.target) && !tipRef.current?.contains(event.target)) setOpen(false);
     };
     const onKey = (event) => event.key === 'Escape' && setOpen(false);
-    const close = () => setOpen(false);
+    // Прокрутка страницы закрывает окно. А прокрутка внутри самого окна (длинное пояснение) — нет
+    const close = (event) => {
+      if (event?.target instanceof Node && tipRef.current?.contains(event.target)) return;
+      setOpen(false);
+    };
     document.addEventListener('pointerdown', onPointerDown);
     document.addEventListener('keydown', onKey);
     window.addEventListener('scroll', close, { passive: true, capture: true });
@@ -109,7 +129,9 @@ export default function Term({ id, children }) {
             id={tipId}
             role="tooltip"
             className={styles.tip}
-            style={position ? { top: position.top, left: position.left } : { visibility: 'hidden' }}
+            style={
+              position ? { top: position.top, left: position.left, maxHeight: position.maxHeight ?? undefined } : { visibility: 'hidden' }
+            }
             onMouseEnter={hoverCapable ? show : undefined}
             onMouseLeave={hoverCapable ? hideSoon : undefined}
           >

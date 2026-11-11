@@ -338,6 +338,14 @@ export default {
     termsTitle: '📜 Tarjetas de términos',
     termsDue: 'Toca repasar: **{due}** · nuevos: **{fresh}** (hasta {limit} nuevos por sesión).',
     termsStart: 'Empezar las tarjetas',
+    coffinsHelpTitle: '❓ Qué significan los ataúdes y qué tienes que hacer',
+    coffinsHelp: [
+      '**Un ataúd es una caja.** En él están las tareas y los términos que ya has visto. Hay cinco ataúdes, y cuanto más lejos está el ataúd, mejor conoces lo que hay dentro.',
+      '**El número del ataúd** es cuántas tareas y términos hay ahora en él. **El texto de debajo** es cada cuánto el juego los saca para repasarlos: del primero, cada día; del quinto, una vez cada 16 días.',
+      '**Has respondido bien:** la tarea pasa al ataúd siguiente y volverá más tarde: lo que sabes bien no hace falta repasarlo a menudo.',
+      '**Te has equivocado:** la tarea vuelve al primer ataúd y te la encontrarás otra vez en la próxima sesión: lo difícil se repasa más a menudo.',
+      '**Qué tienes que hacer:** pásate por aquí una vez al día y pulsa los botones de abajo. El propio juego te mostrará lo que toca refrescar: no tienes que elegir nada. Una tarea que ha llegado al quinto ataúd la has aprendido para mucho tiempo.',
+    ],
   },
 
   flashcard: {

@@ -42,7 +42,7 @@ export default function Header({ section }) {
   const soundOn = progress.sound !== false;
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-fixed="top">
       <FlyingBats />
       <div className={styles.inner}>
         <a href={to.map()} className={styles.logo} aria-label={t('header.logoLabel')}>

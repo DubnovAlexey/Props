@@ -2,7 +2,7 @@
 // Обрати внимание на <ChapterPage key={param} />: при переходе в другую
 // пещеру меняется key, и React создаёт страницу заново со свежим
 // состоянием — тот самый приём «сброс через key» из пещеры 8 («Пещера памяти»).
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useLayoutEffect } from 'react';
 import { useHashRoute } from './app/useHashRoute.js';
 import { ProgressProvider } from './state/ProgressContext.jsx';
 import { MascotProvider } from './mascot/MascotContext.jsx';
@@ -24,6 +24,7 @@ import Scares from './components/Scares/Scares.jsx';
 import NotFound from './app/NotFound.jsx';
 import ErrorBoundary from './app/ErrorBoundary.jsx';
 import { I18nProvider, useI18n } from './i18n/I18nContext.jsx';
+import { scrollToTop } from './utils/scroll.js';
 
 // Свитки (теория) грузятся только когда нужны: это отдельный кусок кода
 const LibraryPage = lazy(() => import('./features/library/LibraryPage.jsx'));
@@ -86,9 +87,10 @@ function sectionOf(route) {
 export default function App({ i18n }) {
   const route = useHashRoute();
 
-  // Новый раздел — начинаем сверху страницы (кроме перехода к термину словаря)
-  useEffect(() => {
-    if (!route.query.term) window.scrollTo(0, 0);
+  // Новый раздел — начинаем сверху страницы (кроме перехода к термину словаря).
+  // Прокручиваем сразу, без плавной анимации, и до показа страницы — см. src/utils/scroll.js
+  useLayoutEffect(() => {
+    if (!route.query.term) scrollToTop();
   }, [route.path, route.query.term]);
 
   const section = sectionOf(route);

@@ -21,6 +21,7 @@ import styles from './CaveMap.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
+import { scrollToTop } from '../../utils/scroll.js';
 
 /**
  * «Начать игру заново»: сначала спрашиваем подтверждение — стёртый прогресс не вернуть.
@@ -37,7 +38,7 @@ function ResetProgress() {
     dispatch({ type: 'reset' });
     dispatch({ type: 'visit', today: dayKey() }); // сегодняшний день в серии остаётся
     setAsking(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   }
 
   if (!asking) {

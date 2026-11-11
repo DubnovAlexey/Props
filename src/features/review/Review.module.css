@@ -37,6 +37,24 @@
   font-size: 1.25rem;
 }
 
+/* Пояснение «что значат гробики»: раскрывающийся блок под рядом гробиков */
+.help summary {
+  cursor: pointer;
+  font-family: var(--font-title), serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.help ul {
+  margin: 12px 0 0;
+  padding-inline-start: 1.2em;
+}
+
+.help li + li {
+  margin-top: 8px;
+}
+
 .flashcard {
   perspective: 1200px;
   cursor: pointer;

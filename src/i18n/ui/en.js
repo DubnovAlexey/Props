@@ -329,6 +329,14 @@ export default {
     termsTitle: '📜 Term cards',
     termsDue: 'Due for review: **{due}** · new: **{fresh}** (up to {limit} new ones per session).',
     termsStart: 'Start the cards',
+    coffinsHelpTitle: '❓ What the coffins mean and what you should do',
+    coffinsHelp: [
+      '**A coffin is a box.** It holds the tasks and terms you have already met. There are five coffins, and the further the coffin, the better you know what lies in it.',
+      '**The number on a coffin** is how many tasks and terms are in it now. **The caption under it** is how often the game takes them out for review: from the first one every day, from the fifth one once in 16 days.',
+      '**You answered correctly** — the task moves to the next coffin and comes back later: what you know well does not need frequent review.',
+      '**You made a mistake** — the task goes back to the first coffin and meets you again in the very next session: hard things are reviewed more often.',
+      '**What you should do:** look in here once a day and press the buttons below. The game itself shows what is due for a refresh — you do not have to choose anything. A task that has reached the fifth coffin is one you have remembered for a long time.',
+    ],
   },
 
   flashcard: {

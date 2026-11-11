@@ -343,6 +343,14 @@ export default {
     termsTitle: '📜 Cartes de termes',
     termsDue: "À réviser : **{due}** · nouveaux : **{fresh}** (jusqu'à {limit} nouveaux par séance).",
     termsStart: 'Commencer les cartes',
+    coffinsHelpTitle: '❓ Ce que signifient les cercueils et ce que vous devez faire',
+    coffinsHelp: [
+      "**Un cercueil est une boîte.** Il contient les exercices et les termes que vous avez déjà rencontrés. Il y a cinq cercueils, et plus le cercueil est loin, mieux vous connaissez ce qu'il contient.",
+      "**Le nombre sur le cercueil** indique combien d'exercices et de termes il contient en ce moment. **La légende en dessous** indique à quelle fréquence le jeu les ressort pour une révision : du premier, chaque jour ; du cinquième, une fois tous les 16 jours.",
+      "**Vous avez bien répondu** — l'exercice passe dans le cercueil suivant et reviendra plus tard : ce que vous savez bien n'a pas besoin d'être révisé souvent.",
+      "**Vous vous êtes trompé** — l'exercice retourne dans le premier cercueil et vous le retrouverez dès la prochaine séance : ce qui est difficile se révise plus souvent.",
+      "**Ce que vous devez faire :** passez ici une fois par jour et appuyez sur les boutons ci-dessous. Le jeu vous montre lui-même ce qu'il est temps de rafraîchir — vous n'avez rien à choisir. Un exercice arrivé au cinquième cercueil, vous l'avez retenu pour longtemps.",
+    ],
   },
 
   flashcard: {

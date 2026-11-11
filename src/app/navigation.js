@@ -2,7 +2,8 @@
 // получают его и рисуют по-своему. Данные отдельно, отображение отдельно.
 //   section — имя раздела; по нему же берётся подпись из словаря: t(`nav.${section}`);
 //   header: false — не показывать в шапке; tab: false — не показывать
-//   в нижней панели телефона (там помещается только пять кнопок).
+//   в нижней панели телефона (там помещается шесть кнопок; подписи на узком экране
+//   мельче — см. .tabbar в Layout.module.css).
 import { to } from './useHashRoute.js';
 
 export const NAV = [
@@ -11,7 +12,7 @@ export const NAV = [
   { href: to.review(), section: 'review', icon: '⚰️' },
   { href: to.glossary(), section: 'glossary', icon: '🔤' },
   { href: to.bestiary(), section: 'bestiary', icon: '👹' },
-  { href: to.break(), section: 'break', icon: '🦇', tab: false },
+  { href: to.break(), section: 'break', icon: '🦇' },
   { href: to.methods(), section: 'methods', icon: '🧠', tab: false, header: false },
 ];
 

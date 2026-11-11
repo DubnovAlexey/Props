@@ -3,7 +3,7 @@
 // на повторение сразу, верные ответы — через растущие промежутки.
 
 import { sfx } from '../../audio/sfx.js';
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { TASK_TYPES, TASK_VIEWS } from './tasks/index.js';
 import Feedback from './Feedback.jsx';
 import ProgressBar from '../../components/ProgressBar/ProgressBar.jsx';
@@ -14,6 +14,7 @@ import { XP } from '../../state/progressReducer.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { phrase } from '../../mascot/phrases.js';
 import { checkTask } from '../../utils/checkAnswer.js';
+import { scrollToElement } from '../../utils/scroll.js';
 import styles from './Practice.module.css';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 
@@ -27,6 +28,18 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
   const [hintShown, setHintShown] = useState(false);
   const [log, setLog] = useState([]); // [{ id, correct }]
   const topRef = useRef(null);
+  const isFirstTask = useRef(true);
+
+  // Следующее задание показываем с его начала. Делаем это после того, как React поставил новое
+  // задание на страницу (useLayoutEffect), и сразу, без плавной анимации — иначе на iPhone
+  // прокрутка обрывалась, и игрок оставался внизу, у кнопки «Дальше»
+  useLayoutEffect(() => {
+    if (isFirstTask.current) {
+      isFirstTask.current = false;
+      return;
+    }
+    scrollToElement(topRef.current);
+  }, [index]);
 
   const task = tasks[index];
   const TaskView = TASK_VIEWS[task.type];
@@ -59,7 +72,6 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
     setIndex(index + 1);
     setResult(null);
     setHintShown(false);
-    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function showHint() {

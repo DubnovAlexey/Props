@@ -15,6 +15,7 @@ import styles from './Review.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
+import { useScrollTopOnChange } from '../../hooks/useScrollTop.js';
 
 const NEW_CARDS_PER_SESSION = 8;
 
@@ -29,6 +30,8 @@ export default function ReviewPage() {
   const [session, setSession] = useState(null); // { kind: 'tasks' | 'cards', ids: [...] }
   const [cardIndex, setCardIndex] = useState(0);
   const [finished, setFinished] = useState(null);
+  // Начало сеанса, следующая карточка и итог — новые экраны: показываем их сверху
+  useScrollTopOnChange(`${session?.kind ?? 'home'}:${cardIndex}:${finished ? 'done' : ''}`);
 
   useEffect(() => {
     say(t('mascot.route.review'), 'talk');
@@ -42,6 +45,9 @@ export default function ReviewPage() {
     .filter((id) => GLOSSARY_MAP[id]);
   const newTerms = GLOSSARY.filter((entry) => !progress.items[`term:${entry.id}`]).map((entry) => entry.id);
   const counts = boxCounts(progress.items);
+  // Пояснение «что значат гробики» раскрыто, пока игрок новичок: в дальних гробиках ещё пусто.
+  // Потом оно свёрнуто, но всегда под рукой. Открыл или закрыл сам — так и остаётся.
+  const [helpOpen, setHelpOpen] = useState(() => counts[3] + counts[4] + counts[5] === 0);
 
   function startTasks() {
     setFinished(null);
@@ -64,7 +70,6 @@ export default function ReviewPage() {
     setFinished(result);
     setSession(null);
     setNow(Date.now());
-    window.scrollTo(0, 0);
   }
 
   if (session?.kind === 'tasks') {
@@ -129,6 +134,17 @@ export default function ReviewPage() {
           </div>
         ))}
       </section>
+
+      <details className={`card ${styles.help}`} open={helpOpen} onToggle={(event) => setHelpOpen(event.currentTarget.open)}>
+        <summary>{t('review.coffinsHelpTitle')}</summary>
+        <ul>
+          {t('review.coffinsHelp').map((line) => (
+            <li key={line}>
+              <RichText text={line} />
+            </li>
+          ))}
+        </ul>
+      </details>
 
       <section className={`card ${styles.option}`}>
         <h2>{t('review.tasksTitle')}</h2>

@@ -22,6 +22,7 @@ import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
+import { useScrollTopOnChange } from '../../hooks/useScrollTop.js';
 
 const STEPS = [
   { id: 'warmup', icon: '🕯️' },
@@ -54,6 +55,9 @@ export default function ChapterPage({ chapterId }) {
   const [cardIndex, setCardIndex] = useState(0);
   const [summary, setSummary] = useState(null);
   const tasks = useMemo(() => ALL_TASKS.filter((task) => task.chapterId === chapterId), [ALL_TASKS, chapterId]);
+  // Другой шаг пещеры или другая карточка урока — показываем с начала: карточки разной высоты,
+  // и игрок, нажавший «Дальше» внизу, иначе оказался бы в середине следующей
+  useScrollTopOnChange(`${step}:${cardIndex}`);
 
   useEffect(() => {
     if (chapter) say(t('chapter.greeting', { cave: chapter.cave, goal: chapter.goal }), 'wave');
@@ -66,7 +70,6 @@ export default function ChapterPage({ chapterId }) {
 
   function go(stepId) {
     setStep(stepId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function complete(stepId, nextStep, xp = XP.step) {
@@ -79,10 +82,8 @@ export default function ChapterPage({ chapterId }) {
     go(nextStep);
   }
 
-  /** Показать карточку урока с начала: карточки разной высоты, прокрутка сбивала бы с толку */
   function showCard(index) {
     setCardIndex(index);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function finishPractice(result) {
