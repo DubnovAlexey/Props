@@ -1,0 +1,569 @@
+// Dictionnaire de l'interface en français. Il reprend ru.js clé par clé (les tests le vérifient).
+// Обращение к игроку — на «вы» (vous), как в README.
+// ВАЖНО про пробелы. Во французском перед «:», «;», «!», «?» и внутри кавычек « … » ставится
+// пробел, и он должен быть неразрывным. Здесь пишем ОБЫЧНЫЕ пробелы — их при загрузке
+// заменяет на неразрывные функция frenchSpaces (src/i18n/typography.js).
+export default {
+  meta: {
+    title: 'Props — Les grottes du Comte Propsula',
+    description:
+      "Jeu d'entraînement sur les props dans React : 18 grottes, des monstres gardiens, de la théorie avec des schémas et de la répétition espacée.",
+  },
+
+  lang: {
+    choose: 'Langue du jeu',
+    notice:
+      "L'interface est maintenant en français. Les leçons, les exercices et le glossaire sont encore en russe : leur traduction est en route.",
+  },
+
+  common: {
+    count: 'Comte Propsula',
+    bat: 'Lunatik',
+    sections: 'Rubriques',
+    toMap: 'Vers la carte des grottes',
+    toMapShort: 'Vers la carte',
+    next: 'Suivant →',
+    back: '← Retour',
+    check: 'Vérifier',
+    reset: 'Réinitialiser',
+    cancel: 'Annuler',
+    simple: 'En mots simples :',
+    tech: 'Techniquement :',
+    code: 'Code',
+    example: 'Exemple',
+    progress: 'Progression',
+    crypt: '⚰️ Crypte de révision',
+    cave: 'Grotte {n}',
+    final: 'Final',
+    minutes: '{n} min',
+  },
+
+  nav: {
+    map: 'Carte',
+    library: 'Parchemins',
+    review: 'Révision',
+    glossary: 'Glossaire',
+    bestiary: 'Bestiaire',
+    break: 'Pause',
+    methods: 'Méthode',
+  },
+
+  header: {
+    logoLabel: 'Props — vers la carte des grottes',
+    subtitle: 'Les grottes du Comte Propsula',
+    rank: 'Rang : {rank}. Expérience : {xp}',
+    xp: 'Expérience :',
+    streak: "Jours d'affilée avec le Comte",
+    soundOff: 'Couper les sons',
+    soundOn: 'Activer les sons',
+    soundOnTitle: 'Les sons des réponses sont activés',
+    soundOffTitle: 'Les sons sont coupés',
+    themeDay: 'Passer au thème de jour',
+    themeNight: 'Passer au thème de nuit',
+    themeDayTitle: "Le Comte n'aime pas le jour, mais il le supporte",
+    themeNightTitle: 'Ramener la nuit',
+  },
+
+  loading: {
+    library: '🕯️ Le Comte sort les parchemins…',
+    scroll: '🕯️ Le Comte déroule le parchemin…',
+  },
+
+  error: {
+    title: '🪨 Éboulement dans la grotte',
+    text: "Cette page n'a pas pu s'ouvrir. Votre progression est intacte : elle est conservée à part.",
+    hint: "Cela arrive le plus souvent quand la connexion a été coupée ou que le jeu a été mis à jour pendant qu'il était ouvert. Recharger la page suffit généralement.",
+    reload: 'Recharger la page',
+    retry: 'Réessayer',
+  },
+
+  notFound: {
+    title: "🕸️ Ici, il n'y a que des toiles d'araignée",
+    text: "Cette grotte n'existe pas. Les chauves-souris auraient-elles emporté le panneau ?",
+  },
+
+  ranks: [
+    'Chauve-souris débutante',
+    'Apprenti de la crypte',
+    'Compagnon des props',
+    'Gardien du flux',
+    'Maître des composants',
+    'Comte des Props',
+  ],
+
+  map: {
+    eyebrow: "Jeu d'entraînement pour React",
+    title: 'Les grottes du Comte Propsula',
+    caves: { one: '{count} grotte', other: '{count} grottes' },
+    intro:
+      "{caves} sur trois niveaux : de la structure du projet aux patrons de conception. Tout sur les [[props|props]] et ce qui les entoure : les [[component|composants]], JavaScript, l'[[state|état]], le [[virtual-dom|DOM virtuel]], les [[hook|hooks]], [[context|Context]], [[memo|memo]] et les types. Chaque grotte a son monstre gardien, et le Comte règne sur tous.",
+    start: '🕯️ Entrer dans la première grotte',
+    continue: '🕯️ Poursuivre le chemin',
+    again: '🔁 Tout refaire',
+    review: '⚰️ Réviser ({count})',
+    rankEyebrow: 'Votre rang',
+    xpToNext: 'Expérience {xp} · encore {left} pour le rang « {rank} »',
+    xpTop: 'Expérience {xp} · le rang le plus élevé !',
+    statCaves: 'Grottes',
+    statAnswers: 'Réponses',
+    statAccuracy: 'Précision',
+    statStreak: "Jours d'affilée",
+    prologue: 'Prologue',
+    epilogue: 'Épilogue',
+    mapTitle: 'Carte des grottes',
+    mapHint: "Descendez dans l'ordre : chaque grotte s'appuie sur la précédente. Mais tous les passages sont ouverts.",
+    tier: 'Niveau {num} · {title}',
+    bestiaryEyebrow: 'Bestiaire',
+    guardians: { one: '{count} gardien de grotte', other: '{count} gardiens de grottes' },
+    bestiaryText:
+      "Souvenez-vous du monstre et vous retrouverez le thème. Le mille-pattes, c'est un tableau ; la mante aux crochets, ce sont les hooks ; le ver qui ronge les niveaux, c'est Context.",
+    bestiaryOpen: 'Ouvrir le bestiaire →',
+    factEyebrow: 'Lunatik a rapporté un fait',
+    factMore: 'Un autre fait',
+    howTitle: 'Comment apprendre avec le Comte',
+    how: [
+      '**Séances courtes.** Une grotte demande 15 à 25 minutes, puis une pause.',
+      '**Revenez demain.** La crypte de révision vous dira elle-même quoi rafraîchir.',
+      '**Expliquez à voix haute.** Les sortilèges et « Explique-le à Lunatik » fixent mieux que la relecture.',
+    ],
+    whyLink: 'Pourquoi ça marche →',
+    breakLink: '🦇 Pause',
+    installLink: '📲 Jouer sans internet',
+    resetButton: '🗑️ Recommencer le jeu à zéro',
+    resetLabel: 'Réinitialisation de la progression',
+    resetText:
+      "**Vraiment tout recommencer ?** L'expérience, les grottes terminées et le calendrier des révisions seront effacés. Impossible de les récupérer.",
+    resetConfirm: 'Oui, effacer la progression',
+    scaresText:
+      "**Surprises.** De temps en temps, quelque chose traverse l'écran en volant ou en courant : une chauve-souris, un gobelin, un troll, une banshee. Une seconde de frayeur secoue le cerveau : il se distrait, se repose et revient à l'exercice l'esprit frais. Si cela vous gêne, désactivez-les.",
+    scaresOn: '👻 Surprises activées',
+    scaresOff: '🚫 Surprises désactivées',
+    scaresReduced:
+      "La « réduction des animations » est activée dans les réglages de votre appareil : personne n'apparaît donc pour l'instant, le jeu respecte ce réglage.",
+  },
+
+  node: {
+    defeated: '✓ vaincu · {percent}%',
+    fighting: 'combat en cours',
+    waiting: 'vous attend',
+    next: 'Le Comte attend ici',
+  },
+
+  chapter: {
+    steps: {
+      warmup: 'Échauffement',
+      lesson: 'Leçon',
+      spell: 'Sortilège',
+      practice: 'Pratique',
+      explain: 'Expliquer',
+      break: 'Pause',
+      done: 'Bilan',
+    },
+    stepsLabel: 'Étapes de la grotte',
+    greeting: 'La grotte « {cave} ». {goal}',
+    backToMap: '← Carte des grottes',
+    scroll: '📜 Parchemin de la grotte : théorie',
+    eyebrow: 'Grotte {order} sur {total} · niveau {tier} · {cave}',
+    lessonProgress: 'Leçon : carte {current} sur {total}',
+    cardsLabel: 'Cartes de la leçon',
+    cardLabel: 'Carte {n} : {title}',
+    toSpell: 'Au sortilège ✨',
+    toPractice: 'Retenu : à la pratique ⚔️',
+    practiceRule:
+      '⚔️ Pour vaincre le gardien, répondez juste à au moins {needed} exercices sur {total}. On a le droit de se tromper : chaque erreur est expliquée.',
+    toSummary: 'Au bilan →',
+    skipBreak: 'Passer la pause',
+    summaryEyebrow: 'Bilan de la grotte',
+    stoodTitle: 'Le gardien a tenu bon',
+    stoodText:
+      'Pour cette tentative : **{correct}** bonnes réponses sur **{total}**. Pour vaincre le gardien, il en faut au moins **{needed}**. Les erreurs sont déjà expliquées et attendent dans la crypte de révision : jetez un œil à la leçon et retournez au combat.',
+    notYetTitle: "Le gardien n'est pas encore vaincu",
+    notYetText: '{name} attend le combat. Pour le vaincre, répondez juste à au moins **{needed}** exercices de pratique sur **{total}**.',
+    fightAgain: 'Retourner au combat ⚔️',
+    toPracticeShort: 'À la pratique ⚔️',
+    rereadLesson: 'Relire la leçon 📖',
+    lessonFirst: "D'abord la leçon 📖",
+    passedTitle: '{icon} {cave} : terminée !',
+    practiceResult: 'Pratique : **{correct}** sur **{total}** ({percent}%).',
+    mistakesWait: 'Les erreurs attendent déjà dans la crypte de révision : revenez-y demain.',
+    bestResult: 'Meilleur résultat de la pratique : {percent}%.',
+    spellOfCave: 'Le sortilège de la grotte :',
+    nextCave: '{icon} Grotte suivante →',
+    toExam: "👑 Vers l'épreuve du Comte",
+  },
+
+  host: {
+    label: 'Gardien de la grotte : {name}',
+    eyebrow: 'Gardien de la grotte',
+    defeated: 'Le gardien de la grotte est vaincu',
+    why: 'Pourquoi lui :',
+  },
+
+  explain: {
+    eyebrow: 'La méthode de la chauve-souris',
+    title: 'Explique-le à Lunatik',
+    hint: 'Avec vos mots, 2 à 4 phrases. Lunatik ne juge pas le style, seulement le sens. Vous pouvez commencer ainsi :',
+    label: 'Votre explication',
+    placeholder: 'Lunatik écoute attentivement…',
+    submit: 'Expliquer',
+    tooShort: 'Au moins une phrase',
+    ready: 'Prêt à expliquer',
+    understood: 'Lunatik a compris {found} idées clés sur {total} :',
+    compare: "L'explication du Comte, pour comparer :",
+    more: 'Compléter',
+    save: 'Enregistrer et continuer →',
+  },
+
+  lesson: {
+    spelling: "Comment ça s'écrit vraiment",
+    stageBase: 'Base',
+    stageDeeper: 'Plus loin',
+    stageNuance: 'Subtilité',
+    card: 'Carte {n} sur {total}',
+    analogy: "L'analogie du Comte :",
+  },
+
+  warmup: {
+    eyebrow: 'Échauffement · devinez avant la leçon',
+    hint: "Vous ne savez pas ? Devinez simplement. Ici, une erreur ne coûte rien, et la leçon s'ancrera mieux ensuite.",
+    right: '🎯 Bien deviné !',
+    wrong: '🤔 Une supposition intéressante.',
+    later: 'Nous verrons cela en détail dans la leçon.',
+    toLesson: 'À la leçon →',
+  },
+
+  code: {
+    why: 'Pourquoi ainsi :',
+    inGlossary: '{title} : dans le glossaire →',
+    hint: "Cliquez sur une partie soulignée du code ou sur un élément de la liste : vous saurez ce que c'est et pourquoi on l'écrit ainsi.",
+    hide: "Masquer l'analyse",
+    explain: '🔍 Analyser la syntaxe',
+    line: 'Ligne {n} : {text}',
+    emptyLine: 'vide',
+  },
+
+  syntax: {
+    label: "Analyse de l'exemple",
+    why: 'Pourquoi ainsi',
+    alt: 'Comment faire autrement · {count}',
+    wrong: "Ce qu'il ne faut pas faire · {count}",
+    works: '✓ Cela marche aussi',
+    bad: '✗ À ne pas faire',
+    because: 'Pourquoi :',
+  },
+
+  term: {
+    open: 'Ouvrir dans le glossaire →',
+  },
+
+  keyPoint: 'Point clé',
+
+  spell: {
+    eyebrow: 'Le sortilège du Comte',
+    read: '🔊 Lire à voix haute',
+    hint: "Dites-le trois fois à voix haute : cela s'ancre mieux ainsi.",
+  },
+
+  practice: {
+    progress: 'Exercice {current} sur {total} · il en reste {left}',
+    levelTitle: 'Difficulté : de « reconnaître » à « trouver le piège »',
+    levels: ['', '★ reconnaître', '★★ appliquer', '★★★ trouver le piège'],
+    caveTitle: "De quelle grotte vient l'exercice",
+    hint: '🦇 Indice de Lunatik',
+    toSummary: 'Au bilan',
+  },
+
+  tasks: {
+    types: {
+      choice: 'Choisissez la réponse',
+      truefalse: 'Vrai ou mythe',
+      input: 'Écrivez la réponse',
+      fill: 'Assemblez le code',
+      bug: "Trouvez l'erreur",
+      order: "Remettez dans l'ordre",
+      match: 'Trouvez la paire',
+      sort: 'Triez dans les paniers',
+    },
+    bugQuestion: "Cliquez sur la ligne qui contient l'erreur.",
+    bugPick: 'Choisissez une ligne',
+    bugLine: "L'erreur est à la ligne {n}",
+    multi: 'Cochez toutes les bonnes réponses.',
+    options: 'Réponses possibles',
+    gapFilled: 'Trou {n} : {value}. Cliquez pour le vider',
+    gapEmpty: 'Trou vide {n}',
+    pieces: 'Morceaux :',
+    answerLabel: 'Votre réponse',
+    answerPlaceholder: 'Votre réponse…',
+    matchQuestion: 'Reliez les paires.',
+    yourOrder: 'Votre ordre',
+    firstStep: 'Cliquez sur la première étape :',
+    whatNext: 'Et ensuite ?',
+    sortWhere: 'Où le ranger : {text}',
+    truth: '✓ Vrai',
+    myth: '✗ Mythe',
+    statement: 'Affirmation :',
+  },
+
+  feedback: {
+    whyNot: '**Pourquoi pas cette réponse :** « {text} » — {why}',
+    isTrue: "C'est **vrai**.",
+    isMyth: "C'est un **mythe**.",
+    expected: '**La réponse attendue :** `{answer}`',
+    pieces: "**Les bons morceaux, dans l'ordre :** {list}",
+    bug: "**L'erreur est à la ligne {line}. La version corrigée :** `{fix}`",
+    order: '**Le bon ordre :**',
+    pairs: '**Les bonnes paires :**',
+    where: "**Où est l'erreur :**",
+    right: '✓ Juste !',
+    wrong: '✗ Pas tout à fait',
+    xp: "+{xp} d'expérience",
+  },
+
+  review: {
+    mistakesTitle: 'Travail sur les erreurs',
+    cardsTitle: 'Cartes de termes',
+    cardProgress: 'Carte {n} sur {total}',
+    eyebrow: 'Répétition espacée',
+    title: 'La crypte de révision',
+    intro:
+      "Le cerveau oublie selon une courbe : vite au début, puis plus lentement. Réviser « au bord de l'oubli » prolonge la mémoire pour longtemps. C'est pourquoi chaque exercice et chaque terme vivent dans l'un des cinq cercueils.",
+    doneTitle: 'La séance est terminée !',
+    doneTasks: 'Bonnes réponses : {correct} sur {total}. Elles sont passées dans le cercueil suivant et reviendront plus tard.',
+    doneCards: 'Cartes parcourues : {total}. Revenez demain : réviser un peu chaque jour marche mieux que le bachotage.',
+    coffinsLabel: 'Cercueils de Leitner',
+    coffin: 'Cercueil {n}',
+    boxes: ['', 'Chaque jour', 'Un jour sur deux', 'Dans 3 jours', 'Dans une semaine', 'Dans 16 jours'],
+    tasksTitle: '🐞 Exercices à réviser',
+    tasksDue: "En attente de révision : **{count}**. Une séance en propose jusqu'à 10, mélangés entre les grottes.",
+    tasksStart: 'Commencer le travail sur les erreurs',
+    tasksEmpty:
+      "Encore vide. Les exercices arrivent ici après la pratique : les erreurs tout de suite, les bonnes réponses au bout d'un jour, de trois, d'une semaine…",
+    termsTitle: '📜 Cartes de termes',
+    termsDue: "À réviser : **{due}** · nouveaux : **{fresh}** (jusqu'à {limit} nouveaux par séance).",
+    termsStart: 'Commencer les cartes',
+  },
+
+  flashcard: {
+    labelBack: 'Explication du terme {title}',
+    labelFront: 'Le terme {title}. Cliquez pour retourner la carte',
+    question: "Qu'est-ce que c'est, en mots simples ?",
+    recall: 'Rappelez-vous par vous-même, puis cliquez sur la carte',
+    forgot: '😖 Pas retrouvé',
+    remembered: '😊 Retrouvé',
+    flip: 'Retourner la carte',
+  },
+
+  exam: {
+    verdicts: [
+      { title: 'Comte des Props !', text: 'La couronne est à vous. Vous comprenez les props mieux que bien des juniors.' },
+      { title: 'Gardien des props', text: 'Excellent résultat. Quelques thèmes méritent un rafraîchissement dans la crypte.' },
+      { title: 'Apprenti de la crypte', text: 'Les bases sont là. Révisez vos erreurs et revenez dans quelques jours.' },
+      { title: 'Chauve-souris ailée', text: 'Les ailes poussent déjà ! Refaites les grottes : la répétition fera le reste.' },
+    ],
+    passed: "Vous avez réussi l'épreuve ! Les chauves-souris sont ravies.",
+    failed: 'Bel essai. La crypte de révision vous attend.',
+    title: "👑 L'épreuve du Comte",
+    result: 'Résultat',
+    again: 'Recommencer',
+    reviewMistakes: '⚰️ Réviser les erreurs',
+    lair: 'Le repaire du Comte',
+    tasks: { one: '{count} exercice', other: '{count} exercices' },
+    intro:
+      "{tasks} de toutes les grottes, mélangés. Lunatik ne donnera pas d'indices, mais les explications après chaque réponse restent : l'épreuve enseigne elle aussi.",
+    rules: [
+      'Un exercice de chaque grotte et {extra} autres au hasard.',
+      'Les erreurs iront dans la crypte de révision.',
+      'À partir de 90%, vous gagnez le titre « Comte des Props ».',
+    ],
+    best: 'Meilleur résultat : {percent}% · tentatives : {attempts}',
+    start: "Accepter l'épreuve",
+  },
+
+  glossary: {
+    eyebrow: 'Glossaire',
+    title: 'Le glossaire du Comte',
+    terms: { one: '{count} terme', other: '{count} termes' },
+    intro: "{terms}. Les mêmes explications s'affichent au survol ou au clic sur un mot souligné dans une leçon.",
+    searchLabel: 'Rechercher un terme',
+    searchPlaceholder: 'Chercher un terme : par exemple children ou état',
+    empty: 'Rien trouvé. Essayez un autre mot.',
+    related: 'Voir aussi :',
+  },
+
+  library: {
+    eyebrow: 'Les parchemins du Comte',
+    title: 'La théorie en schémas',
+    intro:
+      'Pour ceux qui veulent simplement lire. Les parchemins sont rangés par grotte : les mêmes thèmes que dans le jeu. Et plus bas, le guide complet des props, section par section.',
+    cavesTitle: 'Parchemins des grottes',
+    guideTitle: 'Le guide complet des props',
+    all: '← Tous les parchemins',
+    caveSays: 'Le parchemin de la grotte « {cave} » : un résumé sans exercices. Pour vous tester, descendez dans la grotte.',
+    caveEyebrow: 'Parchemin de la grotte {order} · {cave}',
+    summary: 'Résumé de la grotte',
+    fromGuide: 'Extrait du guide complet',
+    section: 'Section {num}',
+    neighbours: 'Parchemins voisins',
+    train: "⚔️ Dans la grotte, pour s'entraîner",
+    sectionSays: 'Le guide complet, section {num} : « {title} ».',
+    sectionEyebrow: 'Le guide complet · section {num} sur {total} · {minutes}',
+    trainLabel: "S'entraîner :",
+    neighbourSections: 'Sections voisines',
+  },
+
+  methods: {
+    eyebrow: "Secrets d'une mémoire de vampire",
+    title: "Comment fonctionne l'apprentissage",
+    intro:
+      "Chaque mécanique des grottes s'appuie sur des recherches sur la mémoire et l'attention. Voici ce qui travaille pour vous, et comment vous en servir en dehors du jeu.",
+    plan: 'Plan pour une séance',
+    what: "Ce que c'est :",
+    inGame: 'Dans le jeu :',
+    self: 'Par vous-même :',
+  },
+
+  break: {
+    eyebrow: 'Pause · {seconds} secondes',
+    rules:
+      "Cliquez sur les chauves-souris qui portent une étiquette **juste** : +1 point. Une étiquette fausse : −1. Rater une chauve-souris n'est pas grave.",
+    go: "C'est parti !",
+    score: 'Points : **{score}**',
+    result: 'Bonnes prises : {good}, erreurs : {bad}. Le cerveau a changé de régime : vous pouvez retourner étudier !',
+    again: 'Encore une fois',
+    another: 'Une autre manche',
+    pageEyebrow: 'Pause',
+    title: 'Attrapez les chauves-souris',
+    intro: '20 secondes de jeu, et le cerveau est de nouveau prêt à apprendre. Meilleur résultat : {best}.',
+    tip: "Le conseil du Comte : après 25 minutes d'étude, faites une pause de 5 minutes ; levez-vous, marchez, regardez au loin.",
+  },
+
+  bestiary: {
+    eyebrow: 'Bestiaire',
+    title: 'Les gardiens des grottes',
+    intro: 'Chaque grotte a son gardien, et son apparence évoque le thème. Vaincus : **{defeated}** sur **{total}**.',
+    lordEyebrow: 'Seigneur de toutes les grottes',
+    lordName: 'Comte Propsula, vampire',
+    lordText:
+      "Le professeur et gardien en chef. Il attend dans son repaire pour l'ultime épreuve : un exercice de chaque grotte, sans indices.",
+    lair: '👑 Le repaire du Comte',
+    caveMeta: 'Grotte {order} · {cave}',
+    defeated: '✓ vaincu',
+    waiting: '⚔️ attend le combat',
+  },
+
+  install: {
+    devices: {
+      ios: {
+        title: '📱 iPhone et iPad',
+        steps: [
+          "Ouvrez le jeu dans le navigateur Safari (l'icône bleue avec une boussole).",
+          "Touchez le bouton « Partager » : un carré avec une flèche vers le haut, généralement en bas de l'écran.",
+          "Faites défiler la liste et choisissez « Sur l'écran d'accueil ».",
+          'Touchez « Ajouter » en haut à droite.',
+          "L'icône Props apparaîtra sur l'écran du téléphone. Ouvrez le jeu depuis cette icône une fois avec internet et attendez une demi-minute : le jeu sera enregistré dans le téléphone.",
+        ],
+        note: "Sur iPhone, c'est important : si vous ne visitez pas le site pendant une semaine, Safari peut effacer la progression. Le jeu de l'écran d'accueil conserve sa progression en sécurité. Elle lui est propre, distincte de celle de l'onglet Safari.",
+      },
+      android: {
+        title: '🤖 Android',
+        steps: [
+          'Ouvrez le jeu dans le navigateur Chrome.',
+          "Touchez le bouton « Installer le jeu » ci-dessus. S'il n'y est pas, touchez les trois points ⋮ en haut à droite et choisissez « Ajouter à l'écran d'accueil » ou « Installer l'application ».",
+          'Confirmez : « Installer ».',
+          "L'icône Props apparaîtra sur l'écran d'accueil. Ouvrez le jeu depuis cette icône une fois avec internet.",
+        ],
+        note: '',
+      },
+      desktop: {
+        title: '💻 Ordinateur : Windows ou Mac',
+        steps: [
+          "Le plus simple : télécharger le jeu en un seul fichier (le bouton « Télécharger Props.html » ci-dessous) et double-cliquer dessus ; le jeu s'ouvrira dans le navigateur sans internet.",
+          "Autre façon : l'installer comme une application. Dans Chrome ou Edge, cliquez sur l'icône d'installation à droite de la barre d'adresse (un écran avec une flèche) ou sur le bouton « Installer le jeu » ci-dessus.",
+        ],
+        note: '',
+      },
+    },
+    singleEyebrow: 'Copie autonome',
+    singleTitle: '📦 Tout le jeu dans un seul fichier',
+    singleText:
+      "Vous jouez avec une copie qui se trouve entièrement sur cet appareil : elle n'a pas besoin d'internet. Vous pouvez envoyer le fichier à un ami ou le mettre sur une clé USB ; il s'ouvrira dans n'importe quel navigateur moderne.",
+    singleNote:
+      'La progression de cette copie est conservée dans le navigateur qui a ouvert le fichier. Si vous déplacez le fichier sur un autre appareil, le jeu y reprendra depuis le début.',
+    eyebrow: 'Mode hors ligne',
+    title: '📲 Les grottes dans la poche',
+    intro:
+      "Par le lien, le jeu fonctionne dans n'importe quel navigateur : rien à installer. Mais si vous l'installez, une icône apparaîtra sur votre écran, comme pour une application ordinaire, et le jeu fonctionnera sans internet. Ci-dessous, trois façons de faire, pas à pas.",
+    saved: "✓ Le jeu est enregistré sur cet appareil : il s'ouvrira aussi sans internet.",
+    installed: "✓ Le jeu est déjà installé : ouvrez-le avec l'icône de votre écran.",
+    framed:
+      "Le jeu est actuellement ouvert à l'intérieur d'une autre page (par exemple dans l'aperçu de claude.ai). L'installation est impossible depuis là : ouvrez le jeu à sa propre adresse, par exemple sur GitHub Pages, puis revenez ici.",
+    button: '📲 Installer le jeu',
+    yours: 'Votre appareil',
+    downloadTitle: 'Télécharger en un seul fichier',
+    downloadText:
+      "Tout le jeu tient dans un fichier, **Props.html** (environ 2 Mo). Sur un ordinateur, il s'ouvre d'un double-clic et fonctionne sans internet. Pratique à envoyer aux camarades de cours ou à mettre sur une clé USB.",
+    download: '⬇️ Télécharger Props.html',
+    downloadNote:
+      "Sur un téléphone, il est plus sûr d'installer le jeu comme une application (voir plus haut) : dans un fichier ouvert depuis le téléphone, la progression peut ne pas être enregistrée. La copie téléchargée a sa propre progression, sans lien avec le site.",
+    checkTitle: 'Comment vérifier que tout a fonctionné',
+    checkText: 'Activez le mode avion (ou coupez le Wi‑Fi) et ouvrez le jeu : il doit fonctionner.',
+    checkNote: "La progression est conservée sur l'appareil où vous jouez : le téléphone a la sienne, l'ordinateur aussi.",
+  },
+
+  mascot: {
+    points: 'Le Comte montre :',
+    hide: 'Masquer la réplique',
+    togglePoint: "Le Comte montre quelque chose d'important : afficher l'indice",
+    toggleSpeech: 'Comte Propsula : afficher ou masquer la réplique',
+    phrases: {
+      greet: [
+        'Bienvenue dans mes grottes, développeur mortel ! Ici, les props volent comme des chauves-souris.',
+        'La nuit ne fait que commencer : le moment idéal pour les props. Choisissez une grotte !',
+        'Je suis le Comte Propsula, 427 ans de métier. Commençons près du feu : vérifions votre équipement.',
+      ],
+      correct: [
+        'Magnifique ! Mes crocs applaudissent.',
+        'Juste ! Encore une goutte de savoir dans la tirelire.',
+        'En plein dans le mille. Vous apprenez plus vite que je ne me change en chauve-souris !',
+        'Excellent. Même Lunatik a battu des ailes.',
+        "Oui ! C'est ainsi que répondent les futurs comtes des props.",
+      ],
+      wrong: [
+        "Ce n'est rien : l'erreur est le meilleur des professeurs. Lisez l'explication.",
+        "Raté ! Mais maintenant, cela s'ancrera mieux : vérifié par les siècles.",
+        "Presque ! Moi aussi, j'ai confondu props et state autrefois. Pendant deux siècles entiers.",
+        "L'erreur est partie dans la crypte de révision : nous y reviendrons plus tard.",
+      ],
+      point: [
+        "Retenez bien ! C'est la clé des props.",
+        'Regardez ici, mortel : un endroit important !',
+        'Je le jure sur mon croc : cela servira en entretien.',
+      ],
+      hint: [
+        "Lunatik a apporté un indice. Vous gagnerez un peu moins d'expérience pour la réponse, mais le savoir vaut davantage.",
+        "Voici un indice. Il n'y a pas de honte à demander ; la honte, c'est de ne pas comprendre.",
+      ],
+      chapterFail: [
+        'Le gardien a tenu bon. Relisez la leçon et revenez : il est déjà nerveux.',
+        'Il a manqué quelques coups. Reprenez vos erreurs et achevez le monstre.',
+      ],
+      chapterDone: ['Grotte terminée ! La torche est allumée : la suivante vous attend.', 'Bravo ! Encore une grotte conquise.'],
+      break: [
+        'Pause ! Le cerveau a besoin de changer de régime : attrapez des chauves-souris.',
+        'Un peu de mouvement, et le savoir se déposera. Attrapez !',
+      ],
+    },
+    route: {
+      map: "Voici la carte des grottes. Chaque grotte, c'est un thème et son monstre gardien. Un thème vit dans sa grotte : il est ainsi plus facile à retrouver.",
+      review: "La crypte de révision. Ce qu'il est temps de rafraîchir remonte tout seul, selon le système de Leitner.",
+      glossary: 'Le glossaire. Chaque terme en mots simples, et aussi techniquement.',
+      methods: 'Ici, je dévoile les secrets de ma mémoire de vampire.',
+      break: 'Pause : on bouge, on attrape, on se repose la tête.',
+      exam: 'Le repaire du Comte. Une épreuve avec des exercices de toutes les grottes, mélangés. Sans indices !',
+      library: 'Mes parchemins. Ici, on peut simplement lire : sans exercices et sans se presser.',
+      bestiary: 'Tous les gardiens des grottes me servent. Souvenez-vous du monstre et vous retrouverez le thème.',
+      install: 'Emportez les grottes avec vous : une fois installé, le jeu fonctionne aussi sans internet.',
+      lost: "Ici, il n'y a que des toiles d'araignée. On retourne à la carte ?",
+    },
+  },
+};

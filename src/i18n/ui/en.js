@@ -8,8 +8,7 @@ export default {
 
   lang: {
     choose: 'Game language',
-    notice:
-      'The interface is in English now. The lessons, tasks and glossary are still in Russian — their translation is on the way.',
+    notice: 'The interface is in English now. The lessons, tasks and glossary are still in Russian — their translation is on the way.',
   },
 
   common: {
@@ -104,7 +103,8 @@ export default {
     tier: 'Tier {num} · {title}',
     bestiaryEyebrow: 'Bestiary',
     guardians: { one: '{count} cave guardian', other: '{count} cave guardians' },
-    bestiaryText: 'Recall the monster — recall the topic. The centipede is an array, the mantis with hooks is hooks, the worm that gnaws through levels is Context.',
+    bestiaryText:
+      'Recall the monster — recall the topic. The centipede is an array, the mantis with hooks is hooks, the worm that gnaws through levels is Context.',
     bestiaryOpen: 'Open the bestiary →',
     factEyebrow: 'Lunatik brought a fact',
     factMore: 'Another fact',
@@ -155,7 +155,8 @@ export default {
     cardLabel: 'Card {n}: {title}',
     toSpell: 'To the spell ✨',
     toPractice: 'Got it — to practice ⚔️',
-    practiceRule: '⚔️ To defeat the guardian, answer at least {needed} of {total} tasks correctly. Mistakes are fine: every one is explained.',
+    practiceRule:
+      '⚔️ To defeat the guardian, answer at least {needed} of {total} tasks correctly. Mistakes are fine: every one is explained.',
     toSummary: 'To the summary →',
     skipBreak: 'Skip the break',
     summaryEyebrow: 'Cave summary',
@@ -163,7 +164,8 @@ export default {
     stoodText:
       'In this attempt you got **{correct}** of **{total}** right. To defeat the guardian you need at least **{needed}**. Your mistakes are already explained and wait in the Crypt of Repetition — look through the lesson and return to the fight.',
     notYetTitle: 'The guardian is not defeated yet',
-    notYetText: '{name} is waiting for a fight. To defeat this guardian, answer at least **{needed}** of **{total}** practice tasks correctly.',
+    notYetText:
+      '{name} is waiting for a fight. To defeat this guardian, answer at least **{needed}** of **{total}** practice tasks correctly.',
     fightAgain: 'Fight again ⚔️',
     toPracticeShort: 'To practice ⚔️',
     rereadLesson: 'Reread the lesson 📖',
@@ -352,7 +354,8 @@ export default {
     reviewMistakes: '⚰️ Review the mistakes',
     lair: 'The Count’s lair',
     tasks: { one: '{count} task', other: '{count} tasks' },
-    intro: '{tasks} from all the caves, mixed together. There will be no hints from Lunatik, but the explanations after every answer stay — the trial teaches too.',
+    intro:
+      '{tasks} from all the caves, mixed together. There will be no hints from Lunatik, but the explanations after every answer stay — the trial teaches too.',
     rules: [
       'One task from every cave and {extra} more random ones.',
       'Mistakes will go to the Crypt of Repetition.',
@@ -397,7 +400,8 @@ export default {
   methods: {
     eyebrow: 'Secrets of a vampire’s memory',
     title: 'How the learning works',
-    intro: 'Every mechanic in the caves rests on research into memory and attention. Here is what works for you — and how to use it outside the game.',
+    intro:
+      'Every mechanic in the caves rests on research into memory and attention. Here is what works for you — and how to use it outside the game.',
     plan: 'A plan for one session',
     what: 'What it is:',
     inGame: 'In the game:',
@@ -467,7 +471,8 @@ export default {
     singleTitle: '📦 The whole game in one file',
     singleText:
       'You are playing a copy that lives entirely on this device: it needs no internet. You can send the file to a friend or put it on a flash drive — it will open in any modern browser.',
-    singleNote: 'The progress of this copy is kept in the browser that opened the file. Move the file to another device, and the game will start from the beginning there.',
+    singleNote:
+      'The progress of this copy is kept in the browser that opened the file. Move the file to another device, and the game will start from the beginning there.',
     eyebrow: 'Offline mode',
     title: '📲 The caves in your pocket',
     intro:
@@ -513,7 +518,11 @@ export default {
         'Almost! Even I once mixed up props and state. For two whole centuries.',
         'The mistake went to the Crypt of Repetition — we will return to it later.',
       ],
-      point: ['Remember this! It is the key to props.', 'Look here, mortal — an important spot!', 'I swear by my fang: this will come up at an interview.'],
+      point: [
+        'Remember this! It is the key to props.',
+        'Look here, mortal — an important spot!',
+        'I swear by my fang: this will come up at an interview.',
+      ],
       hint: [
         'Lunatik brought a hint. You will get a little less experience for the answer, but knowledge is worth more.',
         'Here is a hint. There is no shame in asking — the shame is in not understanding.',
