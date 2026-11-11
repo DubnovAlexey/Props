@@ -88,7 +88,7 @@ npm run dev      # http://localhost:5173
 | Команда                | Что делает                                                    |
 | ---------------------- | ------------------------------------------------------------- |
 | `npm run dev`          | сервер разработки, изменения видны сразу                      |
-| `npm test`             | тесты: целостность контента и логика (368 проверок)           |
+| `npm test`             | тесты: целостность контента и логика (394 проверок)           |
 | `npm run lint`         | ESLint: ошибки и правила хуков                                |
 | `npm run format`       | Prettier: единый стиль кода                                   |
 | `npm run build`        | сборка сайта в `dist/` (+ `sw.js` для офлайна и `Props.html`) |
@@ -188,7 +188,7 @@ npm run dev      # http://localhost:5173
 | Command                | What it does                                                   |
 | ---------------------- | -------------------------------------------------------------- |
 | `npm run dev`          | dev server with instant updates                                |
-| `npm test`             | tests: content integrity and logic (368 checks)                |
+| `npm test`             | tests: content integrity and logic (394 checks)                |
 | `npm run lint`         | ESLint: errors and the rules of hooks                          |
 | `npm run format`       | Prettier: one code style                                       |
 | `npm run build`        | site build in `dist/` (+ `sw.js` for offline and `Props.html`) |
@@ -279,7 +279,7 @@ npm run dev      # http://localhost:5173
 
 </div>
 
-**פקודות:** `npm run dev` — שרת פיתוח · `npm test` — בדיקות (368) · `npm run lint` — ESLint ·
+**פקודות:** `npm run dev` — שרת פיתוח · `npm test` — בדיקות (394) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — בניית האתר ל‑`dist/` (כולל `sw.js` ו‑`Props.html`) ·
 `npm run build:single` — קובץ אחד בלבד · `npm run preview` — תצוגת הבנייה · `npm run check` — הכול יחד לפני commit.
 
@@ -368,7 +368,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-**Comandos:** `npm run dev` — servidor de desarrollo · `npm test` — pruebas (368) · `npm run lint` — ESLint ·
+**Comandos:** `npm run dev` — servidor de desarrollo · `npm test` — pruebas (394) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — compila el sitio en `dist/` (con `sw.js` y `Props.html`) ·
 `npm run build:single` — solo el archivo único · `npm run preview` — vista previa de la compilación ·
 `npm run check` — todo junto antes de cada commit.
@@ -453,7 +453,7 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
-**Commandes :** `npm run dev` — serveur de développement · `npm test` — tests (368) · `npm run lint` — ESLint ·
+**Commandes :** `npm run dev` — serveur de développement · `npm test` — tests (394) · `npm run lint` — ESLint ·
 `npm run format` — Prettier · `npm run build` — construit le site dans `dist/` (avec `sw.js` et `Props.html`) ·
 `npm run build:single` — le fichier unique seulement · `npm run preview` — aperçu du build ·
 `npm run check` — tout à la fois avant chaque commit.
