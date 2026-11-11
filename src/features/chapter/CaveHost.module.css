@@ -53,7 +53,7 @@
 .speech {
   margin: 0 0 10px;
   padding: 10px 14px;
-  border-left: 3px solid var(--cave);
+  border-inline-start: 3px solid var(--cave);
   border-radius: 0 12px 12px 0;
   background: color-mix(in srgb, var(--cave) 10%, var(--surface-2));
   font-family: var(--font-title), serif;
@@ -73,7 +73,7 @@
 }
 
 .defeated .speech {
-  border-left-color: var(--good);
+  border-inline-start-color: var(--good);
 }
 
 /* Анимации этого файла. В модульных стилях (*.module.css) сборщик переименовывает имена

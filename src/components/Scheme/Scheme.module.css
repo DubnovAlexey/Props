@@ -82,7 +82,7 @@
 
 .arrow {
   position: absolute;
-  left: 22px;
+  inset-inline-start: 22px;
   bottom: -28px;
   display: flex;
   align-items: center;
@@ -108,9 +108,9 @@
 }
 
 .treeList {
-  margin-left: 14px;
-  padding-left: 14px;
-  border-left: 2px solid var(--border);
+  margin-inline-start: 14px;
+  padding-inline-start: 14px;
+  border-inline-start: 2px solid var(--border);
 }
 
 .treeItem {
@@ -121,7 +121,7 @@
 .treeList > .treeItem::before {
   content: '';
   position: absolute;
-  left: -14px;
+  inset-inline-start: -14px;
   top: 30px;
   width: 12px;
   border-top: 2px solid var(--border);
@@ -189,7 +189,7 @@
 
 .side ul {
   margin: 6px 0 0;
-  padding-left: 1.1em;
+  padding-inline-start: 1.1em;
 }
 
 .side li {

@@ -4,7 +4,7 @@
   padding: 14px 16px 14px 18px;
   border-radius: 14px;
   border: 1px solid var(--gold);
-  border-left-width: 5px;
+  border-inline-start-width: 5px;
   background: var(--gold-soft);
   animation: glow 2.4s ease-in-out 2;
 }
