@@ -39,6 +39,7 @@ export const initialProgress = {
   theme: 'night',
   sound: true,
   scares: true, // «неожиданности»: пролетающие мыши, гоблины, банши (components/Scares)
+  lang: null, // язык интерфейса; null — игра выберет сама (src/i18n/languages.js)
 };
 
 /** Восстанавливаем сохранённый прогресс, подставляя недостающие поля */
@@ -135,9 +136,12 @@ export function progressReducer(state, action) {
     case 'scares':
       return { ...state, scares: action.scares };
 
+    case 'lang':
+      return { ...state, lang: action.lang };
+
     case 'reset':
-      // настройки (тема, звук, неожиданности) — не прогресс: при сбросе остаются
-      return { ...initialProgress, theme: state.theme, sound: state.sound, scares: state.scares };
+      // настройки (тема, звук, неожиданности, язык) — не прогресс: при сбросе остаются
+      return { ...initialProgress, theme: state.theme, sound: state.sound, scares: state.scares, lang: state.lang };
 
     default:
       return state;

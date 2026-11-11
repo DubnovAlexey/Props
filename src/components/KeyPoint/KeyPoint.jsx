@@ -9,10 +9,12 @@ import { RichText } from '../RichText/RichText.jsx';
 import { stripMarkup } from '../../utils/richText.js';
 import { GLOSSARY_MAP } from '../../content/glossary.js';
 import styles from './KeyPoint.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 const labelFor = (id) => GLOSSARY_MAP[id]?.label ?? id;
 
-export default function KeyPoint({ text, label = 'Ключевой момент' }) {
+export default function KeyPoint({ text, label }) {
+  const { t } = useI18n();
   const ref = useRef(null);
   const { pointAt, release } = useMascot();
 
@@ -33,7 +35,7 @@ export default function KeyPoint({ text, label = 'Ключевой момент'
     <aside ref={ref} className={styles.key}>
       <div className={styles.label}>
         <Bat size={30} />
-        <span>{label}</span>
+        <span>{label ?? t('keyPoint')}</span>
       </div>
       <p className={styles.text}>
         <RichText text={text} />

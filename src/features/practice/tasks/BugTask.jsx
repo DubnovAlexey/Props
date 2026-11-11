@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { RichText } from '../../../components/RichText/RichText.jsx';
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.jsx';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function BugTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const [line, setLine] = useState(null);
   const answered = result !== null;
 
@@ -23,13 +25,13 @@ export default function BugTask({ task, onAnswer, result }) {
   return (
     <div>
       <p className={styles.question}>
-        <RichText text={task.question ?? 'Нажми на строку с ошибкой.'} />
+        <RichText text={task.question ?? t('tasks.bugQuestion')} />
       </p>
       <CodeBlock code={task.code} onLineClick={setLine} lineStatus={lineStatus} disabled={answered} />
       {!answered && (
         <div className={styles.actions}>
           <button type="button" className="btn btn-primary" disabled={line === null} onClick={() => onAnswer(line)}>
-            {line === null ? 'Выбери строку' : `Ошибка в строке ${line}`}
+            {line === null ? t('tasks.bugPick') : t('tasks.bugLine', { n: line })}
           </button>
         </div>
       )}

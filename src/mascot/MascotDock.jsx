@@ -11,10 +11,12 @@ import Bat from './Bat.jsx';
 import { useMascotState } from './MascotContext.jsx';
 import { useMediaQuery, useReducedMotion } from '../hooks/useMediaQuery.js';
 import styles from './MascotDock.module.css';
+import { useI18n } from '../i18n/I18nContext.jsx';
 
 const SPEECH_MS_PHONE = 4500;
 
 export default function MascotDock({ routeKey }) {
+  const { t } = useI18n();
   const { speech, focus, hidden } = useMascotState();
   // Колонка Графа — 230px справа от текста (760px): целиком помещается только с 1280px.
   // На экранах поуже Граф сидит в углу, иначе облачко обрезалось бы краем экрана.
@@ -91,7 +93,7 @@ export default function MascotDock({ routeKey }) {
   }
 
   return (
-    <aside className={`${styles.dock} ${wide ? styles.wide : styles.corner}`} style={dockStyle} aria-label="Граф Пропсула">
+    <aside className={`${styles.dock} ${wide ? styles.wide : styles.corner}`} style={dockStyle} aria-label={t('common.count')}>
       {text && (
         <div className={`${styles.bubble} ${showTip ? styles.bubblePoint : ''}`} role="status" key={showTip ? text : speech.id}>
           {/* На телефоне облачко — плашка под шапкой, поэтому рядом мини-портрет Графа */}
@@ -101,10 +103,10 @@ export default function MascotDock({ routeKey }) {
             </span>
           )}
           <div className={styles.bubbleText}>
-            {showTip && <span className={styles.bubbleLabel}>Граф указывает:</span>}
+            {showTip && <span className={styles.bubbleLabel}>{t('mascot.points')}</span>}
             <p>{text}</p>
           </div>
-          <button type="button" className={styles.close} onClick={close} aria-label="Скрыть реплику">
+          <button type="button" className={styles.close} onClick={close} aria-label={t('mascot.hide')}>
             ×
           </button>
         </div>
@@ -114,7 +116,7 @@ export default function MascotDock({ routeKey }) {
         type="button"
         className={styles.avatar}
         onClick={toggle}
-        aria-label={pointing ? 'Граф указывает на важное: показать подсказку' : 'Граф Пропсула: показать или скрыть реплику'}
+        aria-label={pointing ? t('mascot.togglePoint') : t('mascot.toggleSpeech')}
       >
         {arriving ? (
           <span className={styles.arriving}>

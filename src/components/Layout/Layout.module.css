@@ -144,6 +144,48 @@
   cursor: pointer;
 }
 
+/* Переключатель языка: глобус и код языка. Поверх лежит настоящий список <select>,
+   прозрачный: нажатие попадает в него, и открывается привычное системное окно выбора. */
+.lang {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.langCode {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.langSelect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 16px; /* меньше 16px — iPhone приближает страницу, когда список открывается */
+}
+
+/* рамка фокуса — на видимой «кнопке»: сам список прозрачен */
+.lang:focus-within {
+  outline: 2px solid var(--magic);
+  outline-offset: 2px;
+}
+
 /* 1000–1279px: компактная шапка — меню без значков, логотип без подписи.
    Так шапка помещается на планшете и не растягивает страницу вбок. */
 @media (min-width: 1000px) {
@@ -208,6 +250,11 @@
   .theme {
     width: 38px;
     height: 38px;
+  }
+
+  .lang {
+    height: 38px;
+    padding: 0 8px;
   }
 }
 

@@ -1,7 +1,7 @@
 // Прогон заданий: одно задание за раз → ответ → пояснение → дальше.
 // Каждый ответ записывается в «гробики» Лейтнера: ошибки вернутся
 // на повторение сразу, верные ответы — через растущие промежутки.
-import { LEVEL_LABELS } from '../../content/difficulty.js';
+
 import { sfx } from '../../audio/sfx.js';
 import { useRef, useState } from 'react';
 import { TASK_TYPES, TASK_VIEWS } from './tasks/index.js';
@@ -16,8 +16,10 @@ import { phrase } from '../../mascot/phrases.js';
 import { checkTask } from '../../utils/checkAnswer.js';
 import { CHAPTER_MAP } from '../../content/chapters/index.js';
 import styles from './Practice.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function PracticeRunner({ tasks, onFinish, allowHints = true, showChapter = false }) {
+  const { t } = useI18n();
   const { dispatch } = useProgress();
   const { say } = useMascot();
   const [index, setIndex] = useState(0);
@@ -40,7 +42,7 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
     else sfx.wrong();
     setResult({ correct, value, xp });
     setLog((list) => [...list, { id: task.id, correct }]);
-    say(phrase(correct ? 'correct' : 'wrong'), correct ? 'happy' : 'sad');
+    say(phrase(t, correct ? 'correct' : 'wrong'), correct ? 'happy' : 'sad');
   }
 
   function next() {
@@ -62,7 +64,7 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
 
   function showHint() {
     setHintShown(true);
-    say(phrase('hint'), 'talk');
+    say(phrase(t, 'hint'), 'talk');
   }
 
   return (
@@ -70,21 +72,21 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
       <ProgressBar
         value={index + (result ? 1 : 0)}
         max={tasks.length}
-        label={`Задание ${index + 1} из ${tasks.length} · осталось ${tasks.length - index - (result ? 1 : 0)}`}
+        label={t('practice.progress', { current: index + 1, total: tasks.length, left: tasks.length - index - (result ? 1 : 0) })}
       />
 
       <div className={`card ${styles.taskCard}`} key={task.id}>
         <div className={styles.meta}>
           <span className="chip">
-            <span aria-hidden="true">{type.icon}</span> {type.label}
+            <span aria-hidden="true">{type.icon}</span> {t(`tasks.types.${task.type}`)}
           </span>
           {task.level && (
-            <span className={`chip ${styles.level}`} title="Сложность: от «узнать» к «найти подвох»">
-              {LEVEL_LABELS[task.level]}
+            <span className={`chip ${styles.level}`} title={t('practice.levelTitle')}>
+              {t('practice.levels')[task.level]}
             </span>
           )}
           {showChapter && chapter && (
-            <span className="chip" title="Из какой пещеры задание">
+            <span className="chip" title={t('practice.caveTitle')}>
               <span aria-hidden="true">{chapter.icon}</span> {chapter.cave}
             </span>
           )}
@@ -100,7 +102,7 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
               </p>
             ) : (
               <button type="button" className="btn btn-ghost btn-small" onClick={showHint}>
-                🦇 Подсказка Лунатика
+                {t('practice.hint')}
               </button>
             )}
           </div>
@@ -111,7 +113,7 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
             <Feedback task={task} result={result} />
             <div className={styles.nextRow}>
               <button type="button" className="btn btn-primary" onClick={next} autoFocus>
-                {isLast ? 'К итогам' : 'Дальше →'}
+                {isLast ? t('practice.toSummary') : t('common.next')}
               </button>
             </div>
           </>

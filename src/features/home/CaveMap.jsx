@@ -9,7 +9,7 @@ import { FACTS } from '../../content/facts.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import { useReducedMotion } from '../../hooks/useMediaQuery.js';
-import { PHRASES, phrase } from '../../mascot/phrases.js';
+import { phrase } from '../../mascot/phrases.js';
 import { rankFor } from '../../utils/ranks.js';
 import { dueIds } from '../../utils/leitner.js';
 import { pick } from '../../utils/random.js';
@@ -23,12 +23,14 @@ import CaveNode from './CaveNode.jsx';
 import styles from './CaveMap.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 /**
  * «Начать игру заново»: сначала спрашиваем подтверждение — стёртый прогресс не вернуть.
  * Пока прогресса нет, кнопку не показываем: стирать нечего.
  */
 function ResetProgress() {
+  const { t } = useI18n();
   const { progress, dispatch } = useProgress();
   const [asking, setAsking] = useState(false);
   const hasProgress = progress.xp > 0 || Object.keys(progress.chapters).length > 0 || Object.keys(progress.items).length > 0;
@@ -44,22 +46,22 @@ function ResetProgress() {
   if (!asking) {
     return (
       <button type="button" className="btn btn-ghost btn-small" onClick={() => setAsking(true)}>
-        🗑️ Начать игру заново
+        {t('map.resetButton')}
       </button>
     );
   }
 
   return (
-    <div className={styles.reset} role="alertdialog" aria-label="Сброс прогресса">
+    <div className={styles.reset} role="alertdialog" aria-label={t('map.resetLabel')}>
       <p>
-        <b>Точно начать заново?</b> Опыт, пройденные пещеры и расписание повторений будут стёрты. Вернуть их нельзя.
+        <RichText text={t('map.resetText')} />
       </p>
       <div className="row">
         <button type="button" className="btn" onClick={() => setAsking(false)}>
-          Отмена
+          {t('common.cancel')}
         </button>
         <button type="button" className="btn btn-danger" onClick={reset}>
-          Да, стереть прогресс
+          {t('map.resetConfirm')}
         </button>
       </div>
     </div>
@@ -71,6 +73,7 @@ function ResetProgress() {
  * Настройка хранится в прогрессе рядом с темой и звуком.
  */
 function ScaresToggle() {
+  const { t } = useI18n();
   const { progress, dispatch } = useProgress();
   const reducedMotion = useReducedMotion();
   const on = progress.scares !== false;
@@ -78,32 +81,28 @@ function ScaresToggle() {
   return (
     <div className={styles.scares}>
       <p className="small">
-        <b>Неожиданности.</b> Иногда по экрану кто-то пролетает или пробегает: летучая мышь, гоблин, тролль, банши. Секунда испуга
-        встряхивает мозг — он отвлекается, отдыхает и возвращается к задаче свежим. Мешает — выключи.
+        <RichText text={t('map.scaresText')} />
       </p>
       <button type="button" className="btn btn-small" aria-pressed={on} onClick={() => dispatch({ type: 'scares', scares: !on })}>
-        {on ? '👻 Неожиданности включены' : '🚫 Неожиданности выключены'}
+        {on ? t('map.scaresOn') : t('map.scaresOff')}
       </button>
-      {reducedMotion && on && (
-        <p className="muted small">
-          В настройках твоего устройства включено «уменьшение движения», поэтому сейчас никто не появляется: игра уважает эту настройку.
-        </p>
-      )}
+      {reducedMotion && on && <p className="muted small">{t('map.scaresReduced')}</p>}
     </div>
   );
 }
 
 export default function CaveMap() {
+  const { t } = useI18n();
   const { progress } = useProgress();
   const { say } = useMascot();
   const [fact, setFact] = useState(() => pick(FACTS));
   const isNew = progress.xp === 0;
 
   useEffect(() => {
-    say(isNew ? phrase('greet') : PHRASES.route.map, 'wave');
+    say(isNew ? phrase(t, 'greet') : t('mascot.route.map'), 'wave');
     // реплика — только при входе на карту, поэтому isNew не в зависимостях
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [say]);
+  }, [say, t]);
 
   const nextChapter = CHAPTERS.find((chapter) => !progress.chapters[chapter.id]?.done) ?? null;
   const dueCount = dueIds(progress.items, '', Date.now()).length;
@@ -115,20 +114,18 @@ export default function CaveMap() {
     <div className="stack">
       <section className={styles.hero}>
         <div className={styles.heroText}>
-          <span className="eyebrow">Игра-тренажёр по React</span>
-          <BloodTitle>Пещеры Графа Пропсулы</BloodTitle>
+          <span className="eyebrow">{t('map.eyebrow')}</span>
+          <BloodTitle>{t('map.title')}</BloodTitle>
           <p>
-            <RichText
-              text={`${CHAPTERS.length} пещер на трёх ярусах — от устройства проекта до паттернов. Всё о [[props|пропсах]] и всём, что рядом: [[component|компоненты]], JavaScript, [[state|состояние]], [[virtual-dom|виртуальный DOM]], [[hook|хуки]], [[context|Context]], [[memo|memo]] и типы. В каждой пещере — свой хозяин-чудище, а над всеми — Граф.`}
-            />
+            <RichText text={t('map.intro', { caves: t('map.caves', { count: CHAPTERS.length }) })} />
           </p>
           <div className="row">
             <a className="btn btn-primary" href={to.chapter((nextChapter ?? CHAPTERS[0]).id)}>
-              {isNew ? '🕯️ Войти в первую пещеру' : nextChapter ? '🕯️ Продолжить путь' : '🔁 Пройти заново'}
+              {isNew ? t('map.start') : nextChapter ? t('map.continue') : t('map.again')}
             </a>
             {dueCount > 0 && (
               <a className="btn" href={to.review()}>
-                ⚰️ Повторить ({dueCount})
+                {t('map.review', { count: dueCount })}
               </a>
             )}
           </div>
@@ -136,38 +133,44 @@ export default function CaveMap() {
         <CaveArt />
       </section>
 
+      {t('lang.notice') && <p className="card small">{t('lang.notice')}</p>}
+
       <section className={`card ${styles.rank}`}>
         <div className={styles.rankHead}>
           <span className={styles.rankIcon} aria-hidden="true">
             {current.icon}
           </span>
           <div>
-            <span className="eyebrow">Твой ранг</span>
-            <h2 className={styles.rankTitle}>{current.title}</h2>
+            <span className="eyebrow">{t('map.rankEyebrow')}</span>
+            <h2 className={styles.rankTitle}>{t('ranks')[current.id]}</h2>
           </div>
         </div>
         <ProgressBar
           value={next ? toNext : 1}
           max={1}
-          label={next ? `Опыт ${progress.xp} · до ранга «${next.title}» — ${next.min - progress.xp}` : `Опыт ${progress.xp} · высший ранг!`}
+          label={
+            next
+              ? t('map.xpToNext', { xp: progress.xp, rank: t('ranks')[next.id], left: next.min - progress.xp })
+              : t('map.xpTop', { xp: progress.xp })
+          }
         />
         <dl className={styles.stats}>
           <div>
-            <dt>Пещер</dt>
+            <dt>{t('map.statCaves')}</dt>
             <dd>
               {doneCount}/{CHAPTERS.length}
             </dd>
           </div>
           <div>
-            <dt>Ответов</dt>
+            <dt>{t('map.statAnswers')}</dt>
             <dd>{progress.stats.answered}</dd>
           </div>
           <div>
-            <dt>Точность</dt>
+            <dt>{t('map.statAccuracy')}</dt>
             <dd>{accuracy}%</dd>
           </div>
           <div>
-            <dt>Дней подряд</dt>
+            <dt>{t('map.statStreak')}</dt>
             <dd>{progress.streak.count}</dd>
           </div>
         </dl>
@@ -175,15 +178,15 @@ export default function CaveMap() {
 
       {isNew && (
         <section className={`card ${styles.prologue}`}>
-          <span className="eyebrow">Пролог</span>
+          <span className="eyebrow">{t('map.prologue')}</span>
           <h2>{PROLOGUE.title}</h2>
           <RichBlocks lines={PROLOGUE.text} />
         </section>
       )}
 
       <section>
-        <h2>Карта пещер</h2>
-        <p className="muted small">Спускайся по порядку: каждая пещера опирается на предыдущую. Но проходы открыты все.</p>
+        <h2>{t('map.mapTitle')}</h2>
+        <p className="muted small">{t('map.mapHint')}</p>
         {TIERS.map((tier) => (
           <section key={tier.id} className={styles.tier} aria-labelledby={`tier-${tier.id}`}>
             <header className={styles.tierHead}>
@@ -192,7 +195,7 @@ export default function CaveMap() {
               </span>
               <div>
                 <h3 id={`tier-${tier.id}`} className={styles.tierTitle}>
-                  Ярус {tier.num} · {tier.title}
+                  {t('map.tier', { num: tier.num, title: tier.title })}
                 </h3>
                 <p className="muted small">{tier.sub}</p>
               </div>
@@ -216,7 +219,7 @@ export default function CaveMap() {
 
       {!nextChapter && progress.exam.best !== null && (
         <section className={`card ${styles.prologue}`}>
-          <span className="eyebrow">Эпилог</span>
+          <span className="eyebrow">{t('map.epilogue')}</span>
           <h2>{EPILOGUE.title}</h2>
           <RichBlocks lines={EPILOGUE.text} />
         </section>
@@ -229,13 +232,11 @@ export default function CaveMap() {
           ))}
         </div>
         <div>
-          <span className="eyebrow">Бестиарий</span>
-          <h2 className={styles.bestiaryTitle}>{CHAPTERS.length} хозяев пещер</h2>
-          <p className="muted small">
-            Вспомни чудище — вспомнишь тему. Сороконожка — массив, богомол с крюками — хуки, червь, прогрызающий уровни, — Context.
-          </p>
+          <span className="eyebrow">{t('map.bestiaryEyebrow')}</span>
+          <h2 className={styles.bestiaryTitle}>{t('map.guardians', { count: CHAPTERS.length })}</h2>
+          <p className="muted small">{t('map.bestiaryText')}</p>
           <a className="btn btn-small" href={to.bestiary()}>
-            Открыть бестиарий →
+            {t('map.bestiaryOpen')}
           </a>
         </div>
       </section>
@@ -243,33 +244,29 @@ export default function CaveMap() {
       <section className={`card ${styles.fact}`}>
         <Bat size={54} />
         <div>
-          <span className="eyebrow">Лунатик принёс факт</span>
+          <span className="eyebrow">{t('map.factEyebrow')}</span>
           <p>
             <RichText text={fact} />
           </p>
           <button type="button" className="btn btn-small" onClick={() => setFact(pick(FACTS.filter((item) => item !== fact)))}>
-            Ещё факт
+            {t('map.factMore')}
           </button>
         </div>
       </section>
 
       <section className="card">
-        <h2>Как учиться с Графом</h2>
+        <h2>{t('map.howTitle')}</h2>
         <ul>
-          <li>
-            <b>Короткие подходы.</b> Одна пещера — 15–25 минут, потом перемена.
-          </li>
-          <li>
-            <b>Возвращайся завтра.</b> Склеп повторения сам подскажет, что освежить.
-          </li>
-          <li>
-            <b>Объясняй вслух.</b> Заклинания и «Объясни Лунатику» закрепляют лучше перечитывания.
-          </li>
+          {t('map.how').map((line) => (
+            <li key={line}>
+              <RichText text={line} />
+            </li>
+          ))}
         </ul>
         <div className="row">
-          <a href={to.methods()}>Почему это работает →</a>
-          <a href={to.break()}>🦇 Перемена</a>
-          <a href={to.install()}>📲 Играть без интернета</a>
+          <a href={to.methods()}>{t('map.whyLink')}</a>
+          <a href={to.break()}>{t('map.breakLink')}</a>
+          <a href={to.install()}>{t('map.installLink')}</a>
         </div>
         <ScaresToggle />
         <ResetProgress />

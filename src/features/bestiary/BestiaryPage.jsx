@@ -5,43 +5,44 @@ import { useEffect } from 'react';
 import { CHAPTERS } from '../../content/chapters/index.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
-import { PHRASES } from '../../mascot/phrases.js';
+
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import Vampire from '../../mascot/Vampire.jsx';
 import { to } from '../../app/useHashRoute.js';
 import styles from './Bestiary.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
+import { RichText } from '../../components/RichText/RichText.jsx';
 
 export default function BestiaryPage() {
+  const { t } = useI18n();
   const { progress } = useProgress();
   const { say } = useMascot();
 
   useEffect(() => {
-    say(PHRASES.route.bestiary, 'talk');
-  }, [say]);
+    say(t('mascot.route.bestiary'), 'talk');
+  }, [say, t]);
 
   const defeated = CHAPTERS.filter((chapter) => progress.chapters[chapter.id]?.done).length;
 
   return (
     <div className="stack">
       <header>
-        <span className="eyebrow">Бестиарий</span>
-        <BloodTitle>Хозяева пещер</BloodTitle>
+        <span className="eyebrow">{t('bestiary.eyebrow')}</span>
+        <BloodTitle>{t('bestiary.title')}</BloodTitle>
         <p className="muted">
-          У каждой пещеры свой хозяин, и его облик подсказывает тему. Повержено: <b>{defeated}</b> из <b>{CHAPTERS.length}</b>.
+          <RichText text={t('bestiary.intro', { defeated, total: CHAPTERS.length })} />
         </p>
       </header>
 
       <section className={`card ${styles.count}`}>
         <Vampire mood="idle" size={86} />
         <div>
-          <span className="eyebrow">Повелитель всех пещер</span>
-          <h2 className={styles.countName}>Граф Пропсула, вампир</h2>
-          <p className="muted small">
-            Учитель и главный хозяин. Ждёт в логове на последнее испытание: по заданию из каждой пещеры, без подсказок.
-          </p>
+          <span className="eyebrow">{t('bestiary.lordEyebrow')}</span>
+          <h2 className={styles.countName}>{t('bestiary.lordName')}</h2>
+          <p className="muted small">{t('bestiary.lordText')}</p>
           <a className="btn btn-small" href={to.exam()}>
-            👑 Логово Графа
+            {t('bestiary.lair')}
           </a>
         </div>
       </section>
@@ -54,15 +55,13 @@ export default function BestiaryPage() {
             <li key={chapter.id} className={`card ${styles.item}`} style={{ '--cave': chapter.color }}>
               <a className={styles.link} href={to.chapter(chapter.id)}>
                 <Guardian id={chapter.id} size={112} mood={done ? 'defeated' : 'idle'} label={`${guardian.kind} ${guardian.name}`} />
-                <span className={styles.meta}>
-                  Пещера {chapter.order} · {chapter.cave}
-                </span>
+                <span className={styles.meta}>{t('bestiary.caveMeta', { order: chapter.order, cave: chapter.cave })}</span>
                 <b className={styles.name}>
                   {guardian.name}, {guardian.kind}
                 </b>
                 <span className={styles.topic}>{chapter.title}</span>
                 <span className={styles.why}>{guardian.why}</span>
-                <span className={styles.status}>{done ? '✓ повержен' : '⚔️ ждёт боя'}</span>
+                <span className={styles.status}>{done ? t('bestiary.defeated') : t('bestiary.waiting')}</span>
               </a>
             </li>
           );

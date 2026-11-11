@@ -15,8 +15,10 @@ import { GLOSSARY_MAP } from '../../content/glossary.js';
 import { useHoverCapable } from '../../hooks/useMediaQuery.js';
 import styles from './Term.module.css';
 import { to } from '../../app/useHashRoute.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function Term({ id, children }) {
+  const { t } = useI18n();
   const entry = GLOSSARY_MAP[id];
   const hoverCapable = useHoverCapable();
   const [open, setOpen] = useState(false);
@@ -118,17 +120,17 @@ export default function Term({ id, children }) {
             </div>
             <Spelling entry={entry} />
             <p>
-              <b>Простыми словами: </b>
+              <b>{t('common.simple')} </b>
               {entry.simple}
             </p>
             {entry.tech && (
               <p className={styles.tech}>
-                <b>Технически: </b>
+                <b>{t('common.tech')} </b>
                 {entry.tech}
               </p>
             )}
             <a className={styles.more} href={to.glossary(id)} onClick={() => setOpen(false)}>
-              Открыть в словаре →
+              {t('term.open')}
             </a>
           </div>,
           document.body,

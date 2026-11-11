@@ -3,30 +3,29 @@
 import { useEffect } from 'react';
 import { METHODS, STUDY_PLAN } from '../../content/methods.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
-import { PHRASES } from '../../mascot/phrases.js';
+
 import styles from './Methods.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function MethodsPage() {
+  const { t } = useI18n();
   const { say } = useMascot();
 
   useEffect(() => {
-    say(PHRASES.route.methods, 'talk');
-  }, [say]);
+    say(t('mascot.route.methods'), 'talk');
+  }, [say, t]);
 
   return (
     <div className="stack">
       <div>
-        <span className="eyebrow">Секреты вампирской памяти</span>
-        <BloodTitle>Как устроено обучение</BloodTitle>
-        <p className="muted">
-          Каждая механика в пещерах опирается на исследования памяти и внимания. Вот что работает на тебя — и как пользоваться этим за
-          пределами игры.
-        </p>
+        <span className="eyebrow">{t('methods.eyebrow')}</span>
+        <BloodTitle>{t('methods.title')}</BloodTitle>
+        <p className="muted">{t('methods.intro')}</p>
       </div>
 
       <section className="card">
-        <h2>План на одно занятие</h2>
+        <h2>{t('methods.plan')}</h2>
         <ol className={styles.plan}>
           {STUDY_PLAN.map((item) => (
             <li key={item}>{item}</li>
@@ -42,13 +41,13 @@ export default function MethodsPage() {
             </div>
             <h2 className={styles.name}>{method.name}</h2>
             <p>
-              <b>Что это:</b> {method.what}
+              <b>{t('methods.what')}</b> {method.what}
             </p>
             <p>
-              <b>В игре:</b> {method.inGame}
+              <b>{t('methods.inGame')}</b> {method.inGame}
             </p>
             <p className="muted">
-              <b>Сам:</b> {method.tip}
+              <b>{t('methods.self')}</b> {method.tip}
             </p>
           </article>
         ))}

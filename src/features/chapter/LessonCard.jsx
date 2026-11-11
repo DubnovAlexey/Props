@@ -11,9 +11,11 @@ import SyntaxExplain from '../../components/SyntaxExplain/SyntaxExplain.jsx';
 import { GLOSSARY_MAP } from '../../content/glossary.js';
 import { termIdsIn } from '../../utils/richText.js';
 import styles from './Chapter.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 /** Термины карточки с настоящими написаниями: «пропсы → props» */
 function TermStrip({ card }) {
+  const { t } = useI18n();
   const texts = [...(card.body ?? []), ...(card.after ?? []), card.key ?? '', card.analogy ?? ''];
   const ids = [...new Set(texts.flatMap((text) => termIdsIn(text)))];
   const entries = ids.map((id) => GLOSSARY_MAP[id]).filter((entry) => entry?.en || entry?.code);
@@ -21,7 +23,7 @@ function TermStrip({ card }) {
   return (
     <div className={styles.termStrip}>
       <span className={styles.termStripTitle}>
-        <span aria-hidden="true">🔤</span> Как это пишется по-настоящему
+        <span aria-hidden="true">🔤</span> {t('lesson.spelling')}
       </span>
       <ul>
         {entries.map((entry) => (
@@ -40,21 +42,20 @@ function TermStrip({ card }) {
 /** Глубина карточки по её месту в уроке: основа → глубже → тонкости */
 function depthOf(index, total) {
   const position = (index + 1) / total;
-  if (position <= 0.4) return { label: 'Основа', icon: '🌱' };
-  if (position <= 0.8) return { label: 'Глубже', icon: '🔍' };
-  return { label: 'Тонкость', icon: '🦇' };
+  if (position <= 0.4) return { labelKey: 'lesson.stageBase', icon: '🌱' };
+  if (position <= 0.8) return { labelKey: 'lesson.stageDeeper', icon: '🔍' };
+  return { labelKey: 'lesson.stageNuance', icon: '🦇' };
 }
 
 export default function LessonCard({ card, index, total }) {
+  const { t } = useI18n();
   const depth = depthOf(index, total);
   return (
     <article className={`card ${styles.lessonCard}`}>
       <div className={styles.cardMeta}>
-        <span className="eyebrow">
-          Карточка {index + 1} из {total}
-        </span>
+        <span className="eyebrow">{t('lesson.card', { n: index + 1, total })}</span>
         <span className={styles.depth}>
-          <span aria-hidden="true">{depth.icon}</span> {depth.label}
+          <span aria-hidden="true">{depth.icon}</span> {t(depth.labelKey)}
         </span>
       </div>
       <h2>{card.title}</h2>
@@ -62,14 +63,14 @@ export default function LessonCard({ card, index, total }) {
       <TermStrip card={card} />
       {card.diagram && <Diagram name={card.diagram} caption={card.diagramCaption} />}
       {card.scheme && <Scheme scheme={card.scheme} />}
-      {card.code && <CodeBlock code={card.code} title={card.codeTitle ?? 'Пример'} highlight={card.highlight} anatomy />}
+      {card.code && <CodeBlock code={card.code} title={card.codeTitle ?? t('common.example')} highlight={card.highlight} anatomy />}
       {(card.why || card.alt || card.wrong) && <SyntaxExplain why={card.why} alt={card.alt} wrong={card.wrong} />}
       {card.after && <RichBlocks lines={card.after} />}
       {card.analogy && (
         <p className={styles.analogy}>
           <span aria-hidden="true">🦇</span>{' '}
           <span>
-            <b>Аналогия Графа:</b> <RichText text={card.analogy} />
+            <b>{t('lesson.analogy')}</b> <RichText text={card.analogy} />
           </span>
         </p>
       )}

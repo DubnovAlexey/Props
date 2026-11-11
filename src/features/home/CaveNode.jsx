@@ -4,11 +4,13 @@
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import styles from './CaveMap.module.css';
 import { to } from '../../app/useHashRoute.js';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 const RADIUS = 34;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 export default function CaveNode({ chapter, state, isNext = false, href = to.chapter(chapter.id) }) {
+  const { t } = useI18n();
   const best = state?.practiceBest ?? 0;
   const started = Boolean(state);
   const guardian = chapter.story?.guardian;
@@ -36,18 +38,18 @@ export default function CaveNode({ chapter, state, isNext = false, href = to.cha
         </span>
         <span className={styles.nodeText}>
           <span className={styles.nodeNum}>
-            {typeof chapter.order === 'number' ? `Пещера ${chapter.order}` : 'Финал'} · {chapter.cave}
+            {typeof chapter.order === 'number' ? t('common.cave', { n: chapter.order }) : t('common.final')} · {chapter.cave}
           </span>
           <b className={styles.nodeTitle}>{chapter.title}</b>
           <span className={styles.nodeStatus}>
             {guardian && <span className={styles.nodeGuardian}>{guardian.kind} · </span>}
-            {state?.done ? `✓ повержен · ${Math.round(best * 100)}%` : started ? 'бой идёт' : 'ждёт тебя'}
+            {state?.done ? t('node.defeated', { percent: Math.round(best * 100) }) : started ? t('node.fighting') : t('node.waiting')}
           </span>
         </span>
       </a>
       {isNext && (
         <span className={styles.nextBadge}>
-          <span aria-hidden="true">🕯️</span> Граф ждёт здесь
+          <span aria-hidden="true">🕯️</span> {t('node.next')}
         </span>
       )}
     </li>

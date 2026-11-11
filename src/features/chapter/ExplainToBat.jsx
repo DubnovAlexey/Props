@@ -7,8 +7,10 @@ import { useState } from 'react';
 import Bat from '../../mascot/Bat.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 import styles from './Chapter.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function ExplainToBat({ explain, initialText = '', onDone }) {
+  const { t } = useI18n();
   const [text, setText] = useState(initialText);
   const [checked, setChecked] = useState(false);
   const lower = text.toLowerCase().replace(/ё/g, 'е');
@@ -25,16 +27,16 @@ export default function ExplainToBat({ explain, initialText = '', onDone }) {
   return (
     <div className="card">
       <div className={styles.batHead}>
-        <Bat size={70} label="Лунатик" />
+        <Bat size={70} label={t('common.bat')} />
         <div>
-          <span className="eyebrow">Метод летучей мыши</span>
-          <h2>Объясни Лунатику</h2>
+          <span className="eyebrow">{t('explain.eyebrow')}</span>
+          <h2>{t('explain.title')}</h2>
         </div>
       </div>
       <p>
         <RichText text={explain.prompt} />
       </p>
-      <p className="muted small">Своими словами, 2–4 предложения. Лунатик не оценивает стиль — только смысл. Можно начать так:</p>
+      <p className="muted small">{t('explain.hint')}</p>
       <div className="row">
         {explain.starters.map((starter) => (
           <button key={starter} type="button" className={`chip ${styles.starter}`} onClick={() => addStarter(starter)} disabled={checked}>
@@ -43,30 +45,28 @@ export default function ExplainToBat({ explain, initialText = '', onDone }) {
         ))}
       </div>
       <label className="visually-hidden" htmlFor="explain-text">
-        Твоё объяснение
+        {t('explain.label')}
       </label>
       <textarea
         id="explain-text"
         className={`input ${styles.explainInput}`}
         value={text}
         onChange={(event) => setText(event.target.value)}
-        placeholder="Лунатик внимательно слушает…"
+        placeholder={t('explain.placeholder')}
         disabled={checked}
       />
 
       {!checked ? (
         <div className="row">
           <button type="button" className="btn btn-primary" disabled={text.trim().length < 20} onClick={() => setChecked(true)}>
-            Объяснить
+            {t('explain.submit')}
           </button>
-          <span className="muted small">{text.trim().length < 20 ? 'Хотя бы одно предложение' : 'Готово к объяснению'}</span>
+          <span className="muted small">{text.trim().length < 20 ? t('explain.tooShort') : t('explain.ready')}</span>
         </div>
       ) : (
         <div className={`${styles.explainResult} anim-pop`}>
           <p>
-            <b>
-              Лунатик понял {foundCount} из {ideas.length} ключевых идей:
-            </b>
+            <b>{t('explain.understood', { found: foundCount, total: ideas.length })}</b>
           </p>
           <ul className={styles.checklist}>
             {ideas.map((idea) => (
@@ -76,15 +76,15 @@ export default function ExplainToBat({ explain, initialText = '', onDone }) {
             ))}
           </ul>
           <p>
-            <b>Объяснение Графа для сравнения:</b>
+            <b>{t('explain.compare')}</b>
           </p>
           <blockquote className={styles.model}>{explain.model}</blockquote>
           <div className="row">
             <button type="button" className="btn" onClick={() => setChecked(false)}>
-              Дополнить
+              {t('explain.more')}
             </button>
             <button type="button" className="btn btn-primary" onClick={() => onDone(text)}>
-              Сохранить и дальше →
+              {t('explain.save')}
             </button>
           </div>
         </div>

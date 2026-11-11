@@ -20,13 +20,14 @@ export const TASK_VIEWS = {
   sort: SortTask,
 };
 
+// Названия типов заданий — в словарях интерфейса: t(`tasks.types.${type}`)
 export const TASK_TYPES = {
-  choice: { icon: '🎯', label: 'Выбери ответ' },
-  truefalse: { icon: '⚖️', label: 'Правда или миф' },
-  input: { icon: '✍️', label: 'Впиши ответ' },
-  fill: { icon: '🧩', label: 'Собери код' },
-  bug: { icon: '🐞', label: 'Найди ошибку' },
-  order: { icon: '🔢', label: 'Расставь по порядку' },
-  match: { icon: '🔗', label: 'Найди пару' },
-  sort: { icon: '🗂️', label: 'Разложи по корзинам' },
+  choice: { icon: '🎯' },
+  truefalse: { icon: '⚖️' },
+  input: { icon: '✍️' },
+  fill: { icon: '🧩' },
+  bug: { icon: '🐞' },
+  order: { icon: '🔢' },
+  match: { icon: '🔗' },
+  sort: { icon: '🗂️' },
 };

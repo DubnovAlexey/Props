@@ -6,8 +6,10 @@ import { RichText } from '../../../components/RichText/RichText.jsx';
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.jsx';
 import { shuffle } from '../../../utils/random.js';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function ChoiceTask({ task, onAnswer, result, prompt }) {
+  const { t } = useI18n();
   const multi = task.options.filter((option) => option.correct).length > 1;
   const order = useMemo(() => shuffle(task.options.map((_, i) => i)), [task]);
   const [selected, setSelected] = useState([]);
@@ -28,9 +30,9 @@ export default function ChoiceTask({ task, onAnswer, result, prompt }) {
         <RichText text={prompt ?? task.question} />
       </p>
       {task.code && <CodeBlock code={task.code} anatomy={answered} />}
-      {multi && <p className={styles.hint}>Отметь все верные варианты.</p>}
+      {multi && <p className={styles.hint}>{t('tasks.multi')}</p>}
 
-      <div className={styles.options} role={multi ? 'group' : 'radiogroup'} aria-label="Варианты ответа">
+      <div className={styles.options} role={multi ? 'group' : 'radiogroup'} aria-label={t('tasks.options')}>
         {order.map((index) => {
           const option = task.options[index];
           const isSelected = selected.includes(index);
@@ -61,7 +63,7 @@ export default function ChoiceTask({ task, onAnswer, result, prompt }) {
       {!answered && (
         <div className={styles.actions}>
           <button type="button" className="btn btn-primary" disabled={selected.length === 0} onClick={() => onAnswer(selected)}>
-            Проверить
+            {t('common.check')}
           </button>
         </div>
       )}

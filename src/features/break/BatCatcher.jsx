@@ -9,10 +9,13 @@ import { pick } from '../../utils/random.js';
 import { useReducedMotion } from '../../hooks/useMediaQuery.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 import styles from './BatCatcher.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
+import { RichText } from '../../components/RichText/RichText.jsx';
 
 // Пропсы: onScore(очки) — вызывается сам, когда время вышло (например, чтобы записать рекорд);
 //         onFinish(очки) — по кнопке «дальше» (её подпись — finishLabel). Оба необязательные.
-export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, finishLabel = 'Дальше →' }) {
+export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, finishLabel }) {
+  const { t } = useI18n();
   const [round, setRound] = useState(() => BREAK_ROUNDS[roundId] ?? pick(Object.values(BREAK_ROUNDS)));
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState('intro'); // intro → play → over
@@ -107,7 +110,7 @@ export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, 
     <div className={`card ${styles.wrap}`}>
       <div className={styles.top}>
         <div>
-          <span className="eyebrow">Перемена · {duration} секунд</span>
+          <span className="eyebrow">{t('break.eyebrow', { seconds: duration })}</span>
           <h2 className={styles.title}>{round.title}</h2>
         </div>
         {phase === 'play' && (
@@ -124,10 +127,10 @@ export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, 
         {phase === 'intro' && (
           <div className={styles.overlay}>
             <p>
-              Жми на мышей с <b>верными</b> надписями: +1 очко. Неверная надпись — −1. Пропустить мышь не страшно.
+              <RichText text={t('break.rules')} />
             </p>
             <button type="button" className="btn btn-primary" onClick={start}>
-              Поехали!
+              {t('break.go')}
             </button>
           </div>
         )}
@@ -158,21 +161,19 @@ export default function BatCatcher({ roundId, duration = 20, onScore, onFinish, 
         {phase === 'over' && (
           <div className={styles.overlay}>
             <p className={styles.result}>
-              Очки: <b>{score}</b>
+              <RichText text={t('break.score', { score })} />
             </p>
-            <p className="muted">
-              Поймано верных: {caught.good}, ошибок: {caught.bad}. Мозг переключился — можно возвращаться к учёбе!
-            </p>
+            <p className="muted">{t('break.result', { good: caught.good, bad: caught.bad })}</p>
             <div className="row">
               <button type="button" className="btn" onClick={start}>
-                Ещё раз
+                {t('break.again')}
               </button>
               <button type="button" className="btn" onClick={another}>
-                Другой раунд
+                {t('break.another')}
               </button>
               {onFinish && (
                 <button type="button" className="btn btn-primary" onClick={() => onFinish(score)}>
-                  {finishLabel}
+                  {finishLabel ?? t('common.next')}
                 </button>
               )}
             </div>

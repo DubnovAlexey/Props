@@ -7,18 +7,20 @@ import Guardian from '../../mascot/guardians/Guardian.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import styles from './CaveHost.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 export default function CaveHost({ chapter, defeated = false }) {
+  const { t } = useI18n();
   const { guardian, intro, outro } = chapter.story;
   const name = `${guardian.kind} ${guardian.name}`;
 
   return (
-    <section className={`card ${styles.host} ${defeated ? styles.defeated : ''}`} aria-label={`Хозяин пещеры: ${name}`}>
+    <section className={`card ${styles.host} ${defeated ? styles.defeated : ''}`} aria-label={t('host.label', { name })}>
       <div className={styles.portrait}>
         <Guardian id={chapter.id} size={132} mood={defeated ? 'defeated' : 'idle'} label={name} />
       </div>
       <div className={styles.text}>
-        <span className="eyebrow">{defeated ? 'Хозяин пещеры повержен' : 'Хозяин пещеры'}</span>
+        <span className="eyebrow">{defeated ? t('host.defeated') : t('host.eyebrow')}</span>
         <BloodTitle as="h2" className={styles.name}>
           {guardian.name}, <span className={styles.kind}>{guardian.kind}</span>
         </BloodTitle>
@@ -27,7 +29,7 @@ export default function CaveHost({ chapter, defeated = false }) {
           <RichText text={defeated ? outro : intro} />
         </p>
         <p className={styles.why}>
-          <b>Почему он:</b> {guardian.why}
+          <b>{t('host.why')}</b> {guardian.why}
         </p>
       </div>
     </section>

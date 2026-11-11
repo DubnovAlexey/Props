@@ -4,8 +4,10 @@ import { useMemo, useState } from 'react';
 import { RichText } from '../../../components/RichText/RichText.jsx';
 import { shuffleDifferent } from '../../../utils/random.js';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function MatchTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const rightOrder = useMemo(() => shuffleDifferent(task.pairs.map((_, i) => i)), [task]);
   const [pairs, setPairs] = useState({}); // { левый индекс: правый индекс }
   const [activeLeft, setActiveLeft] = useState(null);
@@ -62,7 +64,7 @@ export default function MatchTask({ task, onAnswer, result }) {
   return (
     <div>
       <p className={styles.question}>
-        <RichText text={task.question ?? 'Соедини пары.'} />
+        <RichText text={task.question ?? t('tasks.matchQuestion')} />
       </p>
       <div className={styles.columns}>
         <div className={styles.column}>
@@ -111,7 +113,7 @@ export default function MatchTask({ task, onAnswer, result }) {
             disabled={!complete}
             onClick={() => onAnswer(Object.fromEntries(Object.entries(pairs).map(([l, r]) => [Number(l), r])))}
           >
-            Проверить
+            {t('common.check')}
           </button>
         </div>
       )}

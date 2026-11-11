@@ -21,15 +21,17 @@ import { sfx } from '../../audio/sfx.js';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
+import { RichText } from '../../components/RichText/RichText.jsx';
 
 const STEPS = [
-  { id: 'warmup', label: 'Разминка', icon: '🕯️' },
-  { id: 'lesson', label: 'Урок', icon: '📖' },
-  { id: 'spell', label: 'Заклинание', icon: '✨' },
-  { id: 'practice', label: 'Практика', icon: '⚔️' },
-  { id: 'explain', label: 'Объясни', icon: '🦇' },
-  { id: 'break', label: 'Перемена', icon: '🎮' },
-  { id: 'done', label: 'Итог', icon: '🏆' },
+  { id: 'warmup', icon: '🕯️' },
+  { id: 'lesson', icon: '📖' },
+  { id: 'spell', icon: '✨' },
+  { id: 'practice', icon: '⚔️' },
+  { id: 'explain', icon: '🦇' },
+  { id: 'break', icon: '🎮' },
+  { id: 'done', icon: '🏆' },
 ];
 
 /**
@@ -43,6 +45,7 @@ function firstStepFor(done) {
 }
 
 export default function ChapterPage({ chapterId }) {
+  const { t } = useI18n();
   const chapter = CHAPTER_MAP[chapterId];
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
@@ -53,8 +56,8 @@ export default function ChapterPage({ chapterId }) {
   const tasks = useMemo(() => ALL_TASKS.filter((task) => task.chapterId === chapterId), [chapterId]);
 
   useEffect(() => {
-    if (chapter) say(`Пещера «${chapter.cave}». ${chapter.goal}`, 'wave');
-  }, [chapter, say]);
+    if (chapter) say(t('chapter.greeting', { cave: chapter.cave, goal: chapter.goal }), 'wave');
+  }, [chapter, say, t]);
 
   if (!chapter) return <NotFound />;
 
@@ -71,7 +74,7 @@ export default function ChapterPage({ chapterId }) {
     // Победу празднуем, только если практика действительно пройдена
     if (nextStep === 'done' && done.done) {
       sfx.complete();
-      say(phrase('chapterDone'), 'happy');
+      say(phrase(t, 'chapterDone'), 'happy');
     }
     go(nextStep);
   }
@@ -90,7 +93,7 @@ export default function ChapterPage({ chapterId }) {
     if (isPassed(result.score) || done.done) {
       go('explain');
     } else {
-      say(phrase('chapterFail'), 'sad');
+      say(phrase(t, 'chapterFail'), 'sad');
       go('done');
     }
   }
@@ -113,10 +116,10 @@ export default function ChapterPage({ chapterId }) {
     <div className={styles.page} style={{ '--cave': chapter.color }}>
       <div className={styles.topLinks}>
         <a href={to.map()} className={styles.back}>
-          ← Карта пещер
+          {t('chapter.backToMap')}
         </a>
         <a href={to.library(chapter.id)} className={styles.back}>
-          📜 Свиток пещеры: теория
+          {t('chapter.scroll')}
         </a>
       </div>
 
@@ -130,14 +133,14 @@ export default function ChapterPage({ chapterId }) {
         />
         <div>
           <span className="eyebrow">
-            Пещера {chapter.order} из {CHAPTERS.length} · ярус {chapter.tier.num} · {chapter.cave}
+            {t('chapter.eyebrow', { order: chapter.order, total: CHAPTERS.length, tier: chapter.tier.num, cave: chapter.cave })}
           </span>
           <BloodTitle className={styles.title}>{chapter.title}</BloodTitle>
           <p className="muted">{chapter.goal}</p>
         </div>
       </header>
 
-      <nav className={styles.steps} aria-label="Шаги пещеры">
+      <nav className={styles.steps} aria-label={t('chapter.stepsLabel')}>
         {STEPS.map((item) => (
           <button
             key={item.id}
@@ -147,7 +150,7 @@ export default function ChapterPage({ chapterId }) {
             aria-current={step === item.id ? 'step' : undefined}
           >
             <span aria-hidden="true">{item.icon}</span>
-            <span>{item.label}</span>
+            <span>{t(`chapter.steps.${item.id}`)}</span>
           </button>
         ))}
       </nav>
@@ -164,22 +167,22 @@ export default function ChapterPage({ chapterId }) {
           <ProgressBar
             value={cardIndex + 1}
             max={chapter.lesson.length}
-            label={`Урок: карточка ${cardIndex + 1} из ${chapter.lesson.length}`}
+            label={t('chapter.lessonProgress', { current: cardIndex + 1, total: chapter.lesson.length })}
             tone="gold"
           />
           <LessonCard key={cardIndex} card={card} index={cardIndex} total={chapter.lesson.length} />
           <div className={styles.cardNav}>
             <button type="button" className="btn" disabled={cardIndex === 0} onClick={() => showCard(cardIndex - 1)}>
-              ← Назад
+              {t('common.back')}
             </button>
-            <div className={styles.dots} role="tablist" aria-label="Карточки урока">
+            <div className={styles.dots} role="tablist" aria-label={t('chapter.cardsLabel')}>
               {chapter.lesson.map((item, i) => (
                 <button
                   key={item.title}
                   type="button"
                   role="tab"
                   aria-selected={i === cardIndex}
-                  aria-label={`Карточка ${i + 1}: ${item.title}`}
+                  aria-label={t('chapter.cardLabel', { n: i + 1, title: item.title })}
                   className={`${styles.dot} ${i === cardIndex ? styles.dotActive : ''}`}
                   onClick={() => showCard(i)}
                 />
@@ -187,11 +190,11 @@ export default function ChapterPage({ chapterId }) {
             </div>
             {lastCard ? (
               <button type="button" className="btn btn-primary" onClick={() => complete('lesson', 'spell')}>
-                К заклинанию ✨
+                {t('chapter.toSpell')}
               </button>
             ) : (
               <button type="button" className="btn btn-primary" onClick={() => showCard(cardIndex + 1)}>
-                Дальше →
+                {t('common.next')}
               </button>
             )}
           </div>
@@ -203,7 +206,7 @@ export default function ChapterPage({ chapterId }) {
           <Spell spell={chapter.spell} />
           <div className="row">
             <button type="button" className="btn btn-primary" onClick={() => complete('spell', 'practice')}>
-              Запомнил — к практике ⚔️
+              {t('chapter.toPractice')}
             </button>
           </div>
         </div>
@@ -211,12 +214,7 @@ export default function ChapterPage({ chapterId }) {
 
       {step === 'practice' && (
         <div className="stack">
-          {!done.done && (
-            <p className="muted small">
-              ⚔️ Чтобы повергнуть хозяина, ответь верно хотя бы на {needed} из {tasks.length} заданий. Ошибаться можно: каждая ошибка
-              объясняется.
-            </p>
-          )}
+          {!done.done && <p className="muted small">{t('chapter.practiceRule', { needed, total: tasks.length })}</p>}
           <PracticeRunner tasks={tasks} onFinish={finishPractice} />
         </div>
       )}
@@ -227,9 +225,9 @@ export default function ChapterPage({ chapterId }) {
 
       {step === 'break' && (
         <div className="stack">
-          <BatCatcher roundId={chapter.breakRound} onFinish={finishBreak} finishLabel="К итогам →" />
+          <BatCatcher roundId={chapter.breakRound} onFinish={finishBreak} finishLabel={t('chapter.toSummary')} />
           <button type="button" className="btn btn-ghost" onClick={() => complete('break', 'done', 0)}>
-            Пропустить перемену
+            {t('chapter.skipBreak')}
           </button>
         </div>
       )}
@@ -241,34 +239,32 @@ export default function ChapterPage({ chapterId }) {
             <Guardian id={chapter.id} size={96} label={`${chapter.story.guardian.kind} ${chapter.story.guardian.name}`} />
             <blockquote className={styles.standingThreat}>«{chapter.story.guardian.threat}»</blockquote>
           </div>
-          <span className="eyebrow">Итог пещеры</span>
+          <span className="eyebrow">{t('chapter.summaryEyebrow')}</span>
           {summary ? (
             <>
-              <h2>Хозяин устоял</h2>
+              <h2>{t('chapter.stoodTitle')}</h2>
               <p>
-                В этой попытке верно <b>{summary.correct}</b> из <b>{summary.total}</b>. Чтобы повергнуть хозяина, нужно хотя бы{' '}
-                <b>{needed}</b>. Ошибки уже объяснены и ждут в склепе повторения — загляни в урок и возвращайся в бой.
+                <RichText text={t('chapter.stoodText', { correct: summary.correct, total: summary.total, needed })} />
               </p>
             </>
           ) : (
             <>
-              <h2>Хозяин ещё не повержен</h2>
+              <h2>{t('chapter.notYetTitle')}</h2>
               <p>
-                {chapter.story.guardian.name} ждёт боя. Чтобы его повергнуть, ответь верно хотя бы на <b>{needed}</b> из{' '}
-                <b>{tasks.length}</b> заданий практики.
+                <RichText text={t('chapter.notYetText', { name: chapter.story.guardian.name, needed, total: tasks.length })} />
               </p>
             </>
           )}
           <div className="row">
             <button type="button" className="btn btn-primary" onClick={() => go('practice')}>
-              {summary ? 'Ещё раз в бой ⚔️' : 'К практике ⚔️'}
+              {summary ? t('chapter.fightAgain') : t('chapter.toPracticeShort')}
             </button>
             <button type="button" className="btn" onClick={() => go('lesson')}>
-              {summary ? 'Перечитать урок 📖' : 'Сначала урок 📖'}
+              {summary ? t('chapter.rereadLesson') : t('chapter.lessonFirst')}
             </button>
             {summary && (
               <a className="btn btn-ghost" href={to.review()}>
-                ⚰️ Склеп повторения
+                {t('common.crypt')}
               </a>
             )}
           </div>
@@ -279,36 +275,40 @@ export default function ChapterPage({ chapterId }) {
         <div className="stack anim-in">
           <CaveHost chapter={chapter} defeated />
           <div className="card stack">
-            <span className="eyebrow">Итог пещеры</span>
-            <h2>
-              {chapter.icon} {chapter.cave} — пройдено!
-            </h2>
+            <span className="eyebrow">{t('chapter.summaryEyebrow')}</span>
+            <h2>{t('chapter.passedTitle', { icon: chapter.icon, cave: chapter.cave })}</h2>
             {summary ? (
               <p>
-                Практика: <b>{summary.correct}</b> из <b>{summary.total}</b> ({Math.round(summary.score * 100)}%).
-                {summary.mistakes.length > 0 && ' Ошибки уже ждут в склепе повторения — вернись к ним завтра.'}
+                <RichText
+                  text={t('chapter.practiceResult', {
+                    correct: summary.correct,
+                    total: summary.total,
+                    percent: Math.round(summary.score * 100),
+                  })}
+                />
+                {summary.mistakes.length > 0 && ` ${t('chapter.mistakesWait')}`}
               </p>
             ) : (
-              done.practiceBest !== undefined && <p>Лучший результат практики: {Math.round(done.practiceBest * 100)}%.</p>
+              done.practiceBest !== undefined && <p>{t('chapter.bestResult', { percent: Math.round(done.practiceBest * 100) })}</p>
             )}
             <p className="muted">
-              Заклинание пещеры: <i>«{chapter.spell.text}»</i>
+              {t('chapter.spellOfCave')} <i>«{chapter.spell.text}»</i>
             </p>
             <div className="row">
               {nextChapter ? (
                 <a className="btn btn-primary" href={to.chapter(nextChapter.id)}>
-                  {nextChapter.icon} Следующая пещера →
+                  {t('chapter.nextCave', { icon: nextChapter.icon })}
                 </a>
               ) : (
                 <a className="btn btn-primary" href={to.exam()}>
-                  👑 К испытанию Графа
+                  {t('chapter.toExam')}
                 </a>
               )}
               <a className="btn" href={to.review()}>
-                ⚰️ Склеп повторения
+                {t('common.crypt')}
               </a>
               <a className="btn btn-ghost" href={to.map()}>
-                На карту
+                {t('common.toMapShort')}
               </a>
             </div>
           </div>

@@ -3,17 +3,19 @@
 import { RichText } from '../../../components/RichText/RichText.jsx';
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.jsx';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 const CHOICES = [
-  { value: true, label: '✓ Правда' },
-  { value: false, label: '✗ Миф' },
+  { value: true, labelKey: 'tasks.truth' },
+  { value: false, labelKey: 'tasks.myth' },
 ];
 
 export default function TrueFalseTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const answered = result !== null;
   return (
     <div>
-      <p className={styles.hint}>Утверждение:</p>
+      <p className={styles.hint}>{t('tasks.statement')}</p>
       <div className={styles.statement}>
         <RichText text={task.statement} />
       </div>
@@ -27,13 +29,13 @@ export default function TrueFalseTask({ task, onAnswer, result }) {
           }
           return (
             <button
-              key={choice.label}
+              key={choice.labelKey}
               type="button"
               className={`${styles.option} ${state}`}
               onClick={() => onAnswer(choice.value)}
               disabled={answered}
             >
-              {choice.label}
+              {t(choice.labelKey)}
             </button>
           );
         })}

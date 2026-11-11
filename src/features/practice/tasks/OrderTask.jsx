@@ -4,8 +4,10 @@ import { useMemo, useState } from 'react';
 import { RichText } from '../../../components/RichText/RichText.jsx';
 import { shuffleDifferent } from '../../../utils/random.js';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function OrderTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const pool = useMemo(() => shuffleDifferent(task.items.map((_, i) => i)), [task]);
   const [sequence, setSequence] = useState([]);
   const answered = result !== null;
@@ -20,7 +22,7 @@ export default function OrderTask({ task, onAnswer, result }) {
       </p>
 
       {sequence.length > 0 && (
-        <ol className={styles.sequence} aria-label="Твой порядок">
+        <ol className={styles.sequence} aria-label={t('tasks.yourOrder')}>
           {sequence.map((index, position) => {
             const state = answered ? (index === position ? styles.correct : styles.wrong) : styles.selected;
             return (
@@ -36,7 +38,7 @@ export default function OrderTask({ task, onAnswer, result }) {
 
       {!answered && sequence.length < task.items.length && (
         <>
-          <p className={styles.poolTitle}>{sequence.length === 0 ? 'Нажми первый шаг:' : 'Что дальше?'}</p>
+          <p className={styles.poolTitle}>{sequence.length === 0 ? t('tasks.firstStep') : t('tasks.whatNext')}</p>
           <div className={styles.options}>
             {pool
               .filter((index) => !sequence.includes(index))
@@ -58,11 +60,11 @@ export default function OrderTask({ task, onAnswer, result }) {
             disabled={sequence.length < task.items.length}
             onClick={() => onAnswer(sequence)}
           >
-            Проверить
+            {t('common.check')}
           </button>
           {sequence.length > 0 && (
             <button type="button" className="btn btn-ghost" onClick={() => setSequence([])}>
-              Сбросить
+              {t('common.reset')}
             </button>
           )}
         </div>

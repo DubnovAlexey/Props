@@ -4,8 +4,10 @@
 import { useState } from 'react';
 import { RichText } from '../../../components/RichText/RichText.jsx';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function SortTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const [assignment, setAssignment] = useState(() => task.items.map(() => null));
   const answered = result !== null;
   const complete = assignment.every((bin) => bin !== null);
@@ -28,7 +30,7 @@ export default function SortTask({ task, onAnswer, result }) {
               <div className={styles.sortText}>
                 <RichText text={item.text} interactive={false} />
               </div>
-              <div className={styles.bins} role="radiogroup" aria-label={`Куда отнести: ${item.text}`}>
+              <div className={styles.bins} role="radiogroup" aria-label={t('tasks.sortWhere', { text: item.text })}>
                 {task.bins.map((binLabel, bin) => (
                   <button
                     key={bin}
@@ -51,7 +53,7 @@ export default function SortTask({ task, onAnswer, result }) {
       {!answered && (
         <div className={styles.actions}>
           <button type="button" className="btn btn-primary" disabled={!complete} onClick={() => onAnswer(assignment)}>
-            Проверить
+            {t('common.check')}
           </button>
         </div>
       )}

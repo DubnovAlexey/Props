@@ -9,6 +9,7 @@ import Diagram from '../../components/Diagram/Diagram.jsx';
 import Scheme from '../../components/Scheme/Scheme.jsx';
 import { LIBRARY_SCHEMES } from '../../content/library/schemes.js';
 import styles from './Library.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 const LIST = /^(-|\*|\d+\.)\s+/;
 const BLOCK_START = /^(```|::|#{3,6}\s|\||>|(-|\*|\d+\.)\s)/;
@@ -143,6 +144,7 @@ export function Inline({ text }) {
 const CODE_LANGS = new Set(['jsx', 'js', 'tsx', 'ts']);
 
 export default function MarkdownView({ markdown }) {
+  const { t } = useI18n();
   const blocks = parseBlocks(markdown);
   return (
     <div className={styles.markdown}>
@@ -212,7 +214,7 @@ export default function MarkdownView({ markdown }) {
               <CodeBlock
                 key={i}
                 code={block.code}
-                title={block.lang ? block.lang.toUpperCase() : 'Код'}
+                title={block.lang ? block.lang.toUpperCase() : t('common.code')}
                 anatomy={CODE_LANGS.has(block.lang)}
               />
             );

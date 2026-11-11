@@ -23,6 +23,7 @@ import Ambience from './components/Ambience/Ambience.jsx';
 import Scares from './components/Scares/Scares.jsx';
 import NotFound from './app/NotFound.jsx';
 import ErrorBoundary from './app/ErrorBoundary.jsx';
+import { I18nProvider, useI18n } from './i18n/I18nContext.jsx';
 
 // Свитки (теория) грузятся только когда нужны: это отдельный кусок кода
 const LibraryPage = lazy(() => import('./features/library/LibraryPage.jsx'));
@@ -34,6 +35,7 @@ const GalleryPage = import.meta.env.DEV ? lazy(() => import('./features/gallery/
 
 /** Какую страницу показать для адреса */
 function Page({ route }) {
+  const { t } = useI18n();
   const [section, param] = route.parts;
   switch (section) {
     case undefined:
@@ -56,7 +58,7 @@ function Page({ route }) {
       return <InstallPage />;
     case 'library':
       return (
-        <Suspense fallback={<p className="muted">🕯️ Граф достаёт свитки…</p>}>
+        <Suspense fallback={<p className="muted">{t('loading.library')}</p>}>
           <LibraryPage key={param ?? 'index'} topic={param} />
         </Suspense>
       );
@@ -80,7 +82,8 @@ function sectionOf(route) {
   return section;
 }
 
-export default function App() {
+// i18n — язык и словарь, подготовленные в main.jsx до отрисовки
+export default function App({ i18n }) {
   const route = useHashRoute();
 
   // Новый раздел — начинаем сверху страницы (кроме перехода к термину словаря)
@@ -92,21 +95,23 @@ export default function App() {
 
   return (
     <ProgressProvider>
-      <MascotProvider>
-        <GuardianDefs />
-        <Ambience />
-        <Header section={section} />
-        <main className="page" id="main">
-          {/* Ошибка на одной странице не должна гасить всю игру: шапка и меню остаются */}
-          <ErrorBoundary resetKey={route.path}>
-            <Page route={route} />
-          </ErrorBoundary>
-        </main>
-        <TabBar section={section} />
-        <MascotDock routeKey={route.path} />
-        {/* «Неожиданности»: в пещере из темноты выглядывает её хозяин — поэтому передаём id пещеры */}
-        <Scares caveId={route.parts[0] === 'chapter' ? route.parts[1] : null} />
-      </MascotProvider>
+      <I18nProvider initial={i18n}>
+        <MascotProvider>
+          <GuardianDefs />
+          <Ambience />
+          <Header section={section} />
+          <main className="page" id="main">
+            {/* Ошибка на одной странице не должна гасить всю игру: шапка и меню остаются */}
+            <ErrorBoundary resetKey={route.path}>
+              <Page route={route} />
+            </ErrorBoundary>
+          </main>
+          <TabBar section={section} />
+          <MascotDock routeKey={route.path} />
+          {/* «Неожиданности»: в пещере из темноты выглядывает её хозяин — поэтому передаём id пещеры */}
+          <Scares caveId={route.parts[0] === 'chapter' ? route.parts[1] : null} />
+        </MascotProvider>
+      </I18nProvider>
     </ProgressProvider>
   );
 }

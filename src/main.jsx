@@ -15,15 +15,22 @@ import './styles/animations.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
+import { bootstrapLanguage } from './i18n/dictionaries.js';
+import { loadJSON } from './utils/storage.js';
 import { startLiveFavicon } from './app/liveFavicon.js';
 
 // StrictMode — «строгий учитель» режима разработки: дважды вызывает
 // компоненты, чтобы поймать нечистый код. В собранной версии не работает.
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+// Язык выбираем и словарь загружаем ДО первой отрисовки — иначе страница на мгновение
+// показалась бы на русском и только потом переключилась. Сохранённый выбор игрока лежит
+// вместе с прогрессом, поэтому читаем его тем же способом, что и прогресс.
+bootstrapLanguage(loadJSON()?.lang, navigator.languages).then((i18n) => {
+  createRoot(document.getElementById('root')).render(
+    <StrictMode>
+      <App i18n={i18n} />
+    </StrictMode>,
+  );
+});
 
 // Значок вкладки оживает: мышь моргает, машет крыльями, с клыков падает капля крови
 startLiveFavicon();

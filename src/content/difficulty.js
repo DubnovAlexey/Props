@@ -100,7 +100,7 @@ export const TASK_LEVELS = Object.fromEntries(
   ),
 );
 
-export const LEVEL_LABELS = ['', '★ узнать', '★★ применить', '★★★ найти подвох'];
+// Подписи уровней («★ узнать», «★★ применить»…) — в словарях интерфейса: practice.levels
 
 export function levelOf(taskId) {
   return TASK_LEVELS[taskId] ?? 2;

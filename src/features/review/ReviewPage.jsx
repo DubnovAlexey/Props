@@ -5,20 +5,23 @@
 import { useEffect, useState } from 'react';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
-import { PHRASES } from '../../mascot/phrases.js';
+
 import { TASK_MAP } from '../../content/chapters/index.js';
 import { GLOSSARY, GLOSSARY_MAP } from '../../content/glossary.js';
-import { BOX_NAMES, boxCounts, dueIds } from '../../utils/leitner.js';
+import { boxCounts, dueIds } from '../../utils/leitner.js';
 import { shuffle } from '../../utils/random.js';
 import PracticeRunner from '../practice/PracticeRunner.jsx';
 import ProgressBar from '../../components/ProgressBar/ProgressBar.jsx';
 import Flashcard from './Flashcard.jsx';
 import styles from './Review.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
+import { RichText } from '../../components/RichText/RichText.jsx';
 
 const NEW_CARDS_PER_SESSION = 8;
 
 export default function ReviewPage() {
+  const { t } = useI18n();
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
   // «Сейчас» запоминаем в состоянии: список к повторению не должен меняться прямо во время сеанса.
@@ -29,8 +32,8 @@ export default function ReviewPage() {
   const [finished, setFinished] = useState(null);
 
   useEffect(() => {
-    say(PHRASES.route.review, 'talk');
-  }, [say]);
+    say(t('mascot.route.review'), 'talk');
+  }, [say, t]);
 
   const dueTasks = dueIds(progress.items, 'task:', now)
     .map((id) => id.slice(5))
@@ -68,7 +71,7 @@ export default function ReviewPage() {
   if (session?.kind === 'tasks') {
     return (
       <div className="stack">
-        <BloodTitle>Работа над ошибками</BloodTitle>
+        <BloodTitle>{t('review.mistakesTitle')}</BloodTitle>
         <PracticeRunner
           tasks={session.ids.map((id) => TASK_MAP[id])}
           showChapter
@@ -82,8 +85,12 @@ export default function ReviewPage() {
     const entry = GLOSSARY_MAP[session.ids[cardIndex]];
     return (
       <div className="stack">
-        <BloodTitle>Карточки терминов</BloodTitle>
-        <ProgressBar value={cardIndex} max={session.ids.length} label={`Карточка ${cardIndex + 1} из ${session.ids.length}`} />
+        <BloodTitle>{t('review.cardsTitle')}</BloodTitle>
+        <ProgressBar
+          value={cardIndex}
+          max={session.ids.length}
+          label={t('review.cardProgress', { n: cardIndex + 1, total: session.ids.length })}
+        />
         <Flashcard key={entry.id} entry={entry} onRate={rateCard} />
       </div>
     );
@@ -92,28 +99,23 @@ export default function ReviewPage() {
   return (
     <div className="stack">
       <div>
-        <span className="eyebrow">Интервальное повторение</span>
-        <BloodTitle>Склеп повторения</BloodTitle>
-        <p className="muted">
-          Мозг забывает по кривой: сначала быстро, потом медленнее. Повторение «на грани забывания» продлевает память надолго. Поэтому
-          каждая задача и каждый термин живут в одном из пяти гробиков.
-        </p>
+        <span className="eyebrow">{t('review.eyebrow')}</span>
+        <BloodTitle>{t('review.title')}</BloodTitle>
+        <p className="muted">{t('review.intro')}</p>
       </div>
 
       {finished && (
         <div className="card anim-pop">
-          <h2>Сеанс окончен!</h2>
+          <h2>{t('review.doneTitle')}</h2>
           {finished.kind === 'tasks' ? (
-            <p>
-              Верно {finished.correct} из {finished.total}. Верные ответы переехали в следующий гробик и вернутся позже.
-            </p>
+            <p>{t('review.doneTasks', { correct: finished.correct, total: finished.total })}</p>
           ) : (
-            <p>Пройдено карточек: {finished.total}. Возвращайся завтра — повторение по чуть-чуть работает лучше зубрёжки.</p>
+            <p>{t('review.doneCards', { total: finished.total })}</p>
           )}
         </div>
       )}
 
-      <section className={styles.coffins} aria-label="Гробики Лейтнера">
+      <section className={styles.coffins} aria-label={t('review.coffinsLabel')}>
         {[1, 2, 3, 4, 5].map((box) => (
           <div key={box} className={styles.coffin}>
             <span className={styles.coffinIcon} aria-hidden="true">
@@ -121,37 +123,37 @@ export default function ReviewPage() {
             </span>
             <b>{counts[box]}</b>
             <span className={styles.coffinName}>
-              Гроб {box}
+              {t('review.coffin', { n: box })}
               <br />
-              {BOX_NAMES[box]}
+              {t('review.boxes')[box]}
             </span>
           </div>
         ))}
       </section>
 
       <section className={`card ${styles.option}`}>
-        <h2>🐞 Задачи на повторение</h2>
+        <h2>{t('review.tasksTitle')}</h2>
         {dueTasks.length > 0 ? (
           <>
             <p>
-              Ждут повторения: <b>{dueTasks.length}</b>. В сеансе — до 10 штук вперемешку из разных пещер.
+              <RichText text={t('review.tasksDue', { count: dueTasks.length })} />
             </p>
             <button type="button" className="btn btn-primary" onClick={startTasks}>
-              Начать работу над ошибками
+              {t('review.tasksStart')}
             </button>
           </>
         ) : (
-          <p className="muted">Пока пусто. Задачи попадают сюда после практики: ошибки — сразу, верные ответы — через день, три, неделю…</p>
+          <p className="muted">{t('review.tasksEmpty')}</p>
         )}
       </section>
 
       <section className={`card ${styles.option}`}>
-        <h2>📜 Карточки терминов</h2>
+        <h2>{t('review.termsTitle')}</h2>
         <p>
-          Пора повторить: <b>{dueTerms.length}</b> · новых: <b>{newTerms.length}</b> (за сеанс — до {NEW_CARDS_PER_SESSION} новых).
+          <RichText text={t('review.termsDue', { due: dueTerms.length, fresh: newTerms.length, limit: NEW_CARDS_PER_SESSION })} />
         </p>
         <button type="button" className="btn btn-primary" onClick={startCards} disabled={dueTerms.length === 0 && newTerms.length === 0}>
-          Начать карточки
+          {t('review.termsStart')}
         </button>
       </section>
     </div>

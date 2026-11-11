@@ -10,6 +10,7 @@ import { explainCode } from '../../utils/syntaxGuide.js';
 import { GLOSSARY_MAP } from '../../content/glossary.js';
 import { to } from '../../app/useHashRoute.js';
 import styles from './CodeBlock.module.css';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 function Tokens({ tokens, picked, onPick }) {
   return tokens.map((token, i) => {
@@ -28,6 +29,7 @@ function Tokens({ tokens, picked, onPick }) {
 }
 
 function AnatomyPanel({ constructs, picked, onPick }) {
+  const { t } = useI18n();
   const current = constructs.find((item) => item.cid === picked);
   const term = current?.term ? GLOSSARY_MAP[current.term] : null;
   return (
@@ -41,18 +43,18 @@ function AnatomyPanel({ constructs, picked, onPick }) {
           <p>{current.simple}</p>
           {current.why && (
             <p className={styles.why}>
-              <b>Почему так: </b>
+              <b>{t('code.why')} </b>
               {current.why}
             </p>
           )}
           {term && (
             <a className={styles.termLink} href={to.glossary(term.id)}>
-              {term.title} — в словаре →
+              {t('code.inGlossary', { title: term.title })}
             </a>
           )}
         </div>
       ) : (
-        <p className={styles.hint}>Нажми на подчёркнутую часть кода или на пункт списка — узнаешь, что это и почему так пишут.</p>
+        <p className={styles.hint}>{t('code.hint')}</p>
       )}
       <ol className={styles.list}>
         {constructs.map((item, i) => (
@@ -79,6 +81,7 @@ export default function CodeBlock({
   disabled = false,
   anatomy = false,
 }) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState(null);
   const canExplain = anatomy && !onLineClick && !renderSlot;
@@ -96,10 +99,10 @@ export default function CodeBlock({
     <figure className={`${styles.figure} ${open ? styles.opened : ''}`}>
       {(title || canExplain) && (
         <figcaption className={styles.title}>
-          <span>{title ?? 'Код'}</span>
+          <span>{title ?? t('common.code')}</span>
           {canExplain && (
             <button type="button" className={styles.toggle} onClick={toggle} aria-expanded={open}>
-              {open ? 'Скрыть разбор' : '🔍 Разобрать синтаксис'}
+              {open ? t('code.hide') : t('code.explain')}
             </button>
           )}
         </figcaption>
@@ -148,7 +151,7 @@ export default function CodeBlock({
                 className={className}
                 onClick={() => onLineClick(number)}
                 disabled={disabled}
-                aria-label={`Строка ${number}: ${line.trim() || 'пустая'}`}
+                aria-label={t('code.line', { n: number, text: line.trim() || t('code.emptyLine') })}
               >
                 {inner}
               </button>

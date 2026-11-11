@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import { ALL_TASKS, CHAPTERS } from '../../content/chapters/index.js';
 import { useProgress } from '../../state/ProgressContext.jsx';
 import { useMascot } from '../../mascot/MascotContext.jsx';
-import { PHRASES } from '../../mascot/phrases.js';
+
 import { pick, shuffle } from '../../utils/random.js';
 import PracticeRunner from '../practice/PracticeRunner.jsx';
 import Bat from '../../mascot/Bat.jsx';
 import styles from './Exam.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
+import { interpolate } from '../../i18n/translate.js';
 
 const EXTRA_TASKS = 2;
 
@@ -22,14 +24,16 @@ export function buildExam() {
   return shuffle([...perCave, ...rest]);
 }
 
-function verdict(score) {
-  if (score >= 0.9) return { title: 'Граф Пропсов!', text: 'Корона твоя. Ты понимаешь пропсы глубже, чем многие джуниоры.' };
-  if (score >= 0.75) return { title: 'Хранитель пропсов', text: 'Отличный результат. Пару тем стоит освежить в склепе.' };
-  if (score >= 0.5) return { title: 'Ученик склепа', text: 'Фундамент есть. Повтори ошибки и вернись через пару дней.' };
-  return { title: 'Летучка с крыльями', text: 'Крылья уже растут! Пройди пещеры ещё раз — повторение всё сделает.' };
+/** Номер вердикта в словаре (exam.verdicts): 0 — лучший результат, 3 — самый слабый */
+function verdictIndex(score) {
+  if (score >= 0.9) return 0;
+  if (score >= 0.75) return 1;
+  if (score >= 0.5) return 2;
+  return 3;
 }
 
 export default function ExamPage() {
+  const { t } = useI18n();
   const { progress, dispatch } = useProgress();
   const { say } = useMascot();
   const [phase, setPhase] = useState('intro');
@@ -37,8 +41,8 @@ export default function ExamPage() {
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-    say(PHRASES.route.exam, 'talk');
-  }, [say]);
+    say(t('mascot.route.exam'), 'talk');
+  }, [say, t]);
 
   function start() {
     setTasks(buildExam());
@@ -50,23 +54,20 @@ export default function ExamPage() {
     dispatch({ type: 'exam', score: result.score });
     setSummary(result);
     setPhase('result');
-    say(
-      result.score >= 0.75 ? 'Ты прошёл испытание! Мыши в восторге.' : 'Хорошая попытка. Склеп повторения ждёт тебя.',
-      result.score >= 0.75 ? 'happy' : 'talk',
-    );
+    say(result.score >= 0.75 ? t('exam.passed') : t('exam.failed'), result.score >= 0.75 ? 'happy' : 'talk');
   }
 
   if (phase === 'run') {
     return (
       <div className="stack">
-        <BloodTitle>👑 Испытание Графа</BloodTitle>
+        <BloodTitle>{t('exam.title')}</BloodTitle>
         <PracticeRunner tasks={tasks} onFinish={finish} allowHints={false} showChapter />
       </div>
     );
   }
 
   if (phase === 'result' && summary) {
-    const { title, text } = verdict(summary.score);
+    const { title, text } = t('exam.verdicts')[verdictIndex(summary.score)];
     return (
       <div className={`card ${styles.result}`}>
         {summary.score >= 0.75 && (
@@ -78,7 +79,7 @@ export default function ExamPage() {
             ))}
           </div>
         )}
-        <span className="eyebrow">Результат</span>
+        <span className="eyebrow">{t('exam.result')}</span>
         <BloodTitle>{title}</BloodTitle>
         <p className={styles.score}>
           {summary.correct} / {summary.total} · {Math.round(summary.score * 100)}%
@@ -86,13 +87,13 @@ export default function ExamPage() {
         <p>{text}</p>
         <div className="row">
           <button type="button" className="btn btn-primary" onClick={start}>
-            Пройти ещё раз
+            {t('exam.again')}
           </button>
           <a className="btn" href={to.review()}>
-            ⚰️ Повторить ошибки
+            {t('exam.reviewMistakes')}
           </a>
           <a className="btn btn-ghost" href={to.map()}>
-            На карту
+            {t('common.toMapShort')}
           </a>
         </div>
       </div>
@@ -101,25 +102,20 @@ export default function ExamPage() {
 
   return (
     <div className="card stack">
-      <span className="eyebrow">Логово Графа</span>
-      <BloodTitle>👑 Испытание Графа</BloodTitle>
-      <p>
-        {CHAPTERS.length + EXTRA_TASKS} заданий из всех пещер вперемешку. Подсказок Лунатика не будет, но пояснения после каждого ответа
-        останутся — испытание тоже учит.
-      </p>
+      <span className="eyebrow">{t('exam.lair')}</span>
+      <BloodTitle>{t('exam.title')}</BloodTitle>
+      <p>{t('exam.intro', { tasks: t('exam.tasks', { count: CHAPTERS.length + EXTRA_TASKS }) })}</p>
       <ul>
-        <li>По одному заданию из каждой пещеры и ещё {EXTRA_TASKS} случайных.</li>
-        <li>Ошибки попадут в склеп повторения.</li>
-        <li>90% и выше — титул «Граф Пропсов».</li>
+        {t('exam.rules').map((rule) => (
+          <li key={rule}>{interpolate(rule, { extra: EXTRA_TASKS })}</li>
+        ))}
       </ul>
       {progress.exam.best !== null && (
-        <p className="muted">
-          Лучший результат: {Math.round(progress.exam.best * 100)}% · попыток: {progress.exam.attempts}
-        </p>
+        <p className="muted">{t('exam.best', { percent: Math.round(progress.exam.best * 100), attempts: progress.exam.attempts })}</p>
       )}
       <div className="row">
         <button type="button" className="btn btn-primary" onClick={start}>
-          Принять испытание
+          {t('exam.start')}
         </button>
       </div>
     </div>

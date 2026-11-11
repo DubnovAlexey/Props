@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { RichText } from '../../../components/RichText/RichText.jsx';
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.jsx';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function InputTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const [value, setValue] = useState('');
   const answered = result !== null;
 
@@ -23,14 +25,14 @@ export default function InputTask({ task, onAnswer, result }) {
       </p>
       {task.code && <CodeBlock code={task.code} anatomy={answered} />}
       <label className="visually-hidden" htmlFor={`input-${task.id}`}>
-        Твой ответ
+        {t('tasks.answerLabel')}
       </label>
       <input
         id={`input-${task.id}`}
         className={`input ${stateClass}`}
         value={value}
         onChange={(event) => setValue(event.target.value)}
-        placeholder={task.placeholder ?? 'Твой ответ…'}
+        placeholder={task.placeholder ?? t('tasks.answerPlaceholder')}
         autoComplete="off"
         autoCapitalize="off"
         spellCheck={false}
@@ -39,7 +41,7 @@ export default function InputTask({ task, onAnswer, result }) {
       {!answered && (
         <div className={styles.actions}>
           <button type="submit" className="btn btn-primary" disabled={!value.trim()}>
-            Проверить
+            {t('common.check')}
           </button>
         </div>
       )}

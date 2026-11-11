@@ -7,8 +7,10 @@ import { RichText } from '../../../components/RichText/RichText.jsx';
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.jsx';
 import { shuffle } from '../../../utils/random.js';
 import styles from './tasks.module.css';
+import { useI18n } from '../../../i18n/I18nContext.jsx';
 
 export default function FillTask({ task, onAnswer, result }) {
+  const { t } = useI18n();
   const bank = useMemo(() => shuffle(task.bank.map((value, id) => ({ id, value }))), [task]);
   const [slots, setSlots] = useState(() => task.answers.map(() => null)); // в каждом слоте — кусочек или null
   const [activeSlot, setActiveSlot] = useState(0);
@@ -42,7 +44,7 @@ export default function FillTask({ task, onAnswer, result }) {
         className={`${styles.slot} ${state}`}
         onClick={() => clickSlot(index)}
         disabled={answered}
-        aria-label={piece ? `Пропуск ${index + 1}: ${piece.value}. Нажми, чтобы убрать` : `Пустой пропуск ${index + 1}`}
+        aria-label={piece ? t('tasks.gapFilled', { n: index + 1, value: piece.value }) : t('tasks.gapEmpty', { n: index + 1 })}
       >
         {piece ? piece.value : ' '}
       </button>
@@ -57,7 +59,7 @@ export default function FillTask({ task, onAnswer, result }) {
       <CodeBlock code={task.code} renderSlot={renderSlot} />
       {!answered && (
         <>
-          <p className={styles.poolTitle}>Кусочки:</p>
+          <p className={styles.poolTitle}>{t('tasks.pieces')}</p>
           <div className={styles.bank}>
             {bank.map((piece) => (
               <button
@@ -78,7 +80,7 @@ export default function FillTask({ task, onAnswer, result }) {
               disabled={!complete}
               onClick={() => onAnswer(slots.map((piece) => piece.value))}
             >
-              Проверить
+              {t('common.check')}
             </button>
           </div>
         </>

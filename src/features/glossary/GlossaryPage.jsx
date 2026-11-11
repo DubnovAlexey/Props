@@ -5,21 +5,23 @@ import Spelling from '../../components/Spelling/Spelling.jsx';
 import { useEffect, useState } from 'react';
 import { GLOSSARY, GLOSSARY_MAP } from '../../content/glossary.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
-import { PHRASES } from '../../mascot/phrases.js';
+
 import CodeBlock from '../../components/CodeBlock/CodeBlock.jsx';
 import styles from './Glossary.module.css';
 import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 
 const SORTED = [...GLOSSARY].sort((a, b) => a.title.localeCompare(b.title, 'ru'));
 
 export default function GlossaryPage({ focusId }) {
+  const { t } = useI18n();
   const [query, setQuery] = useState('');
   const { say } = useMascot();
 
   useEffect(() => {
-    say(PHRASES.route.glossary, 'talk');
-  }, [say]);
+    say(t('mascot.route.glossary'), 'talk');
+  }, [say, t]);
 
   useEffect(() => {
     if (!focusId) return;
@@ -40,26 +42,24 @@ export default function GlossaryPage({ focusId }) {
   return (
     <div className="stack">
       <div>
-        <span className="eyebrow">Словарь</span>
-        <BloodTitle>Словарь Графа</BloodTitle>
-        <p className="muted">
-          {GLOSSARY.length} терминов. Те же пояснения всплывают, если навести мышь или нажать на подчёркнутое слово в уроке.
-        </p>
+        <span className="eyebrow">{t('glossary.eyebrow')}</span>
+        <BloodTitle>{t('glossary.title')}</BloodTitle>
+        <p className="muted">{t('glossary.intro', { terms: t('glossary.terms', { count: GLOSSARY.length }) })}</p>
       </div>
 
       <label className="visually-hidden" htmlFor="glossary-search">
-        Поиск термина
+        {t('glossary.searchLabel')}
       </label>
       <input
         id="glossary-search"
         className="input"
         type="search"
-        placeholder="Найти термин: например, children или состояние"
+        placeholder={t('glossary.searchPlaceholder')}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       />
 
-      {list.length === 0 && <p className="muted">Ничего не нашлось. Попробуй другое слово.</p>}
+      {list.length === 0 && <p className="muted">{t('glossary.empty')}</p>}
 
       <div className={styles.list}>
         {list.map((entry) => (
@@ -67,17 +67,17 @@ export default function GlossaryPage({ focusId }) {
             <h2 className={styles.title}>{entry.title}</h2>
             <Spelling entry={entry} />
             <p>
-              <b>Простыми словами:</b> {entry.simple}
+              <b>{t('common.simple')}</b> {entry.simple}
             </p>
             {entry.tech && (
               <p className="muted">
-                <b>Технически:</b> {entry.tech}
+                <b>{t('common.tech')}</b> {entry.tech}
               </p>
             )}
             {entry.example && <CodeBlock code={entry.example} anatomy />}
             {entry.related?.length > 0 && (
               <div className="row small">
-                <span className="muted">См. также:</span>
+                <span className="muted">{t('glossary.related')}</span>
                 {entry.related.map((id) => (
                   <a key={id} className="chip" href={to.glossary(id)}>
                     {GLOSSARY_MAP[id]?.label ?? id}

@@ -10,6 +10,7 @@
 // Какие части двигаются и как — в Vampire.module.css (классы body, cape, eyes, arm…).
 import { useId } from 'react';
 import styles from './Vampire.module.css';
+import { useI18n } from '../i18n/I18nContext.jsx';
 
 // Пятна крови на шейном платке: [x, y, радиус]
 const BLOOD_SPOTS = [
@@ -20,6 +21,7 @@ const BLOOD_SPOTS = [
 ];
 
 export default function Vampire({ mood = 'idle', size = 120, className = '' }) {
+  const { t } = useI18n();
   // useId даёт уникальную приставку: градиенты двух Графов на странице не перепутаются
   const u = `v${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   return (
@@ -29,7 +31,7 @@ export default function Vampire({ mood = 'idle', size = 120, className = '' }) {
       width={size}
       height={(size * 190) / 160}
       role="img"
-      aria-label="Граф Пропсула"
+      aria-label={t('common.count')}
     >
       <defs>
         {/* кожа: тёплый свет снизу, холодная тень сверху */}
