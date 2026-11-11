@@ -38,7 +38,7 @@
   background: var(--surface-2);
   color: var(--text);
   font: inherit;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   transition:
     border-color 0.2s ease,

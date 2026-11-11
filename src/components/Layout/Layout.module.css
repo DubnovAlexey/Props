@@ -130,7 +130,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
+  margin-inline-start: auto;
   flex: none;
 }
 
@@ -194,7 +194,7 @@
   }
 
   .stats {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 
   .logoText small {

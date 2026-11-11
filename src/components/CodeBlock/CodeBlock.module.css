@@ -22,6 +22,7 @@
 }
 
 .pre {
+  direction: ltr; /* код читается слева направо на любом языке интерфейса */
   margin: 0;
   padding: 10px 0;
   overflow-x: auto;
@@ -286,7 +287,7 @@
   color: #e9e3f5;
   font: inherit;
   font-size: 0.86rem;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -429,7 +430,7 @@
   color: inherit;
   font: inherit;
   font-size: 0.86rem;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
