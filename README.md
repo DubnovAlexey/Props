@@ -166,7 +166,7 @@ it, it gets an icon on your screen like a normal app and works **without the int
 **Option A — download one file (the easiest):**
 
 1. Open the game from the link and, at the bottom of the cave map, click **«📲 Играть без интернета»**
-   (the game is in Russian for now).
+   (the game opens in Russian; the globe 🌐 in the header switches the interface language).
 2. Click **«⬇️ Скачать Props.html»**. The file lands in your Downloads folder.
 3. Double-click the file — the game opens in your browser. No internet needed any more; you can send the file
    to a friend or put it on a USB stick.
@@ -259,7 +259,7 @@ translation is on the way.
 
 **דרך א׳ — להוריד קובץ אחד (הכי פשוט):**
 
-1. פתחו את המשחק מהקישור, ובתחתית מפת המערות לחצו על **«📲 Играть без интернета»** (המשחק כרגע ברוסית).
+1. פתחו את המשחק מהקישור, ובתחתית מפת המערות לחצו על **«📲 Играть без интернета»** (המשחק נפתח ברוסית; את שפת הממשק מחליפים בכפתור הגלובוס 🌐 שבכותרת).
 2. לחצו על **«⬇️ Скачать Props.html»**. הקובץ יישמר בתיקיית «הורדות».
 3. לחצו לחיצה כפולה על הקובץ — המשחק ייפתח בדפדפן. אין יותר צורך באינטרנט; אפשר לשלוח את הקובץ לחבר
    או לשים אותו על דיסק און קי.
@@ -351,7 +351,7 @@ Elige tu dispositivo.
 **Opción A: descargar un solo archivo (lo más fácil).**
 
 1. Abre el juego con el enlace y, al final del mapa de cuevas, haz clic en **«📲 Играть без интернета»**
-   (por ahora el juego está en ruso).
+   (el juego se abre en ruso; el globo 🌐 de la cabecera cambia el idioma de la interfaz).
 2. Haz clic en **«⬇️ Скачать Props.html»**. El archivo quedará en la carpeta Descargas.
 3. Haz doble clic en el archivo: el juego se abrirá en el navegador. Ya no necesitas internet; puedes enviar
    el archivo a un amigo o guardarlo en una memoria USB.
@@ -437,7 +437,7 @@ et fonctionne **sans internet**. Choisissez votre appareil.
 **Option A — télécharger un seul fichier (le plus simple) :**
 
 1. Ouvrez le jeu avec le lien et, en bas de la carte des grottes, cliquez sur **«📲 Играть без интернета»**
-   (le jeu est en russe pour l'instant).
+   (le jeu s'ouvre en russe ; le globe 🌐 dans l'en-tête change la langue de l'interface).
 2. Cliquez sur **«⬇️ Скачать Props.html»**. Le fichier arrive dans le dossier Téléchargements.
 3. Double-cliquez sur le fichier : le jeu s'ouvre dans le navigateur. Plus besoin d'internet ; vous pouvez
    envoyer le fichier à un ami ou le mettre sur une clé USB.
