@@ -105,7 +105,7 @@ export function parseBlocks(markdown) {
   return blocks;
 }
 
-const INLINE = /(`[^`]+`)|(\*\*.+?\*\*)|(\[[^\]]+\]\([^)\s]+\))|(\*[^*\s][^*]*?\*)/g;
+const INLINE = /(`[^`]+`)|(\*\*.+?\*\*)|(\[[^\]]+]\([^)\s]+\))|(\*[^*\s][^*]*?\*)/g;
 
 /** Строка с разметкой → элементы React */
 export function Inline({ text }) {
@@ -123,7 +123,7 @@ export function Inline({ text }) {
         </strong>,
       );
     else if (match[3]) {
-      const [, label, href] = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      const [, label, href] = token.match(/^\[([^\]]+)]\(([^)]+)\)$/);
       out.push(
         <a key={key} href={href} target="_blank" rel="noopener noreferrer">
           <Inline text={label} />
