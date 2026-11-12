@@ -16,6 +16,8 @@ import { DIAGRAM_TEXT } from '../src/content/diagrams.js';
 import LIBRARY_SECTIONS from '../src/content/library/sections.json';
 import { LIBRARY_SCHEMES } from '../src/content/library/schemes.js';
 import { DIAGRAM_NAMES } from '../src/components/Diagram/Diagram.jsx';
+import { COURSE } from '../src/content/course.js';
+import { LEARN } from '../src/content/learn.js';
 import { explainCode } from '../src/utils/syntaxGuide.js';
 import { languageByCode } from '../src/i18n/languages.js';
 import { loadLanguage } from '../src/i18n/dictionaries.js';
@@ -50,6 +52,9 @@ const BASES = {
   diagrams: DIAGRAM_TEXT,
   // свитки: заголовки разделов и подписи схем (сами разделы проверяет tests/library.test.js)
   library: { titles: Object.fromEntries(LIBRARY_SECTIONS.map((section) => [section.id, section.title])), schemes: LIBRARY_SCHEMES },
+  // вопросы преподавателя (Кафедра Графа) и страница «Чему научат пещеры»
+  course: COURSE,
+  learn: LEARN,
 };
 
 const CYRILLIC = /[а-яё]/i;
@@ -93,6 +98,10 @@ function freeLengthFor(lang) {
       ),
     ),
   );
+  // и у вопросов преподавателя с ответом «Впиши ответ»
+  COURSE.questions.forEach((item, index) => {
+    if (item.task.type === 'input') inputAnswers.add(`${lang}.course.questions[${index}].task.answers`);
+  });
   return (path) => path.endsWith('.words') || inputAnswers.has(path);
 }
 

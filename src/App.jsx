@@ -18,6 +18,8 @@ import MethodsPage from './features/methods/MethodsPage.jsx';
 import BreakPage from './features/break/BreakPage.jsx';
 import BestiaryPage from './features/bestiary/BestiaryPage.jsx';
 import InstallPage from './features/install/InstallPage.jsx';
+import CoursePage from './features/course/CoursePage.jsx';
+import LearnPage from './features/learn/LearnPage.jsx';
 import GuardianDefs from './mascot/guardians/GuardianDefs.jsx';
 import Ambience from './components/Ambience/Ambience.jsx';
 import Scares from './components/Scares/Scares.jsx';
@@ -47,6 +49,10 @@ function Page({ route }) {
       return <ReviewPage />;
     case 'exam':
       return <ExamPage />;
+    case 'course':
+      return <CoursePage focus={Number(route.query.question) || null} />;
+    case 'learn':
+      return <LearnPage />;
     case 'glossary':
       return <GlossaryPage focusId={route.query.term} />;
     case 'methods':
@@ -79,7 +85,7 @@ function Page({ route }) {
 /** Раздел меню, который подсвечивать */
 function sectionOf(route) {
   const [section] = route.parts;
-  if (!section || section === 'chapter' || section === 'exam') return 'map';
+  if (!section || section === 'chapter' || section === 'exam' || section === 'course' || section === 'learn') return 'map';
   return section;
 }
 
@@ -90,8 +96,8 @@ export default function App({ i18n }) {
   // Новый раздел — начинаем сверху страницы (кроме перехода к термину словаря).
   // Прокручиваем сразу, без плавной анимации, и до показа страницы — см. src/utils/scroll.js
   useLayoutEffect(() => {
-    if (!route.query.term) scrollToTop();
-  }, [route.path, route.query.term]);
+    if (!route.query.term && !route.query.question) scrollToTop();
+  }, [route.path, route.query.term, route.query.question]);
 
   const section = sectionOf(route);
 

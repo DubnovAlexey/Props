@@ -41,3 +41,23 @@
     opacity: 0;
   }
 }
+
+/* Обязательная часть: итог по вопросам преподавателя и ссылки на те, где ошибка */
+.course {
+  display: grid;
+  gap: 4px;
+  margin: 4px 0 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--gold-soft);
+  text-align: start;
+}
+
+.course p {
+  margin: 4px 0 0;
+}
+
+.missed {
+  margin: 0;
+  padding-inline-start: 1.2em;
+}

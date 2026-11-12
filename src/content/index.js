@@ -21,7 +21,10 @@ import { BREAK_ROUNDS as RU_BREAK_ROUNDS } from './breakRounds.js';
 import { EPILOGUE as RU_EPILOGUE, FINALE as RU_FINALE, PROLOGUE as RU_PROLOGUE, TIERS as RU_TIERS } from './story.js';
 import { SYNTAX_GUIDE as RU_SYNTAX_GUIDE } from './syntaxGuide.js';
 import { DIAGRAM_TEXT as RU_DIAGRAM_TEXT } from './diagrams.js';
+import { COURSE as RU_COURSE } from './course.js';
+import { LEARN as RU_LEARN } from './learn.js';
 import { localize } from '../utils/localize.js';
+import { courseTasks } from '../utils/course.js';
 
 /** Список с id: перевод каждого элемента лежит в накладке под его id */
 const localizeById = (list, overlays) => list.map((item) => localize(item, overlays?.[item.id]));
@@ -34,7 +37,8 @@ const localizeById = (list, overlays) => list.map((item) => localize(item, overl
  *   finale, prologue, epilogue — объекты с переведёнными полями;
  *   syntaxGuide — тексты «анатомии кода» (см. ./syntaxGuide.js);
  *   diagrams — подписи внутри схем-картинок (см. ./diagrams.js);
- *   library — свитки: titles (id раздела → заголовок) и schemes (подписи схем, см. ./library/schemes.js).
+ *   library — свитки: titles (id раздела → заголовок) и schemes (подписи схем, см. ./library/schemes.js);
+ *   course — вопросы преподавателя и Кафедра Графа (см. ./course.js), learn — страница «Чему научат пещеры» (см. ./learn.js).
  */
 export function buildContent(overlay = {}) {
   const TIERS = localizeById(RU_TIERS, overlay.tiers);
@@ -53,12 +57,20 @@ export function buildContent(overlay = {}) {
 
   const GLOSSARY = localizeById(RU_GLOSSARY, overlay.glossary);
 
+  // Вопросы курса: обязательная часть испытания. Их задания — не в ALL_TASKS (там ровно по 8 на пещеру),
+  // но в TASK_MAP: испытание и склеп повторения находят их по id
+  const COURSE = localize(RU_COURSE, overlay.course);
+  const COURSE_TASKS = courseTasks(COURSE);
+
   return {
     TIERS,
     CHAPTERS,
     CHAPTER_MAP: Object.fromEntries(CHAPTERS.map((chapter) => [chapter.id, chapter])),
     ALL_TASKS,
-    TASK_MAP: Object.fromEntries(ALL_TASKS.map((task) => [task.id, task])),
+    TASK_MAP: Object.fromEntries([...ALL_TASKS, ...COURSE_TASKS].map((task) => [task.id, task])),
+    COURSE,
+    COURSE_TASKS,
+    LEARN: localize(RU_LEARN, overlay.learn),
     GLOSSARY,
     GLOSSARY_MAP: Object.fromEntries(GLOSSARY.map((entry) => [entry.id, entry])),
     FACTS: localize(RU_FACTS, overlay.facts),

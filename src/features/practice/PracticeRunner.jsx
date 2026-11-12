@@ -88,6 +88,12 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
               {t('practice.levels')[task.level]}
             </span>
           )}
+          {task.course && (
+            <span className={`chip ${styles.courseChip}`}>
+              <span aria-hidden="true">📋</span>{' '}
+              {task.course.kind === 'test' ? t('course.chipTest', { n: task.course.number }) : t('course.chip', { n: task.course.number })}
+            </span>
+          )}
           {showChapter && chapter && (
             <span className="chip" title={t('practice.caveTitle')}>
               <span aria-hidden="true">{chapter.icon}</span> {chapter.cave}

@@ -12,10 +12,11 @@ import styles from './Bestiary.module.css';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
+import { COURSE_PASS, courseAsCave } from '../../utils/course.js';
 
 export default function BestiaryPage() {
   const { t } = useI18n();
-  const { CHAPTERS } = useContent();
+  const { CHAPTERS, COURSE } = useContent();
   const { progress } = useProgress();
   const { say } = useMascot();
 
@@ -24,6 +25,8 @@ export default function BestiaryPage() {
   }, [say, t]);
 
   const defeated = CHAPTERS.filter((chapter) => progress.chapters[chapter.id]?.done).length;
+  const course = courseAsCave(COURSE);
+  const courseDone = (progress.exam.courseBest ?? 0) >= COURSE_PASS;
 
   return (
     <div className="stack">
@@ -67,6 +70,27 @@ export default function BestiaryPage() {
             </li>
           );
         })}
+        {/* Хозяин Кафедры Графа: повержен, когда в испытании верны 80% вопросов преподавателя */}
+        <li className={`card ${styles.item}`} style={{ '--cave': course.color }}>
+          <a className={styles.link} href={to.course()}>
+            <Guardian
+              id="course"
+              size={112}
+              mood={courseDone ? 'defeated' : 'idle'}
+              label={`${course.story.guardian.kind} ${course.story.guardian.name}`}
+            />
+            <span className={styles.meta}>
+              {course.icon} {course.cave}
+            </span>
+            <b className={styles.name}>
+              {course.story.guardian.name}, {course.story.guardian.kind}
+            </b>
+            <span className={styles.topic}>{course.title}</span>
+            <span className={styles.why}>{course.story.guardian.why}</span>
+            <span className={styles.bio}>{course.story.guardian.bio}</span>
+            <span className={styles.status}>{courseDone ? t('bestiary.defeated') : t('bestiary.waiting')}</span>
+          </a>
+        </li>
       </ul>
     </div>
   );

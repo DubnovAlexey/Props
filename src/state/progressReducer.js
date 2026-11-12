@@ -34,7 +34,7 @@ export const initialProgress = {
   stats: { answered: 0, correct: 0 },
   streak: { count: 0, lastDay: null },
   journal: {}, // объяснения Лунатику: { [chapterId]: 'текст' }
-  exam: { best: null, attempts: 0 },
+  exam: { best: null, attempts: 0, courseBest: null }, // courseBest — лучший результат по вопросам преподавателя (Кафедра Графа)
   breakBest: 0,
   theme: 'night',
   sound: true,
@@ -121,7 +121,10 @@ export function progressReducer(state, action) {
 
     case 'exam': {
       const best = state.exam.best === null ? action.score : Math.max(state.exam.best, action.score);
-      return { ...state, exam: { best, attempts: state.exam.attempts + 1 } };
+      // Вопросы курса считаются отдельно: их результат виден на карте и у хозяина Кафедры
+      const previous = state.exam.courseBest ?? null;
+      const courseBest = action.course === undefined ? previous : previous === null ? action.course : Math.max(previous, action.course);
+      return { ...state, exam: { best, attempts: state.exam.attempts + 1, courseBest } };
     }
 
     case 'break':

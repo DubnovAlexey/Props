@@ -1,0 +1,691 @@
+/* Кафедра Графа: вопросы курса, мастерская Student CRM и блок «На занятии спросят» в пещерах и свитках.
+   --cave задаёт страница или пещера (цвет хозяина); значение по умолчанию — золото Кафедры. */
+.page,
+.inCave,
+.caveLink {
+  --cave: #d9a441;
+}
+
+.back {
+  align-self: flex-start;
+}
+
+.score {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.examCall {
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border));
+}
+
+.outro {
+  margin: 0 0 12px;
+  font-family: var(--font-title), serif;
+  font-size: 1.15rem;
+  font-style: italic;
+}
+
+.blockTitle {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.miniList {
+  margin: 0;
+  padding-inline-start: 1.4em;
+}
+
+.miniList li {
+  margin-bottom: 6px;
+}
+
+/* ---------- вопрос-раскрывашка ---------- */
+
+.questions {
+  display: grid;
+  gap: 8px;
+}
+
+.question {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.question[open] {
+  border-color: color-mix(in srgb, var(--cave) 55%, var(--border));
+}
+
+.questionHead {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 12px;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.questionNum {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--cave) var(--cave-ink), var(--text));
+}
+
+.questionText {
+  font-weight: 600;
+  min-width: 0;
+}
+
+.answer {
+  display: grid;
+  gap: 10px;
+  padding: 0 12px 12px;
+  min-width: 0;
+}
+
+.questionOpen {
+  border-color: color-mix(in srgb, var(--good) 35%, var(--border));
+}
+
+/* путь к вопросу через пещеры: пройденные — с галочкой */
+.path {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+}
+
+.pathLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.pathSteps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pathSteps li:not(:last-child)::after {
+  content: '→';
+  margin-inline-start: 6px;
+  color: var(--text-faint);
+}
+
+/* в иврите путь идёт справа налево — и стрелка смотрит влево */
+:global([dir='rtl']) .pathSteps li:not(:last-child)::after {
+  content: '←';
+}
+
+.pathStep {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--cave) 45%, var(--border));
+  color: var(--text);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.pathDone {
+  background: var(--good-soft);
+  border-color: var(--good);
+}
+
+.pathStatus {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.answerLabel {
+  color: color-mix(in srgb, var(--gold) var(--cave-ink), var(--text));
+}
+
+.caveLink {
+  justify-self: start;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--cave) var(--cave-ink), var(--text));
+}
+
+/* ---------- «На занятии спросят» в пещере и свитке ---------- */
+
+.inCave {
+  display: grid;
+  gap: 10px;
+  border-color: color-mix(in srgb, var(--gold) 40%, var(--border));
+}
+
+.inCaveTitle {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.inCave > a {
+  justify-self: start;
+}
+
+/* ---------- мастерская ---------- */
+
+.lab {
+  border-color: color-mix(in srgb, var(--magic) 40%, var(--border));
+}
+
+.labGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 820px) {
+  .labGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.labData,
+.labView {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-width: 0;
+}
+
+.labTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.rowPicked {
+  border-color: var(--magic);
+}
+
+.rowName {
+  min-width: 0;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.toggle {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.toggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--good);
+}
+
+.age {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.ageButton,
+.remove {
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ageButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.remove:hover {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+/* на узком телефоне строка данных — в два ряда: имя сверху, управление снизу */
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+
+  .rowName {
+    grid-column: 1 / -1;
+  }
+
+  .remove {
+    justify-self: end;
+  }
+}
+
+.screen {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--code-border);
+  background: var(--code-bg);
+  color: var(--code-text);
+  min-height: 180px;
+  align-content: start;
+}
+
+.screenTitle {
+  text-align: center;
+  letter-spacing: 0.12em;
+}
+
+.total {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.empty {
+  margin: 24px 0;
+  text-align: center;
+  font-weight: 700;
+  color: var(--bad);
+}
+
+.studentCard {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--good) 45%, var(--code-border));
+  background: color-mix(in srgb, var(--good) 8%, transparent);
+  font-size: 0.85rem;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+}
+
+.studentPaused {
+  border-color: var(--code-border);
+  background: transparent;
+  opacity: 0.75;
+}
+
+.studentPicked {
+  outline: 2px solid var(--magic);
+  outline-offset: 1px;
+}
+
+.studentHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge {
+  flex: none;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badgeOn {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.badgeOff {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.minor {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.notes {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--magic-soft);
+  min-width: 0;
+}
+
+.notes ul {
+  margin: 0;
+  padding-inline-start: 1.2em;
+}
+
+/* ---------- опыт с key ---------- */
+
+.keyLab {
+  display: grid;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+.keyLab h3 {
+  margin: 0;
+}
+
+.keyGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 640px) {
+  .keyGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.keyColumn {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  min-width: 0;
+}
+
+.keyBad {
+  border-color: color-mix(in srgb, var(--bad) 50%, var(--border));
+}
+
+.keyGood {
+  border-color: color-mix(in srgb, var(--good) 50%, var(--border));
+}
+
+.keyTitle {
+  font-weight: 700;
+}
+
+.keyList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.keyRow {
+  display: grid;
+  grid-template-columns: minmax(0, 7.5em) minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.keyName {
+  font-size: 0.85rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.keyInput {
+  min-width: 0;
+  min-height: 34px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.keyVerdict {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--gold-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studentCard {
+    transition: none;
+  }
+}
+
+/* ---------- анимации: в том же духе, что и вся игра ---------- */
+
+/* раскрытый вопрос: ответ проступает, как чернила на пергаменте */
+.question[open] .answer {
+  animation: ink-in 0.45s ease both;
+}
+
+@keyframes ink-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* замок вопроса: открытая печать тлеет золотом */
+.lock {
+  display: inline-block;
+}
+
+.lockOpen {
+  animation: seal-glow 2.8s ease-in-out infinite;
+}
+
+@keyframes seal-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 6px var(--gold));
+  }
+}
+
+/* пройденная пещера на пути вспыхивает, когда путь показан */
+.pathDone {
+  animation: path-lit 0.9s ease both;
+}
+
+@keyframes path-lit {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  50% {
+    box-shadow: 0 0 12px 2px var(--good);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/* мастерская: карточка ученика поднимается из темноты */
+.studentCard {
+  animation: card-rise 0.45s ease both;
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* бейдж статуса переворачивается, когда меняется isActive (у него key по статусу) */
+.badge {
+  animation: badge-flip 0.4s ease both;
+}
+
+@keyframes badge-flip {
+  from {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* пометка о несовершеннолетнем выскакивает, как только age < 18 */
+.minor {
+  animation: minor-pop 0.4s ease both;
+}
+
+@keyframes minor-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  70% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* «Список пуст» мерцает, как догорающая свеча */
+.empty {
+  animation: empty-flicker 2.4s ease-in-out infinite;
+}
+
+@keyframes empty-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  55% {
+    opacity: 0.6;
+  }
+}
+
+/* «что сработало»: новая строка проступает чернилами */
+.notes li {
+  animation: ink-in 0.4s ease both;
+}
+
+/* опыт с key: после удаления перепутанные заметки слева дрожат, верные справа светятся */
+.keyMoved.keyBad .keyInput {
+  border-color: var(--bad);
+  animation: key-shake 0.45s ease 2;
+}
+
+.keyMoved.keyGood .keyInput {
+  border-color: var(--good);
+  animation: key-glow 1.2s ease 2;
+}
+
+@keyframes key-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes key-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 2px var(--good);
+  }
+}
+
+/* блок «На занятии спросят»: архивариус выглядывает рядом с заголовком */
+.inCaveHead {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .question[open] .answer,
+  .lockOpen,
+  .pathDone,
+  .studentCard,
+  .badge,
+  .minor,
+  .empty,
+  .notes li,
+  .keyMoved .keyInput {
+    animation: none;
+  }
+}

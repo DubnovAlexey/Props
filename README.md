@@ -28,10 +28,21 @@
 | Задания восьми типов, сложность ★ → ★★★                                   | 144                                    |
 | Термины словаря с английским и кодовым написанием                         | 117                                    |
 | Свитки теории: конспекты пещер + полное руководство                       | 18 + 20 разделов                       |
+| Вопросы преподавателя с готовыми ответами (Кафедра Графа)                 | 20 + мини-тест из 5                    |
 
 **Как устроена учёба.** Каждая пещера — это шаги: разминка → урок → заклинание → практика (8 заданий) →
 «Объясни Лунатику» → перемена → итог. Хозяин пещеры повержен, если в практике верно **5 заданий из 8**. Ошибки
 попадают в «склеп повторения» и возвращаются по системе Лейтнера.
+
+**Вопросы преподавателя — Кафедра Графа.** Вопросы, которые задают на занятии (что такое пропсы и как их
+передавать, можно ли их менять, `children`, `map()` и `key`, условный рендеринг), вплетены в игру: к каждому
+ведёт путь через пещеры — победишь хозяев на пути, и вопрос откроется. В пещерах и свитках есть блок «На занятии
+спросят» с готовым ответом, а на Кафедре Графа — теория по пяти темам, мастерская-опыт (своими глазами видно,
+почему индекс — плохой `key`) и новый хозяин, упырь-архивариус Формуляр. Все вопросы и мини-тест — обязательная
+часть итогового испытания, вдобавок к заданиям пещер.
+
+**Чему научат пещеры.** Путеводитель с оглавлением всей игры: что будешь уметь, какие темы в какой пещере и на
+какие вопросы ответишь. Открывается с карты пещер и из свитков.
 
 **Неожиданности.** Иногда по экрану кто-то пролетает или пробегает: летучая мышь с горящими глазами, гоблин
 с факелом, тролль, банши. Секунда испуга встряхивает внимание — мозг отдыхает и возвращается к задаче свежим.
@@ -130,10 +141,23 @@ from project setup to patterns — defeat a monster guardian in each, and your t
 | Tasks of eight kinds, difficulty ★ → ★★★                                | 144                                |
 | Glossary terms with English and in-code spelling                        | 117                                |
 | Theory scrolls: cave summaries + the full guide                         | 18 + 20 sections                   |
+| The teacher's questions with model answers (the Count's Chair)          | 20 + a 5-question mini-test        |
 
 **How learning works.** Every cave is a path: warm-up → lesson → spell → practice (8 tasks) → "Explain it to the
 bat" → break → summary. The guardian is defeated when **5 of 8** practice tasks are correct. Mistakes go to the
 "crypt of repetition" and come back on a Leitner schedule.
+
+**The teacher's questions — the Count's Chair.** The questions asked in class (what props are and how to pass
+them, whether you may change them, `children`, `map()` and `key`, conditional rendering) are woven into the game:
+a path through the caves leads to each one — defeat the guardians on the way and the question opens. Caves and
+scrolls have a "They will ask in class" block with a model answer, and the Count's Chair has theory on five
+topics, a hands-on workshop (you see with your own eyes why an index is a bad `key`) and a new guardian, the
+ghoul archivist Formular. All the questions and the mini-test are a required part of the final trial, on top of
+the cave tasks.
+
+**What the caves will teach you.** A guide with the table of contents of the whole game: what you will be able
+to do, which topics live in which cave and which questions you will answer. It opens from the cave map and the
+scrolls.
 
 **Surprises.** Now and then something flies or runs across the screen: a bat with burning eyes, a goblin with
 a torch, a troll, a banshee. A second of fright resets your attention, and you return to the task refreshed.
@@ -229,6 +253,15 @@ version 2.6.0): a browser set to English opens the English game right away. Hebr
 **איך לומדים.** כל מערה היא מסלול: חימום ← שיעור ← לחש ← תרגול (8 משימות) ← «הסבר לעטלף» ← הפסקה ← סיכום.
 השומר מובס כאשר **5 מתוך 8** משימות התרגול נכונות. הטעויות עוברות ל«קריפטת החזרה» וחוזרות לפי שיטת לייטנר.
 
+**שאלות המרצה — הקתדרה של הרוזן.** השאלות שנשאלות בשיעור (מה הם props ואיך מעבירים אותם, האם מותר לשנות
+אותם, `children`, ‏`map()` ו‑`key`, רינדור מותנה) שזורות במשחק: לכל שאלה מובילה דרך דרך המערות — מביסים את
+השומרים בדרך, והשאלה נפתחת. במערות ובמגילות יש קטע «ישאלו בשיעור» עם תשובה מוכנה, ובקתדרה של הרוזן — תיאוריה
+בחמישה נושאים, סדנה מעשית (רואים במו עיניכם למה אינדקס הוא `key` גרוע) ושומר חדש, הגול‑ארכיבר פורמולר. כל
+השאלות והמבחן הקצר הם חלק מחייב מהמבחן המסכם, בנוסף למשימות המערות.
+
+**מה המערות ילמדו אתכם.** מדריך עם תוכן העניינים של כל המשחק: מה תדעו לעשות, אילו נושאים בכל מערה ועל אילו
+שאלות תענו. נפתח ממפת המערות ומהמגילות.
+
 **הפתעות.** מדי פעם משהו עף או רץ על פני המסך: עטלף עם עיניים בוערות, גובלין עם לפיד, טרול, בנשי. שנייה של
 בהלה מרעננת את הקשב, וחוזרים למשימה רעננים. אפשר לכבות אותן בתחתית מפת המערות. אם במכשיר מופעלת «הפחתת
 תנועה», הן לא מופיעות כלל.
@@ -317,6 +350,17 @@ tipos · 117 términos en el glosario · pergaminos de teoría: 18 resúmenes y 
 **Cómo se aprende.** Cada cueva es un camino: calentamiento → lección → conjuro → práctica (8 tareas) →
 «Explícaselo al murciélago» → recreo → resumen. El guardián cae cuando aciertas **5 de 8** tareas de la práctica.
 Los errores van a la «cripta de repaso» y vuelven según el sistema de Leitner.
+
+**Las preguntas del profesor — la Cátedra del Conde.** Las preguntas que se hacen en clase (qué son las props y
+cómo se pasan, si se pueden cambiar, `children`, `map()` y `key`, el renderizado condicional) están tejidas en el
+juego: a cada una lleva un camino por las cuevas; vence a los guardianes del camino y la pregunta se abre. Las
+cuevas y los pergaminos tienen el bloque «Te lo preguntarán en clase» con una respuesta modelo, y la Cátedra del
+Conde tiene teoría en cinco temas, un taller práctico (ves con tus propios ojos por qué un índice es un mal
+`key`) y un guardián nuevo, el gul archivero Formular. Todas las preguntas y el minitest son parte obligatoria
+de la prueba final, además de las tareas de las cuevas.
+
+**Qué te enseñarán las cuevas.** Una guía con el índice de todo el juego: qué sabrás hacer, qué temas hay en cada
+cueva y qué preguntas sabrás responder. Se abre desde el mapa de cuevas y desde los pergaminos.
 
 **Sobresaltos.** De vez en cuando algo cruza la pantalla volando o corriendo: un murciélago de ojos ardientes,
 un goblin con antorcha, un trol, una banshee. Un segundo de susto despeja la atención y vuelves a la tarea con
@@ -409,6 +453,18 @@ pas faire » · 144 exercices de huit types · 117 termes dans le glossaire · 
 **Comment on apprend.** Chaque grotte est un parcours : échauffement → leçon → sortilège → pratique (8 exercices) →
 « Explique-le à la chauve-souris » → pause → bilan. Le gardien est vaincu quand **5 exercices sur 8** sont justes.
 Les erreurs partent dans la « crypte de révision » et reviennent selon le système de Leitner.
+
+**Les questions du professeur — la Chaire du Comte.** Les questions posées en cours (ce que sont les props et
+comment les passer, peut-on les modifier, `children`, `map()` et `key`, le rendu conditionnel) sont tissées dans
+le jeu : un chemin à travers les grottes mène à chacune — battez les gardiens du chemin et la question s'ouvre.
+Les grottes et les parchemins ont un bloc « On vous le demandera en cours » avec une réponse modèle, et la Chaire
+du Comte propose la théorie en cinq thèmes, un atelier pratique (on voit de ses propres yeux pourquoi un index
+est une mauvaise `key`) et un nouveau gardien, la goule archiviste Formular. Toutes les questions et le
+mini-test sont une partie obligatoire de l'épreuve finale, en plus des exercices des grottes.
+
+**Ce que les grottes vous apprendront.** Un guide avec la table des matières de tout le jeu : ce que vous saurez
+faire, quels thèmes dans quelle grotte et à quelles questions vous saurez répondre. Il s'ouvre depuis la carte
+des grottes et les parchemins.
 
 <a id="install-fr"></a>
 

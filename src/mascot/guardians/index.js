@@ -21,6 +21,7 @@ import Octopus from './art/Octopus.jsx';
 import Werewolf from './art/Werewolf.jsx';
 import Golem from './art/Golem.jsx';
 import Minotaur from './art/Minotaur.jsx';
+import Archivist from './art/Archivist.jsx';
 
 export const GUARDIANS = {
   setup: { Art: Goblin, light: '#ff8a3d' },
@@ -41,4 +42,6 @@ export const GUARDIANS = {
   performance: { Art: Werewolf, light: '#ffd34a' },
   types: { Art: Golem, light: '#57e3ff' },
   patterns: { Art: Minotaur, light: '#ff5a1f' },
+  // Не пещера, а Кафедра Графа (вопросы преподавателя): её хозяин живёт в content/course.js (COURSE.guardian)
+  course: { Art: Archivist, light: '#d9a441' },
 };

@@ -10,6 +10,8 @@ import { GLOSSARY } from './glossary.js';
 import { SYNTAX_GUIDE } from './syntaxGuide.js';
 import { DIAGRAM_TEXT } from './diagrams.js';
 import { LIBRARY } from './library.js';
+import { COURSE } from './course.js';
+import { LEARN } from './learn.js';
 
 export default {
   tiers: TIERS,
@@ -26,4 +28,6 @@ export default {
   syntaxGuide: SYNTAX_GUIDE,
   diagrams: DIAGRAM_TEXT,
   library: LIBRARY,
+  course: COURSE,
+  learn: LEARN,
 };

@@ -5,3 +5,4 @@ docs/guide.md
 src/content/library/sections
 dist-artifact
 dist-single
+src/content/i18n/*/library/*.md

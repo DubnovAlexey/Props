@@ -11,6 +11,9 @@ export const to = {
   chapter: (id) => `#chapter-${id}`,
   review: () => '#review',
   exam: () => '#exam',
+  // Кафедра Графа — вопросы курса; с номером — сразу открыть этот вопрос (#course-q7)
+  course: (number) => (number ? `#course-q${number}` : '#course'),
+  learn: () => '#learn',
   glossary: (termId) => (termId ? `#glossary-${termId}` : '#glossary'),
   methods: () => '#methods',
   break: () => '#break',
@@ -33,6 +36,7 @@ export function parseHash(hash) {
   if (!raw || raw === 'map') return { path: 'map', parts: [], query: {} };
   if (raw.startsWith('chapter-')) return { path: raw, parts: ['chapter', raw.slice('chapter-'.length)], query: {} };
   if (raw.startsWith('library-')) return { path: raw, parts: ['library', raw.slice('library-'.length)], query: {} };
+  if (raw.startsWith('course-')) return { path: 'course', parts: ['course'], query: { question: raw.slice('course-q'.length) } };
   if (raw.startsWith('glossary-')) return { path: 'glossary', parts: ['glossary'], query: { term: raw.slice('glossary-'.length) } };
   return { path: raw, parts: [raw], query: {} };
 }

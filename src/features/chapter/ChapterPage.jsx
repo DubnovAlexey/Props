@@ -23,6 +23,7 @@ import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { RichText } from '../../components/RichText/RichText.jsx';
 import { useScrollTopOnChange } from '../../hooks/useScrollTop.js';
+import CaveQuestions from '../course/CaveQuestions.jsx';
 
 const STEPS = [
   { id: 'warmup', icon: '🕯️' },
@@ -199,6 +200,8 @@ export default function ChapterPage({ chapterId }) {
               </button>
             )}
           </div>
+          {/* После последней карточки — вопросы преподавателя по теме пещеры: их задают на занятии */}
+          {lastCard && <CaveQuestions chapterId={chapter.id} />}
         </div>
       )}
 
@@ -313,6 +316,8 @@ export default function ChapterPage({ chapterId }) {
               </a>
             </div>
           </div>
+          {/* Хозяин повержен — путь к вопросам преподавателя по этой теме продвинулся */}
+          <CaveQuestions chapterId={chapter.id} />
         </div>
       )}
     </div>

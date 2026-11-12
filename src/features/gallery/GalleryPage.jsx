@@ -28,7 +28,7 @@ const MOODS = [
 const GRAF_SIZES = [150, 86, 52, 34];
 
 export default function GalleryPage() {
-  const { CHAPTERS } = useContent();
+  const { CHAPTERS, COURSE } = useContent();
   return (
     <div className="stack">
       <header>
@@ -134,6 +134,16 @@ export default function GalleryPage() {
               </figcaption>
             </figure>
           ))}
+          {/* хозяин Кафедры Графа — не пещеры, но рисуется так же */}
+          <figure className={styles.cell}>
+            <div className={styles.pair}>
+              <Guardian id="course" size={150} />
+              <Guardian id="course" size={64} mood="defeated" />
+            </div>
+            <figcaption>
+              📋 {COURSE.guardian.name}, {COURSE.guardian.kind}
+            </figcaption>
+          </figure>
         </div>
       </section>
 

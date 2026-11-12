@@ -1,0 +1,83 @@
+/* «Чему научат пещеры»: список умений и оглавление всех пещер.
+   --cave задаёт карточка пещеры (цвет её хозяина); значение по умолчанию — золото. */
+.cave,
+.special {
+  --cave: #d9a441;
+}
+
+.skills ul {
+  margin: 0;
+  padding-inline-start: 1.3em;
+}
+
+.skills li {
+  margin-bottom: 6px;
+}
+
+.tier {
+  display: grid;
+  gap: 6px;
+}
+
+.tierTitle {
+  margin: 8px 0 0;
+}
+
+.caves {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+
+.cave,
+.special {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  border-color: color-mix(in srgb, var(--cave) 35%, var(--border));
+}
+
+.caveHead {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.caveName {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.caveMeta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--cave) var(--cave-ink), var(--text));
+}
+
+.caveTitle {
+  font-size: 1.05rem;
+}
+
+.goal {
+  margin: 0;
+}
+
+.label {
+  font-size: 0.85rem;
+}
+
+.topics,
+.questions {
+  margin: 0;
+  padding-inline-start: 1.2em;
+  font-size: 0.9rem;
+}
+
+.topics li,
+.questions li {
+  margin-bottom: 3px;
+}

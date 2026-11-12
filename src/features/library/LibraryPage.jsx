@@ -13,6 +13,7 @@ import Guardian from '../../mascot/guardians/Guardian.jsx';
 import LessonCard from '../chapter/LessonCard.jsx';
 import NotFound from '../../app/NotFound.jsx';
 import MarkdownView from './MarkdownView.jsx';
+import CaveQuestions from '../course/CaveQuestions.jsx';
 import { to } from '../../app/useHashRoute.js';
 import { useMascot } from '../../mascot/MascotContext.jsx';
 
@@ -85,6 +86,18 @@ function LibraryIndex() {
         <p className="muted">{t('library.intro')}</p>
       </header>
 
+      {/* Путеводитель по всей игре и Кафедра с вопросами преподавателя — тоже теория, поэтому и здесь */}
+      <section className={styles.guides}>
+        <a className={`card ${styles.guide}`} href={to.learn()}>
+          <b>{t('learn.open')}</b>
+          <span className="muted small">{t('learn.text')}</span>
+        </a>
+        <a className={`card ${styles.guide}`} href={to.course()}>
+          <b>{t('course.toCourse')}</b>
+          <span className="muted small">{t('learn.courseLine')}</span>
+        </a>
+      </section>
+
       <section>
         <h2>{t('library.cavesTitle')}</h2>
         <ul className={styles.caves}>
@@ -151,6 +164,9 @@ function CaveScroll({ chapter }) {
       {chapter.lesson.map((card, i) => (
         <LessonCard key={card.title} card={card} index={i} total={chapter.lesson.length} />
       ))}
+
+      {/* Вопросы преподавателя по теме пещеры — и в свитке: теория тут, значит и ответы тут */}
+      <CaveQuestions chapterId={chapter.id} />
 
       {related.length > 0 && (
         <section className="stack">

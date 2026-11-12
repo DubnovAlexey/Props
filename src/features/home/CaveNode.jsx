@@ -1,5 +1,6 @@
 // Одна пещера на карте. Все данные приходят пропсами:
 // chapter — что за пещера, state — прогресс в ней, isNext — ждёт ли здесь Граф.
+// У «не пещер» (Кафедра Графа, Логово) вместо номера — своя подпись: chapter.label или «Финал».
 // В кольце прогресса — портрет хозяина пещеры: тема узнаётся по чудищу.
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import styles from './CaveMap.module.css';
@@ -38,7 +39,8 @@ export default function CaveNode({ chapter, state, isNext = false, href = to.cha
         </span>
         <span className={styles.nodeText}>
           <span className={styles.nodeNum}>
-            {typeof chapter.order === 'number' ? t('common.cave', { n: chapter.order }) : t('common.final')} · {chapter.cave}
+            {chapter.label ?? (typeof chapter.order === 'number' ? t('common.cave', { n: chapter.order }) : t('common.final'))} ·{' '}
+            {chapter.cave}
           </span>
           <b className={styles.nodeTitle}>{chapter.title}</b>
           <span className={styles.nodeStatus}>

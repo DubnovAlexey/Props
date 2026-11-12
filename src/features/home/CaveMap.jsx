@@ -22,6 +22,7 @@ import { to } from '../../app/useHashRoute.js';
 import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import { useContent, useI18n } from '../../i18n/I18nContext.jsx';
 import { scrollToTop } from '../../utils/scroll.js';
+import { COURSE_PASS, courseAsCave } from '../../utils/course.js';
 
 /**
  * «Начать игру заново»: сначала спрашиваем подтверждение — стёртый прогресс не вернуть.
@@ -93,7 +94,7 @@ export default function CaveMap() {
   const { t } = useI18n();
   const { progress } = useProgress();
   const { say } = useMascot();
-  const { CHAPTERS, FACTS, EPILOGUE, FINALE, PROLOGUE, TIERS, translatedCaves } = useContent();
+  const { CHAPTERS, COURSE, FACTS, EPILOGUE, FINALE, PROLOGUE, TIERS, translatedCaves } = useContent();
   // В состоянии — номер факта, а не текст: сменится язык — тот же факт покажется на новом языке
   const [factIndex, setFactIndex] = useState(() => pick(FACTS.map((_, i) => i)));
   const isNew = progress.xp === 0;
@@ -108,6 +109,7 @@ export default function CaveMap() {
   const dueCount = dueIds(progress.items, '', Date.now()).length;
   const doneCount = CHAPTERS.filter((chapter) => progress.chapters[chapter.id]?.done).length;
   const { current, next, progress: toNext } = rankFor(progress.xp);
+  const courseBest = progress.exam.courseBest ?? null;
   const accuracy = progress.stats.answered ? Math.round((progress.stats.correct / progress.stats.answered) * 100) : 0;
 
   return (
@@ -128,6 +130,9 @@ export default function CaveMap() {
                 {t('map.review', { count: dueCount })}
               </a>
             )}
+            <a className="btn btn-ghost" href={to.learn()}>
+              {t('learn.open')}
+            </a>
           </div>
         </div>
         <CaveArt />
@@ -213,6 +218,12 @@ export default function CaveMap() {
           </section>
         ))}
         <ol className={styles.path}>
+          {/* Кафедра Графа: вопросы преподавателя — обязательная часть испытания, поэтому стоит перед Логовом */}
+          <CaveNode
+            chapter={{ ...courseAsCave(COURSE), label: t('course.mapLabel') }}
+            href={to.course()}
+            state={courseBest !== null ? { done: courseBest >= COURSE_PASS, practiceBest: courseBest } : undefined}
+          />
           <CaveNode
             chapter={{ ...FINALE, order: '★' }}
             href={to.exam()}
