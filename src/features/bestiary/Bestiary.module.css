@@ -65,6 +65,16 @@
   color: var(--text-faint);
 }
 
+/* Короткая биография хозяина — курсивом, с кровавой чертой слева: это уже не урок, а легенда пещеры. */
+.bio {
+  padding-inline-start: 8px;
+  border-inline-start: 2px solid color-mix(in srgb, var(--blood) 70%, transparent);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-dim);
+  text-align: start;
+}
+
 .status {
   margin-top: auto;
   padding-top: 6px;

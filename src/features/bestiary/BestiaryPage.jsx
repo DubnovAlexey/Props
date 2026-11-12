@@ -61,6 +61,7 @@ export default function BestiaryPage() {
                 </b>
                 <span className={styles.topic}>{chapter.title}</span>
                 <span className={styles.why}>{guardian.why}</span>
+                <span className={styles.bio}>{guardian.bio}</span>
                 <span className={styles.status}>{done ? t('bestiary.defeated') : t('bestiary.waiting')}</span>
               </a>
             </li>

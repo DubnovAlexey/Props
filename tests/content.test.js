@@ -180,10 +180,10 @@ describe('разбор кода и схемы', () => {
     }
   });
 
-  it('у каждой пещеры есть хозяин: имя, вид, угроза, поражение и «почему он»', () => {
+  it('у каждой пещеры есть хозяин: имя, вид, угроза, поражение, «почему он» и биография', () => {
     for (const chapter of CHAPTERS) {
       const guardian = chapter.story.guardian;
-      for (const field of ['name', 'kind', 'threat', 'defeat', 'why']) {
+      for (const field of ['name', 'kind', 'threat', 'defeat', 'why', 'bio']) {
         expect(guardian?.[field], `${chapter.id}: ${field}`).toBeTruthy();
       }
     }
