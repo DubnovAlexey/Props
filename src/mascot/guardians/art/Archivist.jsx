@@ -1,14 +1,14 @@
-// Упырь-архивариус Формуляр — хозяин Кафедры Графа (двадцать вопросов преподавателя и мини-тест).
+// Упырь-архивариус Формуляр — хозяин Скриптория Графа (двадцать вопросов Реестра Формуляра и Малое испытание).
 // Ведёт реестр учеников Графа и принимает у них устный экзамен — без шпаргалок и без подсказок.
 // Пенсне с треснувшим стеклом, костяное перо в крови, раскрытый журнал с кровавыми галочками и огарок свечи.
 import { Drop, Trail } from '../gore.jsx';
 
-// Строки реестра в журнале: y, длина строки, есть ли кровавая галочка
+// Строки реестра в журнале: высота строки, её длина и есть ли напротив кровавая галочка
 const ROWS = [
-  [168, 34, true],
-  [175, 30, true],
-  [182, 36, false],
-  [189, 28, true],
+  { y: 168, length: 34, tick: true },
+  { y: 175, length: 30, tick: true },
+  { y: 182, length: 36, tick: false },
+  { y: 189, length: 28, tick: true },
 ];
 
 export default function Archivist({ u }) {
@@ -89,7 +89,7 @@ export default function Archivist({ u }) {
       <path d="M50 160 L98 156 L98 200 L46 200 Z" fill={`url(#${u}page)`} />
       <path d="M102 156 L150 160 L154 200 L102 200 Z" fill={`url(#${u}page)`} />
       <path d="M100 156 L100 200" stroke="#3b2c1c" strokeWidth="2" />
-      {ROWS.map(([y, length, tick]) => (
+      {ROWS.map(({ y, length, tick }) => (
         <g key={y}>
           <path d={`M56 ${y} L${56 + length} ${y - 0.5}`} stroke="#4a3a26" strokeWidth="1" opacity="0.7" />
           {tick && <path d={`M${60 + length} ${y - 1} l2 2.5 l4.5 -6`} stroke="#8c0a1b" strokeWidth="1.6" fill="none" />}

@@ -52,7 +52,7 @@ const BASES = {
   diagrams: DIAGRAM_TEXT,
   // свитки: заголовки разделов и подписи схем (сами разделы проверяет tests/library.test.js)
   library: { titles: Object.fromEntries(LIBRARY_SECTIONS.map((section) => [section.id, section.title])), schemes: LIBRARY_SCHEMES },
-  // вопросы преподавателя (Кафедра Графа) и страница «Чему научат пещеры»
+  // вопросы Реестра (Скрипторий Графа) и страница «Чему научат пещеры»
   course: COURSE,
   learn: LEARN,
 };
@@ -98,7 +98,7 @@ function freeLengthFor(lang) {
       ),
     ),
   );
-  // и у вопросов преподавателя с ответом «Впиши ответ»
+  // и у вопросов Реестра с ответом «Впиши ответ»
   COURSE.questions.forEach((item, index) => {
     if (item.task.type === 'input') inputAnswers.add(`${lang}.course.questions[${index}].task.answers`);
   });

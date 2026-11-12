@@ -1,6 +1,6 @@
-// «На занятии спросят»: вопросы преподавателя по теме этой пещеры — с готовыми ответами.
+// «Формуляр спросит»: вопросы Реестра по теме этой пещеры — с готовыми ответами.
 // Стоит в конце урока пещеры, на её итоге и в свитке пещеры: вопрос встречается там, где учат тему,
-// а все 20 вместе — на Кафедре Графа. В пещере без вопросов курса блок не рисуется.
+// а все 20 вместе — на Скриптории Графа. В пещере без вопросов курса блок не рисуется.
 import CourseQuestion from './CourseQuestion.jsx';
 import Guardian from '../../mascot/guardians/Guardian.jsx';
 import { questionsOfCave } from '../../utils/course.js';
@@ -17,7 +17,7 @@ export default function CaveQuestions({ chapterId }) {
   return (
     <section className={`card anim-in ${styles.inCave}`}>
       <div className={styles.inCaveHead}>
-        {/* хозяин Кафедры выглядывает: его вопросы встречаются по пути, в пещерах */}
+        {/* хозяин Скриптория выглядывает: его вопросы встречаются по пути, в пещерах */}
         <Guardian id="course" size={44} />
         <h2 className={styles.inCaveTitle}>{t('course.inCave')}</h2>
       </div>

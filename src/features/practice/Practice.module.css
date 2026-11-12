@@ -92,7 +92,7 @@
   border-color: color-mix(in srgb, var(--gold) 40%, var(--border));
 }
 
-/* вопрос преподавателя (Кафедра Графа) — золотая метка, как у обязательной части */
+/* вопрос Реестра (Скрипторий Графа) — золотая метка, как у обязательной части */
 .courseChip {
   background: var(--gold-soft);
   border-color: color-mix(in srgb, var(--gold) 55%, var(--border));

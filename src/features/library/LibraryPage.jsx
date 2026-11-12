@@ -86,7 +86,7 @@ function LibraryIndex() {
         <p className="muted">{t('library.intro')}</p>
       </header>
 
-      {/* Путеводитель по всей игре и Кафедра с вопросами преподавателя — тоже теория, поэтому и здесь */}
+      {/* Путеводитель по всей игре и Скрипторий с вопросами Реестра — тоже теория, поэтому и здесь */}
       <section className={styles.guides}>
         <a className={`card ${styles.guide}`} href={to.learn()}>
           <b>{t('learn.open')}</b>
@@ -165,7 +165,7 @@ function CaveScroll({ chapter }) {
         <LessonCard key={card.title} card={card} index={i} total={chapter.lesson.length} />
       ))}
 
-      {/* Вопросы преподавателя по теме пещеры — и в свитке: теория тут, значит и ответы тут */}
+      {/* Вопросы Реестра по теме пещеры — и в свитке: теория тут, значит и ответы тут */}
       <CaveQuestions chapterId={chapter.id} />
 
       {related.length > 0 && (

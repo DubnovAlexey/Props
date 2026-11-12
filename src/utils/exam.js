@@ -6,7 +6,7 @@ export const EXTRA_TASKS = 2;
 
 /**
  * По одному случайному заданию из каждой пещеры и ещё несколько любых — вперемешку,
- * а в конце все вопросы преподавателя по порядку (обязательная часть, вдобавок к пещерам).
+ * а в конце все вопросы Реестра по порядку (обязательная часть, вдобавок к пещерам).
  * Возвращает id заданий: по ним страница достаёт задания на языке игрока.
  */
 export function buildExam(chapters, tasks, courseTasks = []) {
@@ -15,7 +15,7 @@ export function buildExam(chapters, tasks, courseTasks = []) {
   return [...shuffle([...perCave, ...rest]), ...courseTasks].map((task) => task.id);
 }
 
-/** Итог по вопросам преподавателя: сколько верно, доля верных и задания с ошибкой */
+/** Итог по вопросам Реестра: сколько верно, доля верных и задания с ошибкой */
 export function courseSummary(courseTasks, mistakes) {
   const missed = courseTasks.filter((task) => mistakes.includes(task.id));
   const total = courseTasks.length;

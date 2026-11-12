@@ -38,7 +38,7 @@ const localizeById = (list, overlays) => list.map((item) => localize(item, overl
  *   syntaxGuide — тексты «анатомии кода» (см. ./syntaxGuide.js);
  *   diagrams — подписи внутри схем-картинок (см. ./diagrams.js);
  *   library — свитки: titles (id раздела → заголовок) и schemes (подписи схем, см. ./library/schemes.js);
- *   course — вопросы преподавателя и Кафедра Графа (см. ./course.js), learn — страница «Чему научат пещеры» (см. ./learn.js).
+ *   course — вопросы Реестра и Скрипторий Графа (см. ./course.js), learn — страница «Чему научат пещеры» (см. ./learn.js).
  */
 export function buildContent(overlay = {}) {
   const TIERS = localizeById(RU_TIERS, overlay.tiers);

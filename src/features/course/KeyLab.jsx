@@ -1,7 +1,7 @@
-// «Почему индекс — плохой key» — живой опыт, а не пересказ. Два одинаковых списка студентов с полями
-// для заметок: слева key={index}, справа key={student.id}. Игрок пишет заметки и удаляет первого студента.
+// «Почему индекс — плохой key» — живой опыт, а не пересказ. Два одинаковых списка учеников с полями
+// для заметок: слева key={index}, справа key={apprentice.id}. Игрок пишет заметки и вычёркивает первого ученика.
 // Слева React сверяет элементы по индексам 0, 1, 2: решает, что исчез последний, и оставляет поля
-// (с введённым текстом) на прежних местах — заметки «переезжают» к чужим студентам. Справа всё на месте.
+// (с введённым текстом) на прежних местах — заметки «переезжают» к чужим ученикам. Справа всё на месте.
 // Поля нарочно неуправляемые (defaultValue): их текст живёт в DOM, как состояние элементов списка.
 import { useState } from 'react';
 import { RichText } from '../../components/RichText/RichText.jsx';
@@ -13,7 +13,7 @@ const SIZE = 3;
 function NoteList({ students, byIndex, placeholder, moved }) {
   return (
     <div className={`${styles.keyColumn} ${byIndex ? styles.keyBad : styles.keyGood} ${moved ? styles.keyMoved : ''}`}>
-      <code className={styles.keyTitle}>{byIndex ? 'key={index}' : 'key={student.id}'}</code>
+      <code className={styles.keyTitle}>{byIndex ? 'key={index}' : 'key={apprentice.id}'}</code>
       <ul className={styles.keyList}>
         {students.map((student, index) => (
           // Ключ-индекс здесь — нарочно: это и есть показываемая ошибка
@@ -33,7 +33,7 @@ function NoteList({ students, byIndex, placeholder, moved }) {
 }
 
 export default function KeyLab({ lab }) {
-  const first = lab.students.slice(0, SIZE);
+  const first = lab.apprentices.slice(0, SIZE);
   const [students, setStudents] = useState(first);
   // Новый «раунд» — новый key у обёртки: React создаёт списки заново, и введённые заметки стираются
   const [round, setRound] = useState(0);

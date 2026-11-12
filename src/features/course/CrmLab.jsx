@@ -1,5 +1,5 @@
-// Мастерская-опыт: слева — данные (массив students), справа — экран, который React рисует из них.
-// Игрок меняет данные — включает и выключает isActive, двигает возраст, удаляет студентов — и сразу
+// Мастерская-опыт: данные (массив apprentices — Реестр учеников Графа) и экран, который React рисует из них.
+// Игрок меняет данные — будит учеников и укладывает в гробы (isActive), двигает возраст, вычёркивает — и сразу
 // видит, как работают props, тернарный оператор, &&, ранний return при пустом списке и map с key.
 // Под экраном — «что сейчас сработало»: какая строка кода отвечает за то, что видно.
 // Тексты — в content/course.js (COURSE.lab); здесь только отображение и состояние мастерской.
@@ -10,22 +10,22 @@ import { interpolate } from '../../i18n/translate.js';
 import KeyLab from './KeyLab.jsx';
 import styles from './Course.module.css';
 
-/** Что сейчас «пришло» в карточку: тот же JSX, что пишут в StudentList */
-function passedCode(student) {
-  const { id, name, age, group, isActive } = student;
-  return `<StudentCard\n  key={${id}}\n  student={{ id: ${id}, name: '${name}', age: ${age}, group: '${group}', isActive: ${isActive} }}\n/>`;
+/** Что сейчас «пришло» в карточку: тот же JSX, что пишут в ApprenticeList */
+function passedCode(apprentice) {
+  const { id, name, age, tier, isActive } = apprentice;
+  return `<ApprenticeCard\n  key={${id}}\n  apprentice={{ id: ${id}, name: '${name}', age: ${age}, tier: '${tier}', isActive: ${isActive} }}\n/>`;
 }
 
-/** Бейдж статуса — как StatusBadge из задания: тернарный оператор выбирает подпись */
+/** Бейдж статуса — как StatusBadge из примеров: тернарный оператор выбирает «Бодрствует» или «Спит в гробу» */
 function StatusBadge({ isActive, lab }) {
   return (
     <span className={`${styles.badge} ${isActive ? styles.badgeOn : styles.badgeOff}`}>{isActive ? lab.activeBadge : lab.pausedBadge}</span>
   );
 }
 
-/** Карточка студента — как StudentCard из задания */
-function StudentCard({ student, lab, picked }) {
-  const { name, age, group, isActive } = student;
+/** Карточка ученика — как ApprenticeCard из примеров Реестра */
+function ApprenticeCard({ apprentice, lab, picked }) {
+  const { name, age, tier, isActive } = apprentice;
   return (
     <article className={`${styles.studentCard} ${isActive ? '' : styles.studentPaused} ${picked ? styles.studentPicked : ''}`}>
       <div className={styles.studentHead}>
@@ -34,15 +34,15 @@ function StudentCard({ student, lab, picked }) {
         <StatusBadge key={String(isActive)} isActive={isActive} lab={lab} />
       </div>
       <span>{interpolate(lab.ageLine, { age })}</span>
-      <span>{interpolate(lab.groupLine, { group })}</span>
+      <span>{interpolate(lab.tierLine, { tier })}</span>
       {age < 18 && <span className={styles.minor}>{lab.minor}</span>}
     </article>
   );
 }
 
 export default function CrmLab({ lab }) {
-  const [students, setStudents] = useState(lab.students);
-  const [pickedId, setPickedId] = useState(lab.students[0].id);
+  const [students, setStudents] = useState(lab.apprentices); // ученики Реестра — данные мастерской
+  const [pickedId, setPickedId] = useState(lab.apprentices[0].id);
   const picked = students.find((student) => student.id === pickedId) ?? students[0];
 
   // Новые объекты вместо правки старых — как велит пещера неизменяемости
@@ -124,7 +124,7 @@ export default function CrmLab({ lab }) {
             <button type="button" className="btn btn-small" disabled={students.length === 0} onClick={() => setStudents([])}>
               {lab.clear}
             </button>
-            <button type="button" className="btn btn-small btn-ghost" onClick={() => setStudents(lab.students)}>
+            <button type="button" className="btn btn-small btn-ghost" onClick={() => setStudents(lab.apprentices)}>
               {lab.restore}
             </button>
           </div>
@@ -142,7 +142,7 @@ export default function CrmLab({ lab }) {
               <>
                 <span className={styles.total}>{interpolate(lab.total, { n: students.length })}</span>
                 {students.map((student) => (
-                  <StudentCard key={student.id} student={student} lab={lab} picked={student.id === pickedId} />
+                  <ApprenticeCard key={student.id} apprentice={student} lab={lab} picked={student.id === pickedId} />
                 ))}
               </>
             )}

@@ -28,18 +28,13 @@
 | Задания восьми типов, сложность ★ → ★★★                                   | 144                                    |
 | Термины словаря с английским и кодовым написанием                         | 117                                    |
 | Свитки теории: конспекты пещер + полное руководство                       | 18 + 20 разделов                       |
-| Вопросы преподавателя с готовыми ответами (Кафедра Графа)                 | 20 + мини-тест из 5                    |
+| Вопросы Реестра Формуляра с ответами (Скрипторий Графа)                   | 20 + Малое испытание из 5              |
 
 **Как устроена учёба.** Каждая пещера — это шаги: разминка → урок → заклинание → практика (8 заданий) →
 «Объясни Лунатику» → перемена → итог. Хозяин пещеры повержен, если в практике верно **5 заданий из 8**. Ошибки
 попадают в «склеп повторения» и возвращаются по системе Лейтнера.
 
-**Вопросы преподавателя — Кафедра Графа.** Вопросы, которые задают на занятии (что такое пропсы и как их
-передавать, можно ли их менять, `children`, `map()` и `key`, условный рендеринг), вплетены в игру: к каждому
-ведёт путь через пещеры — победишь хозяев на пути, и вопрос откроется. В пещерах и свитках есть блок «На занятии
-спросят» с готовым ответом, а на Кафедре Графа — теория по пяти темам, мастерская-опыт (своими глазами видно,
-почему индекс — плохой `key`) и новый хозяин, упырь-архивариус Формуляр. Все вопросы и мини-тест — обязательная
-часть итогового испытания, вдобавок к заданиям пещер.
+**Реестр Формуляра — Скрипторий Графа.** Архивариус Графа, упырь Формуляр, задаёт каждому ученику вопросы и вписывает ответы в Реестр: что такое пропсы и как их передавать, можно ли их менять, `children`, `map()` и `key`, условный рендеринг. К каждому вопросу ведёт путь через пещеры — победишь хозяев на пути, и вопрос откроется. В пещерах и свитках есть блок «Формуляр спросит» с готовым ответом, а в Скриптории Графа — теория по пяти темам, мастерская-опыт (своими глазами видно, почему индекс — плохой `key`) и сам Формуляр. Все вопросы и Малое испытание — обязательная часть итогового испытания, вдобавок к заданиям пещер. Всё — внутри мира пещер: никаких надписей «из реальности».
 
 **Чему научат пещеры.** Путеводитель с оглавлением всей игры: что будешь уметь, какие темы в какой пещере и на
 какие вопросы ответишь. Открывается с карты пещер и из свитков.
@@ -141,19 +136,13 @@ from project setup to patterns — defeat a monster guardian in each, and your t
 | Tasks of eight kinds, difficulty ★ → ★★★                                | 144                                |
 | Glossary terms with English and in-code spelling                        | 117                                |
 | Theory scrolls: cave summaries + the full guide                         | 18 + 20 sections                   |
-| The teacher's questions with model answers (the Count's Chair)          | 20 + a 5-question mini-test        |
+| Formular's Register questions with answers (the Count's Scriptorium)    | 20 + the 5-question Small Trial    |
 
 **How learning works.** Every cave is a path: warm-up → lesson → spell → practice (8 tasks) → "Explain it to the
 bat" → break → summary. The guardian is defeated when **5 of 8** practice tasks are correct. Mistakes go to the
 "crypt of repetition" and come back on a Leitner schedule.
 
-**The teacher's questions — the Count's Chair.** The questions asked in class (what props are and how to pass
-them, whether you may change them, `children`, `map()` and `key`, conditional rendering) are woven into the game:
-a path through the caves leads to each one — defeat the guardians on the way and the question opens. Caves and
-scrolls have a "They will ask in class" block with a model answer, and the Count's Chair has theory on five
-topics, a hands-on workshop (you see with your own eyes why an index is a bad `key`) and a new guardian, the
-ghoul archivist Formular. All the questions and the mini-test are a required part of the final trial, on top of
-the cave tasks.
+**Formular's Register — the Count's Scriptorium.** The Count's archivist, the ghoul Formular, asks every apprentice questions and writes the answers into the Register: what props are and how to pass them, whether you may change them, `children`, `map()` and `key`, conditional rendering. A path through the caves leads to each question — defeat the guardians on the way and it opens. Caves and scrolls have a "Formular will ask" block with a model answer, and the Count's Scriptorium has theory on five topics, a hands-on workshop (you see with your own eyes why an index is a bad `key`) and Formular himself. All the questions and the Small Trial are a required part of the final trial, on top of the cave tasks. Everything stays inside the world of the caves.
 
 **What the caves will teach you.** A guide with the table of contents of the whole game: what you will be able
 to do, which topics live in which cave and which questions you will answer. It opens from the cave map and the
@@ -253,11 +242,7 @@ version 2.6.0): a browser set to English opens the English game right away. Hebr
 **איך לומדים.** כל מערה היא מסלול: חימום ← שיעור ← לחש ← תרגול (8 משימות) ← «הסבר לעטלף» ← הפסקה ← סיכום.
 השומר מובס כאשר **5 מתוך 8** משימות התרגול נכונות. הטעויות עוברות ל«קריפטת החזרה» וחוזרות לפי שיטת לייטנר.
 
-**שאלות המרצה — הקתדרה של הרוזן.** השאלות שנשאלות בשיעור (מה הם props ואיך מעבירים אותם, האם מותר לשנות
-אותם, `children`, ‏`map()` ו‑`key`, רינדור מותנה) שזורות במשחק: לכל שאלה מובילה דרך דרך המערות — מביסים את
-השומרים בדרך, והשאלה נפתחת. במערות ובמגילות יש קטע «ישאלו בשיעור» עם תשובה מוכנה, ובקתדרה של הרוזן — תיאוריה
-בחמישה נושאים, סדנה מעשית (רואים במו עיניכם למה אינדקס הוא `key` גרוע) ושומר חדש, הגול‑ארכיבר פורמולר. כל
-השאלות והמבחן הקצר הם חלק מחייב מהמבחן המסכם, בנוסף למשימות המערות.
+**הפנקס של פורמוליאר — הסקריפטוריום של הרוזן.** הארכיבר של הרוזן, הגול פורמוליאר, שואל כל תלמיד שאלות ורושם את התשובות בפנקס: מה הם props ואיך מעבירים אותם, האם מותר לשנות אותם, `children`, ‏`map()` ו‑`key`, רינדור מותנה. לכל שאלה מובילה דרך דרך המערות — מביסים את השומרים בדרך, והשאלה נפתחת. במערות ובמגילות יש קטע «פורמוליאר ישאל» עם תשובה מוכנה, ובסקריפטוריום של הרוזן — תיאוריה בחמישה נושאים, סדנה מעשית (רואים במו עיניכם למה אינדקס הוא `key` גרוע) ופורמוליאר עצמו. כל השאלות והמבחן הקטן הם חלק מחייב מהמבחן המסכם, בנוסף למשימות המערות. הכול נשאר בתוך עולם המערות.
 
 **מה המערות ילמדו אתכם.** מדריך עם תוכן העניינים של כל המשחק: מה תדעו לעשות, אילו נושאים בכל מערה ועל אילו
 שאלות תענו. נפתח ממפת המערות ומהמגילות.
@@ -351,13 +336,7 @@ tipos · 117 términos en el glosario · pergaminos de teoría: 18 resúmenes y 
 «Explícaselo al murciélago» → recreo → resumen. El guardián cae cuando aciertas **5 de 8** tareas de la práctica.
 Los errores van a la «cripta de repaso» y vuelven según el sistema de Leitner.
 
-**Las preguntas del profesor — la Cátedra del Conde.** Las preguntas que se hacen en clase (qué son las props y
-cómo se pasan, si se pueden cambiar, `children`, `map()` y `key`, el renderizado condicional) están tejidas en el
-juego: a cada una lleva un camino por las cuevas; vence a los guardianes del camino y la pregunta se abre. Las
-cuevas y los pergaminos tienen el bloque «Te lo preguntarán en clase» con una respuesta modelo, y la Cátedra del
-Conde tiene teoría en cinco temas, un taller práctico (ves con tus propios ojos por qué un índice es un mal
-`key`) y un guardián nuevo, el gul archivero Formular. Todas las preguntas y el minitest son parte obligatoria
-de la prueba final, además de las tareas de las cuevas.
+**El Registro de Formular — el Scriptorium del Conde.** El archivero del Conde, el gul Formular, hace preguntas a cada aprendiz y anota las respuestas en el Registro: qué son las props y cómo se pasan, si se pueden cambiar, `children`, `map()` y `key`, el renderizado condicional. A cada pregunta lleva un camino por las cuevas; vence a los guardianes del camino y la pregunta se abre. Las cuevas y los pergaminos tienen el bloque «Formular preguntará» con una respuesta modelo, y el Scriptorium del Conde tiene teoría en cinco temas, un taller práctico (ves con tus propios ojos por qué un índice es un mal `key`) y al propio Formular. Todas las preguntas y la prueba menor son parte obligatoria de la prueba final, además de las tareas de las cuevas. Todo queda dentro del mundo de las cuevas.
 
 **Qué te enseñarán las cuevas.** Una guía con el índice de todo el juego: qué sabrás hacer, qué temas hay en cada
 cueva y qué preguntas sabrás responder. Se abre desde el mapa de cuevas y desde los pergaminos.
@@ -454,13 +433,7 @@ pas faire » · 144 exercices de huit types · 117 termes dans le glossaire · 
 « Explique-le à la chauve-souris » → pause → bilan. Le gardien est vaincu quand **5 exercices sur 8** sont justes.
 Les erreurs partent dans la « crypte de révision » et reviennent selon le système de Leitner.
 
-**Les questions du professeur — la Chaire du Comte.** Les questions posées en cours (ce que sont les props et
-comment les passer, peut-on les modifier, `children`, `map()` et `key`, le rendu conditionnel) sont tissées dans
-le jeu : un chemin à travers les grottes mène à chacune — battez les gardiens du chemin et la question s'ouvre.
-Les grottes et les parchemins ont un bloc « On vous le demandera en cours » avec une réponse modèle, et la Chaire
-du Comte propose la théorie en cinq thèmes, un atelier pratique (on voit de ses propres yeux pourquoi un index
-est une mauvaise `key`) et un nouveau gardien, la goule archiviste Formular. Toutes les questions et le
-mini-test sont une partie obligatoire de l'épreuve finale, en plus des exercices des grottes.
+**Le Registre de Formular — le Scriptorium du Comte.** L’archiviste du Comte, la goule Formular, pose des questions à chaque apprenti et inscrit les réponses dans le Registre : ce que sont les props et comment les passer, peut-on les modifier, `children`, `map()` et `key`, le rendu conditionnel. Un chemin à travers les grottes mène à chaque question — battez les gardiens du chemin et elle s’ouvre. Les grottes et les parchemins ont un bloc « Formular demandera » avec une réponse modèle, et le Scriptorium du Comte propose la théorie en cinq thèmes, un atelier pratique (on voit de ses propres yeux pourquoi un index est une mauvaise `key`) et Formular lui-même. Toutes les questions et la petite épreuve sont une partie obligatoire de l’épreuve finale, en plus des exercices des grottes. Tout reste dans le monde des grottes.
 
 **Ce que les grottes vous apprendront.** Un guide avec la table des matières de tout le jeu : ce que vous saurez
 faire, quels thèmes dans quelle grotte et à quelles questions vous saurez répondre. Il s'ouvre depuis la carte

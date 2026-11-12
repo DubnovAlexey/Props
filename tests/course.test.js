@@ -1,4 +1,4 @@
-// Вопросы преподавателя и Кафедра Графа (src/content/course.js, src/utils/course.js).
+// Вопросы Реестра и Скрипторий Графа (src/content/course.js, src/utils/course.js).
 // Решение владельца (12.11.2026): вопросы — обязательная часть, «не для замены, а для дополнения»;
 // к каждому ведёт путь через пещеры (это игра, а не учебник). Тесты следят, чтобы вопросы не потерялись
 // из испытания, путь вёл через существующие пещеры от простого к сложному, а задания проверялись верно.
@@ -27,7 +27,7 @@ function strings(value) {
   return [];
 }
 
-describe('вопросы преподавателя: содержимое', () => {
+describe('вопросы Реестра: содержимое', () => {
   it('у каждого вопроса есть текст, ответ, пещера и путь через существующие пещеры', () => {
     for (const [index, item] of COURSE.questions.entries()) {
       const where = `вопрос ${index + 1}`;
@@ -61,7 +61,7 @@ describe('вопросы преподавателя: содержимое', () =
     expect(texts.filter((text) => parseInline(text).some((token) => token.type === 'bold' && token.value.includes('[[')))).toEqual([]);
   });
 
-  it('у хозяина Кафедры есть портрет и все поля, как у хозяев пещер', () => {
+  it('у хозяина Скриптория есть портрет и все поля, как у хозяев пещер', () => {
     expect(GUARDIANS.course).toBeDefined();
     for (const field of ['name', 'kind', 'threat', 'defeat', 'why', 'bio']) expect(COURSE.guardian[field], field).toBeTruthy();
     const cave = courseAsCave(COURSE);
@@ -69,16 +69,16 @@ describe('вопросы преподавателя: содержимое', () =
     expect(cave.story.guardian).toBe(COURSE.guardian);
   });
 
-  it('мастерская: у учеников уникальные id, есть и пауза, и несовершеннолетний', () => {
-    const { students } = COURSE.lab;
+  it('мастерская: у учеников уникальные id, есть и спящий в гробу, и слишком юный для обращения', () => {
+    const { apprentices: students } = COURSE.lab;
     expect(new Set(students.map((student) => student.id)).size).toBe(students.length);
     expect(students.some((student) => !student.isActive)).toBe(true);
     expect(students.some((student) => student.age < 18)).toBe(true);
   });
 });
 
-describe('вопросы преподавателя: задания', () => {
-  it('заданий столько же, сколько вопросов и мини-теста; id уникальны и не совпадают с заданиями пещер', () => {
+describe('вопросы Реестра: задания', () => {
+  it('заданий столько же, сколько вопросов и Малого испытания; id уникальны и не совпадают с заданиями пещер', () => {
     expect(TASKS).toHaveLength(COURSE.questions.length + COURSE.miniTest.length);
     const ids = TASKS.map((task) => task.id);
     expect(new Set(ids).size).toBe(ids.length);
@@ -94,7 +94,7 @@ describe('вопросы преподавателя: задания', () => {
     expect(checkTask(task, wrongValue(task))).toBe(false);
   });
 
-  it('после ответа на вопрос игрок видит, как отвечать преподавателю', () => {
+  it('после ответа на вопрос игрок видит, как отвечать Формуляру', () => {
     const task = TASKS[0];
     expect(task.explain).toContain(`**${COURSE.answerLabel}**`);
     for (const line of COURSE.questions[0].answer) expect(task.explain).toContain(line);
@@ -124,7 +124,7 @@ describe('путь к вопросу и вопросы пещеры', () => {
     expect(questionsOfCave(COURSE, 'setup')).toEqual([]);
   });
 
-  it('ссылка на вопрос: #course-q7 открывает Кафедру на седьмом вопросе', () => {
+  it('ссылка на вопрос: #course-q7 открывает Скрипторий на седьмом вопросе', () => {
     expect(parseHash('#course-q7')).toEqual({ path: 'course', parts: ['course'], query: { question: '7' } });
     expect(parseHash('#course')).toEqual({ path: 'course', parts: ['course'], query: {} });
     expect(parseHash('#learn')).toEqual({ path: 'learn', parts: ['learn'], query: {} });
@@ -132,7 +132,7 @@ describe('путь к вопросу и вопросы пещеры', () => {
 });
 
 describe('испытание Графа: обязательная часть', () => {
-  it('все вопросы преподавателя идут в конце, по порядку, вдобавок к заданиям пещер', () => {
+  it('все вопросы Реестра идут в конце, по порядку, вдобавок к заданиям пещер', () => {
     const ids = buildExam(CHAPTERS, ALL_TASKS, TASKS);
     expect(ids).toHaveLength(CHAPTERS.length + 2 + TASKS.length);
     expect(ids.slice(-TASKS.length)).toEqual(TASKS.map((task) => task.id));

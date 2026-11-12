@@ -1,37 +1,38 @@
-// English overlay for the teacher's questions and the Count's Chair (original: src/content/course.js).
+// English overlay for the Register of Formular and the Count's Scriptorium (original: src/content/course.js).
 // Same shape as the original, text only and in the same order: which answer is right, the paths through the
-// caves and the number of code lines come from the original.
+// caves and the number of code lines come from the original. Everything stays inside the world of the caves:
+// no teachers, classes or students — the Count's apprentices and his archivist.
 // Code examples in strings are inspected by IntelliJ as real code — false positives
-// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute
+// noinspection JSUnusedLocalSymbols,HtmlRequiredAltAttribute,HtmlUnknownTarget,HtmlUnknownAttribute,UnnecessaryLabelJS,CommaExpressionJS,WithStatementJS,UnreachableCodeJS,BadExpressionStatementJS,JSXUnresolvedComponent,JSUnresolvedReference
 export const COURSE = {
-  title: 'The teacher’s questions',
-  cave: 'The Count’s Chair',
-  goal: 'The teacher’s questions on props, lists and conditions, plus a mini-test — the required part of the trial',
-  answerLabel: 'How to answer the teacher:',
+  title: 'The Register of Formular',
+  cave: 'The Count’s Scriptorium',
+  goal: 'The Register’s questions on props, lists and conditions, plus the Small Trial — the required part of the Count’s Trial',
+  answerLabel: 'How to answer Formular:',
   intro: [
-    'The teacher asks these questions in class: what props are and how to pass them, whether you may change them, what children is, how to draw lists with `map()` and `key`, and how to show different things depending on a condition. Answer with confidence and in your own words.',
-    'A path through the caves leads to every question — from simple to complex: defeat the guardians on the way and the question opens. Here every question has a model answer, a code example and the cave where the topic is covered in depth. The questions are **required**: all of them and the mini-test await you at the end of the Count’s Trial — on top of the cave tasks, not instead of them.',
+    'The archivist Formular asks these questions of every apprentice of the Count and writes the answers into the Register: what props are and how to pass them, whether you may change them, what children is, how to draw lists with `map()` and `key`, and how to show different things depending on a condition. Answer with confidence and in your own words — Formular smells a memorised phrase the way he smells blood.',
+    'A path through the caves leads to every question — from simple to complex: defeat the guardians on the way and the question opens. Here every question has a model answer, a code example and the cave where the topic is covered in depth. The questions are **required**: all of them and the Small Trial await you at the end of the Count’s Trial — on top of the cave tasks, not instead of them.',
   ],
   story: {
     intro:
-      'The Count takes a battered leather-bound ledger from the shelf. “Every apprentice of mine answers the teacher’s questions. Even vampires sit exams — I sat mine by candlelight. My archivist will ask strictly, but first we will pick every question apart, bone by bone.”',
+      'The Count takes a battered leather-bound ledger from the shelf. “This is the Register of my apprentices. Everyone who descends into the caves answers its questions. Even vampires sit exams — I sat mine by candlelight. My archivist will ask strictly, but first we will pick every question apart, bone by bone.”',
     outro:
-      '“If you know the answers, tell them to me in the lair. Every single one, and the mini-test. The trial does not end without them.”',
+      '“If you know the answers, tell them to me in the lair. Every single one, and the Small Trial. The trial does not end without them.”',
   },
   guardian: {
     name: 'Formular',
     kind: 'ghoul archivist',
-    threat: 'Answer every question and I will enter you in the register. Fail — and I will enter you in the obituaries.',
-    defeat: 'The archivist slams the ledger shut and puts a bloody tick next to your name.',
-    why: 'The archivist keeps the register of the Count’s apprentices and holds their oral exam — no cheat sheets, no hints.',
-    bio: 'In life he examined students and never once gave top marks — he did not live long enough. Now he records the answers in blood: ink, he says, fades, but blood never does.',
+    threat: 'Answer every question and I will enter you in the Register. Fail — and I will enter you in the obituaries.',
+    defeat: 'The archivist slams the Register shut and puts a bloody tick next to your name.',
+    why: 'The archivist keeps the Register of the Count’s apprentices and holds their oral exam — no cheat sheets, no hints.',
+    bio: 'In life he examined others and never once gave top marks — he did not live long enough. Now he records the answers in blood: ink, he says, fades, but blood never does.',
   },
   blocks: [
     {
       title: 'What props are and why we need them',
       body: [
         'Imagine a parcel: the parent puts data into it and sends it to the child. The parcel is the [[props|props]] object. The child opens it and draws what is inside.',
-        'A component is an ordinary JavaScript function, and props are its argument. That is why one function `StudentCard` draws any student: whatever data arrives, that is the card you get.',
+        'A component is an ordinary JavaScript function, and props are its argument. That is why one function `ApprenticeCard` draws any apprentice of the Count: whatever data arrives, that is the card you get.',
       ],
       scheme: {
         left: {
@@ -46,7 +47,7 @@ export const COURSE = {
         right: {
           title: 'A component',
           items: [
-            'props go as attributes: `<StudentCard age={25} />`',
+            'props go as attributes: `<ApprenticeCard age={25} />`',
             'React calls it, not you',
             'returns markup (JSX)',
             'one argument — the props object',
@@ -58,32 +59,32 @@ export const COURSE = {
       title: 'How to pass a string, a number, a boolean, an object',
       body: [
         'The main rule: **quotes are only for strings**. Everything else — a number, true / false, an object, an array, a function, a variable — goes in curly braces: JavaScript lives inside them.',
-        'The most common beginner mistake is `age="25"`: the number turns into a string, and `"25" + 1` gives `"251"`. The second is `isActive="false"`: a non-empty string is truthy, and a paused student suddenly shows as “Active”.',
+        'The most common beginner mistake is `age="25"`: the number turns into a string, and `"25" + 1` gives `"251"`. The second is `isActive="false"`: a non-empty string is truthy, and an apprentice asleep in his coffin suddenly shows as “Awake”.',
       ],
-      code: '// a string — in quotes\n<StudentCard name="Anna Cohen" />\n\n// a number — in curly braces\n<StudentCard age={25} />\n\n// true — just the name, false — only in braces\n<StatusBadge isActive />\n<StatusBadge isActive={false} />\n\n// an object — from a variable or right in JSX (double braces)\n<StudentCard student={student} />\n<p style={{ color: "green" }}>Active</p>',
+      code: '// a string — in quotes\n<ApprenticeCard name="Agnes Morrow" />\n\n// a number — in curly braces\n<ApprenticeCard age={25} />\n\n// true — just the name, false — only in braces\n<StatusBadge isActive />\n<StatusBadge isActive={false} />\n\n// an object — from a variable or right in JSX (double braces)\n<ApprenticeCard apprentice={apprentice} />\n<p style={{ color: "crimson" }}>Awake</p>',
     },
     {
       title: 'How to get props, whether you may change them, and what children is',
       body: [
-        'Inside a component props are an ordinary object. Read it with a dot (`props.student`) or unpack it right in the parameters with [[destructuring|destructuring]]: `function StudentCard({ student })`.',
+        'Inside a component props are an ordinary object. Read it with a dot (`props.apprentice`) or unpack it right in the parameters with [[destructuring|destructuring]]: `function ApprenticeCard({ apprentice })`.',
         'You may not change props — they are [[read-only|read-only]]: the data belongs to the parent. And everything between a component’s tags arrives in a special prop, [[children|children]].',
       ],
       scheme: {
         left: {
           title: 'Not allowed',
-          items: ['`props.student = …`', '`student.isActive = false` inside the card', 'expecting the parent to see the change'],
+          items: ['`props.apprentice = …`', '`apprentice.isActive = false` inside the card', 'expecting the parent to see the change'],
         },
         right: {
           title: 'Allowed',
-          items: ['read: `props.student.name`', 'unpack: `({ student })`', 'compute something new: `const isMinor = age < 18`'],
+          items: ['read: `props.apprentice.name`', 'unpack: `({ apprentice })`', 'compute something new: `const isYoung = age < 18`'],
         },
       },
     },
     {
       title: 'Lists: map() and key',
       body: [
-        '`map()` walks through an array and turns every element into a new one — that is how an array of students becomes an array of cards. The original array does not change: `map` returns **a new array of the same length**.',
-        'Every card made by `map` needs a [[key|key]] — a permanent label. With it React understands who was added, removed or moved. An array index is a poor label: it belongs to a place in the list, not to a student. In the Workshop below you can see it with your own eyes.',
+        '`map()` walks through an array and turns every element into a new one — that is how an array of apprentices becomes an array of cards. The original array does not change: `map` returns **a new array of the same length**.',
+        'Every card made by `map` needs a [[key|key]] — a permanent label. With it React understands who was entered, struck out or moved. An array index is a poor label: it belongs to a place in the list, not to an apprentice. In the Workshop below you can see it with your own eyes.',
       ],
       scheme: {
         title: 'How an array becomes a list',
@@ -98,16 +99,16 @@ export const COURSE = {
       title: 'Conditional rendering: if, ? :, && and an empty list',
       body: [
         '[[conditional|Conditional rendering]] — a component shows different things depending on the data. There are three tools, each with its own place:',
-        '- `if` with an early `return` — when the component’s whole answer is different: an empty list → “The list is empty”. You cannot write `if` inside `{}` in JSX — only expressions go there.',
-        '- `? :` — pick one of two: “Active” or “Paused”, the class `card` or `card--paused`.',
-        '- `&&` — show something or nothing: the “Minor student” note when `age < 18`. Put a real true / false on the left — otherwise a `0` crawls onto the screen.',
+        '- `if` with an early `return` — when the component’s whole answer is different: an empty Register → “The Register is empty”. You cannot write `if` inside `{}` in JSX — only expressions go there.',
+        '- `? :` — pick one of two: “Awake” or “Asleep in the coffin”, the class `card` or `card--asleep`.',
+        '- `&&` — show something or nothing: the note “Too young to be turned” when `age < 18`. Put a real true / false on the left — otherwise a `0` crawls onto the screen.',
       ],
       scheme: {
-        title: 'StudentList and an empty array',
+        title: 'ApprenticeList and an empty array',
         steps: [
-          { title: 'StudentList gets the array' },
+          { title: 'ApprenticeList gets the array' },
           { title: 'Check the length' },
-          { title: 'Empty — early return', code: 'return <p>The list is empty</p>;', arrow: 'else' },
+          { title: 'Empty — early return', code: 'return <p>The Register is empty</p>;', arrow: 'else' },
           { title: 'Not empty — map() and cards' },
         ],
       },
@@ -116,53 +117,53 @@ export const COURSE = {
   lab: {
     title: 'Workshop: touch the props with your own hands',
     intro:
-      'Two halves: the data (the `students` array) and the screen — what React draws from it. Switch `isActive` on and off, change the age, remove apprentices — and watch how the cards change and which line of code is responsible.',
-    dataTitle: 'Data: the students array',
-    screenTitle: 'The register of the Count’s apprentices',
-    viewTitle: 'Screen: <StudentList students={students} />',
+      'Two halves: the data (the `apprentices` array) and the screen — what React draws from it. Wake the apprentices and lay them in their coffins (`isActive`), change their age, strike them out of the Register — and watch how the cards change and which line of code is responsible.',
+    dataTitle: 'Data: the apprentices array',
+    screenTitle: 'The Register of the Count’s apprentices',
+    viewTitle: 'Screen: <ApprenticeList apprentices={apprentices} />',
     older: 'Age of {name} +1',
     younger: 'Age of {name} −1',
-    remove: 'Remove {name}',
-    clear: 'Remove everyone',
+    remove: 'Strike out {name}',
+    clear: 'Strike out everyone',
     restore: 'Bring everyone back',
-    total: 'Students in total: {n}',
-    empty: 'The list is empty',
-    activeBadge: 'Active',
-    pausedBadge: 'Paused',
+    total: 'Apprentices in the Register: {n}',
+    empty: 'The Register is empty',
+    activeBadge: 'Awake',
+    pausedBadge: 'Asleep in the coffin',
     ageLine: 'Age: {age}',
-    groupLine: 'Group: {group}',
-    minor: 'Minor student',
+    tierLine: 'Tier: {tier}',
+    minor: 'Too young to be turned',
     notesTitle: 'What just worked',
     notes: {
-      empty: 'An early `return`: `students.length === 0` — “The list is empty” instead of the list.',
-      list: '`students.map(…)` turned the students ({n}) into as many cards, each with `key={student.id}`.',
+      empty: 'An early `return`: `apprentices.length === 0` — “The Register is empty” instead of the list.',
+      list: '`apprentices.map(…)` turned the apprentices ({n}) into as many cards, each with `key={apprentice.id}`.',
       paused:
-        '`isActive={false}` for {name}: `StatusBadge` picked “Paused” with the ternary operator, and the card got the class `card--paused`.',
-      minor: '`{age < 18 && …}`: {name} is {age} — the note appeared by itself.',
+        '`isActive={false}` for {name}: `StatusBadge` picked “Asleep in the coffin” with the ternary operator, and the card got the class `card--asleep`.',
+      minor: '`{age < 18 && …}`: {name} is only {age} — the note appeared by itself.',
     },
     keyTitle: 'Why an index is a bad key',
     keyIntro:
-      'Write a note for every student in both lists — for example, “class rep” or “owes an essay”. Then remove the first student and see who ends up with the notes.',
+      'Write a note for every apprentice in both lists — for example, “bites” or “afraid of garlic”. Then strike out the first one and see who ends up with the notes.',
     notePlaceholder: 'a note about {name}',
-    removeFirst: 'Remove the first',
+    removeFirst: 'Strike out the first',
     reset: 'Start over',
     passed: 'Right now the card of {name} received:',
     keyVerdict:
-      'On the left the notes “moved” to other students: React compared the elements by indexes 0, 1, 2 and decided the last one had gone. On the right everything is in place: the key is the student’s id, and React knows exactly who was removed.',
+      'On the left the notes “moved” to other apprentices: React compared the elements by indexes 0, 1, 2 and decided the last one had gone. On the right everything is in place: the key is the apprentice’s id, and React knows exactly who was struck out.',
   },
   questions: [
     {
       question: 'What are props?',
       answer: [
         '[[props|Props]] (properties) are the data a parent component passes to a child. In JSX they are written as attributes, and the component receives them as one object — the first and only argument of its function.',
-        'Example: in `<StudentCard student={anna} />` the prop `student` is an object with the student’s data.',
+        'Example: in `<ApprenticeCard apprentice={agnes} />` the prop `apprentice` is an object with the apprentice’s data.',
       ],
       task: {
         question: 'What will the component receive?',
         options: [
-          { text: 'One props object: `{ name: "Anna", age: 25 }`' },
+          { text: 'One props object: `{ name: "Agnes", age: 25 }`' },
           {
-            text: 'Two separate arguments: `"Anna"` and `25`',
+            text: 'Two separate arguments: `"Agnes"` and `25`',
             why: 'A component receives exactly one argument — an object with all the props.',
           },
           {
@@ -180,18 +181,18 @@ export const COURSE = {
     {
       question: 'What are props for?',
       answer: [
-        'So that one and the same component can show different data. A component is a template, and props are what fills it: one `StudentCard` and five students — five different cards.',
+        'So that one and the same component can show different data. A component is a template, and props are what fills it: one `ApprenticeCard` and five apprentices — five different cards.',
         'Props also connect components to each other: data flows from top to bottom, from the parent to the children.',
       ],
       task: {
-        question: 'Why does `StudentCard` get the student through props instead of keeping the data inside?',
+        question: 'Why does `ApprenticeCard` get the apprentice through props instead of keeping the data inside?',
         options: [
-          { text: 'So that one card can show any student: the data comes from outside' },
+          { text: 'So that one card can show any apprentice: the data comes from outside' },
           {
             text: 'It makes the browser faster',
             why: 'Speed has nothing to do with it: the point is for one component to work with different data.',
           },
-          { text: 'So that the card can change the student’s data', why: 'Props are read-only: the child does not change them.' },
+          { text: 'So that the card can change the apprentice’s data', why: 'Props are read-only: the child does not change them.' },
         ],
         explain: 'A component is a template, props are its filling. One component + different props = different cards.',
       },
@@ -200,15 +201,15 @@ export const COURSE = {
       question: 'How are props similar to function arguments?',
       answer: [
         'A component is an ordinary function, and props are its argument. Just as `sum(a, b)` counts differently for different `a` and `b`, a component draws differently for different props.',
-        'The differences: there is one argument — an object with all the props; we pass it not by calling `StudentCard(…)` but with attributes in JSX — React calls the function itself; and you may not change props inside.',
+        'The differences: there is one argument — an object with all the props; we pass it not by calling `ApprenticeCard(…)` but with attributes in JSX — React calls the function itself; and you may not change props inside.',
       ],
-      code: "function greet(name) {\n  return 'Hello, ' + name;\n}\ngreet('Anna');\n\nfunction Greeting({ name }) {\n  return <p>Hello, {name}</p>;\n}\n<Greeting name=\"Anna\" />",
+      code: "function greet(name) {\n  return 'Welcome to the caves, ' + name;\n}\ngreet('Agnes');\n\nfunction Greeting({ name }) {\n  return <p>Welcome to the caves, {name}</p>;\n}\n<Greeting name=\"Agnes\" />",
       task: {
         question: 'What is true about props and function arguments?',
         options: [
           { text: 'A component is a function, props are its only argument-object, and React calls the function' },
           {
-            text: 'Every prop is a separate argument: `StudentCard(name, age)`',
+            text: 'Every prop is a separate argument: `ApprenticeCard(name, age)`',
             why: 'There is one argument — an object holding all the props.',
           },
           { text: 'Props are global variables that every component sees', why: 'Only the component they were passed to sees its props.' },
@@ -220,13 +221,13 @@ export const COURSE = {
     {
       question: 'How do you pass a string?',
       answer: [
-        'A string is written in quotes, like an HTML attribute: `group="React Basics"`. Curly braces work too — `group={"React Basics"}` — but quotes are shorter.',
-        'A string from a variable — only in curly braces: `group={groupName}`. In quotes, `"groupName"` would pass the word groupName itself.',
+        'A string is written in quotes, like an HTML attribute: `tier="Lower tier"`. Curly braces work too — `tier={"Lower tier"}` — but quotes are shorter.',
+        'A string from a variable — only in curly braces: `tier={tierName}`. In quotes, `"tierName"` would pass the word tierName itself.',
       ],
       task: {
-        question: 'Pass the name as a string and the group from the variable `groupName`.',
+        question: 'Pass the name as a string and the tier from the variable `tierName`.',
         explain:
-          'A string literal goes in quotes, a variable in curly braces. `{Anna Cohen}` is an error: without quotes it is not a string but two unknown words.',
+          'A string literal goes in quotes, a variable in curly braces. `{Agnes Morrow}` is an error: without quotes it is not a string but two unknown words.',
       },
     },
     {
@@ -246,10 +247,10 @@ export const COURSE = {
         'The trap: `isActive="false"` is a non-empty string, and in a condition it counts as truthy.',
       ],
       task: {
-        question: 'The student is on a break. How do you pass that to `StatusBadge`?',
+        question: 'The apprentice is asleep in her coffin. How do you pass that to `StatusBadge`?',
         options: [
           {},
-          { why: 'That is the string "false". A non-empty string is truthy — the badge will show “Active”.' },
+          { why: 'That is the string "false". A non-empty string is truthy — the badge will show “Awake”.' },
           { text: '`isActive` (no value)', why: 'An attribute without a value means true.' },
         ],
         explain: 'A boolean goes in curly braces. For true there is a short form: just the attribute name.',
@@ -258,11 +259,11 @@ export const COURSE = {
     {
       question: 'How do you pass an object?',
       answer: [
-        'An object goes in curly braces. If it sits in a variable: `student={student}`. If we write the object right in JSX, the braces are double: the outer ones mean “JavaScript here”, the inner ones are the object itself: `style={{ color: "green" }}`.',
-        'You can also “pour out” all of an object’s fields as separate props: `<StudentCard {...student} />`.',
+        'An object goes in curly braces. If it sits in a variable: `apprentice={apprentice}`. If we write the object right in JSX, the braces are double: the outer ones mean “JavaScript here”, the inner ones are the object itself: `style={{ color: "crimson" }}`.',
+        'You can also “pour out” all of an object’s fields as separate props: `<ApprenticeCard {...apprentice} />`.',
       ],
       task: {
-        question: 'What do you write instead of `___` to pass the object `{ id: 1, name: "Anna" }` right in JSX?',
+        question: 'What do you write instead of `___` to pass the object `{ id: 1, name: "Agnes" }` right in JSX?',
         placeholder: 'e.g. {…}',
         explain:
           'The outer braces mean “JavaScript here”, the inner ones are an object literal. Double braces are not special syntax, just two different braces in a row.',
@@ -271,29 +272,30 @@ export const COURSE = {
     {
       question: 'How do you get props inside a component?',
       answer: [
-        'Two ways. The first is the `props` parameter and a dot: `props.student.name`. The second, handier, is [[destructuring|destructuring]] right in the parameters: `function StudentCard({ student })`.',
+        'Two ways. The first is the `props` parameter and a dot: `props.apprentice.name`. The second, handier, is [[destructuring|destructuring]] right in the parameters: `function ApprenticeCard({ apprentice })`.',
         'Inside a component props are an ordinary object: read it like any other object.',
       ],
-      code: '// 1. through the props object\nfunction StudentCard(props) {\n  return <h3>{props.student.name}</h3>;\n}\n\n// 2. by destructuring in the parameters\nfunction StudentCard({ student }) {\n  return <h3>{student.name}</h3>;\n}',
+      code: '// 1. through the props object\nfunction ApprenticeCard(props) {\n  return <h3>{props.apprentice.name}</h3>;\n}\n\n// 2. by destructuring in the parameters\nfunction ApprenticeCard({ apprentice }) {\n  return <h3>{apprentice.name}</h3>;\n}',
       task: {
-        question: 'The card was given `<StudentCard student={anna} />`. How do you get the name inside `function StudentCard(props)`?',
+        question:
+          'The card was given `<ApprenticeCard apprentice={agnes} />`. How do you get the name inside `function ApprenticeCard(props)`?',
         options: [
           {},
-          { why: 'Props hold only `student`, and the name is inside it.' },
-          { why: 'Without destructuring there is no variable student — only props.' },
+          { why: 'Props hold only `apprentice`, and the name is inside it.' },
+          { why: 'Without destructuring there is no variable apprentice — only props.' },
           { why: 'this.props comes from old class components. In a function, props are a parameter.' },
         ],
-        explain: 'Props are an object: `props.student` is the student, `props.student.name` is their name.',
+        explain: 'Props are an object: `props.apprentice` is the apprentice, `props.apprentice.name` is their name.',
       },
     },
     {
       question: 'What is destructuring?',
       answer: [
-        '[[destructuring|Destructuring]] is a short way to say “take the object’s fields out into variables”. Instead of `const name = student.name;` and `const age = student.age;` we write one line: `const { name, age } = student;`.',
-        'In React it is most often done right in the component’s parameters: `function StudentCard({ student })`. You can set a default value: `{ group = "No group" }`.',
+        '[[destructuring|Destructuring]] is a short way to say “take the object’s fields out into variables”. Instead of `const name = apprentice.name;` and `const age = apprentice.age;` we write one line: `const { name, age } = apprentice;`.',
+        'In React it is most often done right in the component’s parameters: `function ApprenticeCard({ apprentice })`. You can set a default value: `{ tier = "Lower tier" }`.',
       ],
       task: {
-        question: 'What do you write instead of `___` to get `name` and `age` out of `student`?',
+        question: 'What do you write instead of `___` to get `name` and `age` out of `apprentice`?',
         placeholder: 'e.g. { … }',
         explain: 'Curly braces to the left of `=` mean “unpack”: the variables get the values of the fields with the same names.',
       },
@@ -305,7 +307,7 @@ export const COURSE = {
         'Need a different value? Create a new variable instead of editing the prop.',
       ],
       task: {
-        statement: '`StudentCard` may write `student.isActive = false` to put a student on a break.',
+        statement: '`ApprenticeCard` may write `apprentice.isActive = false` to lay the apprentice in his coffin.',
         explain:
           'Props are read-only. The data must be changed by its owner — the parent, and the child can only ask it to do so through a callback function.',
       },
@@ -313,16 +315,16 @@ export const COURSE = {
     {
       question: 'What is children?',
       answer: [
-        '[[children|children]] is a special prop: everything written between a component’s opening and closing tags. In `<Header>Student management system</Header>` the text lands in `props.children`.',
+        '[[children|children]] is a special prop: everything written between a component’s opening and closing tags. In `<Header>Apprentices of the Propsula caves</Header>` the text lands in `props.children`.',
         'That is how “frames” are made: a wrapper component draws the decoration, and the content is passed to it from outside.',
       ],
-      code: 'function Header({ title, children }) {\n  return (\n    <header>\n      <h1>{title}</h1>\n      <p>{children}</p>\n    </header>\n  );\n}\n\n<Header title="STUDENT CRM">Student management system</Header>',
+      code: 'function Header({ title, children }) {\n  return (\n    <header>\n      <h1>{title}</h1>\n      <p>{children}</p>\n    </header>\n  );\n}\n\n<Header title="THE COUNT’S REGISTER">Apprentices of the Propsula caves</Header>',
       task: {
         question: 'What will arrive in `children`?',
-        code: '<Header title="STUDENT CRM">Student management system</Header>',
+        code: '<Header title="THE COUNT’S REGISTER">Apprentices of the Propsula caves</Header>',
         options: [
-          { text: 'The text “Student management system”' },
-          { text: 'The text “STUDENT CRM”', why: 'That is the title prop — it is written as an attribute.' },
+          { text: 'The text “Apprentices of the Propsula caves”' },
+          { text: 'The text “THE COUNT’S REGISTER”', why: 'That is the title prop — it is written as an attribute.' },
           {
             text: '`undefined`: children is passed as an attribute',
             why: 'children fills itself — with whatever stands between the tags.',
@@ -335,12 +337,12 @@ export const COURSE = {
       question: 'What is map() used for?',
       answer: [
         '`map()` turns every element of an array into something new. That is how React draws lists: an array of data → an array of JSX elements.',
-        '`students.map((student) => <StudentCard key={student.id} student={student} />)` — five students give five cards, and you do not have to write each one by hand.',
+        '`apprentices.map((apprentice) => <ApprenticeCard key={apprentice.id} apprentice={apprentice} />)` — five apprentices give five cards, and you do not have to write each one by hand.',
       ],
       task: {
-        question: 'Draw a card for every student.',
+        question: 'Draw a card for every apprentice.',
         explain:
-          '`forEach` returns nothing — React has nothing to draw. `map` returns a new array of elements. Each card gets its own `student`, not the whole array.',
+          '`forEach` returns nothing — React has nothing to draw. `map` returns a new array of elements. Each card gets its own `apprentice`, not the whole array.',
       },
     },
     {
@@ -349,7 +351,7 @@ export const COURSE = {
         'A new array of the same length; the original array does not change. Every element of the new array is whatever the function inside `map` returned.',
         'A common mistake: an arrow with curly braces and no `return` — then you get an array of `undefined`.',
       ],
-      code: 'const ages = students.map((s) => s.age); // [25, 28, 23, 30, 17]\n\n// ❌ curly braces without return\nstudents.map((s) => { <StudentCard student={s} />; });\n\n// ✅ round brackets — the value is returned by itself\nstudents.map((s) => <StudentCard key={s.id} student={s} />);',
+      code: 'const ages = apprentices.map((a) => a.age); // [25, 28, 23, 30, 17]\n\n// ❌ curly braces without return\napprentices.map((a) => { <ApprenticeCard apprentice={a} />; });\n\n// ✅ round brackets — the value is returned by itself\napprentices.map((a) => <ApprenticeCard key={a.id} apprentice={a} />);',
       task: {
         question: 'What does `[1, 2, 3].map((n) => n * 2)` return?',
         options: [
@@ -364,7 +366,7 @@ export const COURSE = {
     {
       question: 'What is key for?',
       answer: [
-        '[[key|key]] is a unique label of a list element. With it React tells which element is which when the list changes: what was added, removed or moved — and updates only what is needed, without mixing up the elements’ state.',
+        '[[key|key]] is a unique label of a list element. With it React tells which element is which when the list changes: who was entered, struck out or moved — and updates only what is needed, without mixing up the elements’ state.',
         'The key goes on the element right inside `map`; it must be unique among its siblings. The best key is an id from the data.',
       ],
       task: {
@@ -375,28 +377,28 @@ export const COURSE = {
     {
       question: 'Why is it unwise to use the array index as a key?',
       answer: [
-        'An index is a place in the list, not the element itself. Remove the first student or sort the list — the indexes shift, and React decides that the elements with the old keys are the same ones. It mixes them up: typed text, checkboxes and other state “move” to someone else’s row.',
+        'An index is a place in the list, not the element itself. Strike out the first apprentice or sort the Register — the indexes shift, and React decides that the elements with the old keys are the same ones. It mixes them up: typed text, checkboxes and other state “move” to someone else’s row.',
         'An index is acceptable only if the list never changes. An id from the data is better.',
       ],
       task: {
-        statement: 'If students can be removed and sorted, `key={index}` is a fine choice.',
-        explain: 'On removal and sorting the indexes shift, and React mixes up the elements. You need a permanent key — `student.id`.',
+        statement: 'If apprentices can be struck out and sorted, `key={index}` is a fine choice.',
+        explain: 'On removal and sorting the indexes shift, and React mixes up the elements. You need a permanent key — `apprentice.id`.',
       },
     },
     {
       question: 'What is conditional rendering?',
       answer: [
         '[[conditional|Conditional rendering]] means showing different things depending on a condition. A component is a function, so ordinary JavaScript tools work: `if` with an early `return`, the ternary operator `? :` and `&&`.',
-        'For example, in a list of students: “Active” or “Paused”, a note for a minor, and a message for an empty list.',
+        'For example, in the Register of apprentices: “Awake” or “Asleep in the coffin”, the note “Too young to be turned” and the line “The Register is empty”.',
       ],
       task: {
         question: 'Which tool is the handiest for each case?',
         bins: ['if with an early return', 'ternary ? :', '&&'],
         items: [
-          { text: 'The list is empty — return completely different markup' },
-          { text: 'Show “Active” or “Paused”' },
-          { text: 'The “Minor” line only when `age < 18`' },
-          { text: 'The class `card` or `card--paused`' },
+          { text: 'The Register is empty — return completely different markup' },
+          { text: 'Show “Awake” or “Asleep in the coffin”' },
+          { text: 'The line “Too young to be turned” only when `age < 18`' },
+          { text: 'The class `card` or `card--asleep`' },
         ],
         explain:
           '`if` — when the component’s whole answer is different; `? :` — when you pick one of two; `&&` — when you show something or nothing.',
@@ -408,18 +410,18 @@ export const COURSE = {
         'You cannot write `if` inside JSX curly braces — only expressions are allowed there. So `if` goes **before** `return`: check the condition and immediately return the right markup (an “early return”).',
         'If there is nothing to draw, the component returns `null`.',
       ],
-      code: 'function StudentList({ students }) {\n  if (students.length === 0) {\n    return <p>The list is empty</p>;\n  }\n  return students.map((s) => <StudentCard key={s.id} student={s} />);\n}',
+      code: 'function ApprenticeList({ apprentices }) {\n  if (apprentices.length === 0) {\n    return <p>The Register is empty</p>;\n  }\n  return apprentices.map((a) => <ApprenticeCard key={a.id} apprentice={a} />);\n}',
       task: {
         question: 'Find the line with the error.',
-        code: "function StatusBadge({ isActive }) {\n  return (\n    <span>\n      {if (isActive) 'Active'}\n    </span>\n  );\n}",
-        fix: "{isActive ? 'Active' : 'Paused'}",
+        code: "function StatusBadge({ isActive }) {\n  return (\n    <span>\n      {if (isActive) 'Awake'}\n    </span>\n  );\n}",
+        fix: "{isActive ? 'Awake' : 'Asleep in the coffin'}",
         explain: 'Only expressions go inside `{}` in JSX, and `if` is a statement. Use the ternary operator or put `if` before `return`.',
       },
     },
     {
       question: 'How does the ternary operator work?',
       answer: [
-        '`condition ? A : B` means “if the condition is true, then A, otherwise B”. It is an expression, so you can write it right in JSX: `{isActive ? "Active" : "Paused"}`.',
+        '`condition ? A : B` means “if the condition is true, then A, otherwise B”. It is an expression, so you can write it right in JSX: `{isActive ? "Awake" : "Asleep in the coffin"}`.',
         'Handy when you need to pick one of two: a text, a class or a component.',
       ],
       task: {
@@ -431,30 +433,30 @@ export const COURSE = {
       question: 'How does && work in JSX?',
       answer: [
         '`condition && <Element />` means “if the condition is true, draw the element, otherwise nothing”. JavaScript returns the right side if the left one is [[truthy|truthy]], and otherwise the left side itself; React does not draw `false`, `null` or `undefined`.',
-        'The trap: React does draw the number `0`! So put a real true / false on the left: `students.length > 0 && …`, not `students.length && …`.',
+        'The trap: React does draw the number `0`! So put a real true / false on the left: `apprentices.length > 0 && …`, not `apprentices.length && …`.',
       ],
       task: {
-        question: 'What appears on the screen if `students` is an empty array?',
-        code: "<p>{students.length && 'We have students'}</p>",
+        question: 'What appears on the screen if `apprentices` is an empty array?',
+        code: "<p>{apprentices.length && 'There are apprentices'}</p>",
         options: [
           { text: 'The digit `0`' },
           {
             text: 'Nothing',
-            why: 'There is 0 to the left of &&, and React draws the number 0. Nothing would appear with `students.length > 0 && …`.',
+            why: 'There is 0 to the left of &&, and React draws the number 0. Nothing would appear with `apprentices.length > 0 && …`.',
           },
-          { text: 'The text “We have students”', why: 'A length of 0 is falsy, so the right side is not even evaluated.' },
+          { text: 'The text “There are apprentices”', why: 'A length of 0 is falsy, so the right side is not even evaluated.' },
         ],
-        explain: '`0 && anything` gives `0`, and React draws it. Put a comparison to the left of `&&`: `students.length > 0`.',
+        explain: '`0 && anything` gives `0`, and React draws it. Put a comparison to the left of `&&`: `apprentices.length > 0`.',
       },
     },
     {
       question: 'How do you show a message for an empty array?',
       answer: [
-        'Check the array’s length: `students.length === 0`. Then use any kind of conditional rendering: an early `return <p>The list is empty</p>` in the list component or the ternary operator `{students.length === 0 ? <p>The list is empty</p> : <ul>…</ul>}`.',
-        'Do not check the array itself: an empty array `[]` is truthy, and the condition `!students` will not catch it.',
+        'Check the array’s length: `apprentices.length === 0`. Then use any kind of conditional rendering: an early `return <p>The Register is empty</p>` in the list component or the ternary operator `{apprentices.length === 0 ? <p>The Register is empty</p> : <ul>…</ul>}`.',
+        'Do not check the array itself: an empty array `[]` is truthy, and the condition `!apprentices` will not catch it.',
       ],
       task: {
-        question: 'Which condition catches an empty list?',
+        question: 'Which condition catches an empty Register?',
         options: [
           {},
           { why: '`[]` is an object, and objects are truthy: `![]` gives false.' },
@@ -516,8 +518,8 @@ export const COURSE = {
       task: {
         question: 'How do you show an element only when something is true?',
         options: [
-          { text: '`{isActive && <p>Active</p>}`' },
-          { text: '`{isActive <p>Active</p>}`', why: 'There is no operator between the condition and the element — it is a syntax error.' },
+          { text: '`{isActive && <p>Awake</p>}`' },
+          { text: '`{isActive <p>Awake</p>}`', why: 'There is no operator between the condition and the element — it is a syntax error.' },
         ],
         explain: '`condition && element`: with true React draws the element, with false — nothing.',
       },

@@ -200,7 +200,7 @@ export default function ChapterPage({ chapterId }) {
               </button>
             )}
           </div>
-          {/* После последней карточки — вопросы преподавателя по теме пещеры: их задают на занятии */}
+          {/* После последней карточки — вопросы Реестра по теме пещеры: их задаёт архивариус Формуляр */}
           {lastCard && <CaveQuestions chapterId={chapter.id} />}
         </div>
       )}
@@ -316,7 +316,7 @@ export default function ChapterPage({ chapterId }) {
               </a>
             </div>
           </div>
-          {/* Хозяин повержен — путь к вопросам преподавателя по этой теме продвинулся */}
+          {/* Хозяин повержен — путь к вопросам Реестра по этой теме продвинулся */}
           <CaveQuestions chapterId={chapter.id} />
         </div>
       )}

@@ -70,7 +70,7 @@ export default function BestiaryPage() {
             </li>
           );
         })}
-        {/* Хозяин Кафедры Графа: повержен, когда в испытании верны 80% вопросов преподавателя */}
+        {/* Хозяин Скриптория Графа: повержен, когда в испытании верны 80% вопросов Реестра */}
         <li className={`card ${styles.item}`} style={{ '--cave': course.color }}>
           <a className={styles.link} href={to.course()}>
             <Guardian

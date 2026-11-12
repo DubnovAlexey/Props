@@ -42,6 +42,6 @@ export const GUARDIANS = {
   performance: { Art: Werewolf, light: '#ffd34a' },
   types: { Art: Golem, light: '#57e3ff' },
   patterns: { Art: Minotaur, light: '#ff5a1f' },
-  // Не пещера, а Кафедра Графа (вопросы преподавателя): её хозяин живёт в content/course.js (COURSE.guardian)
+  // Не пещера, а Скрипторий Графа (вопросы Реестра): её хозяин живёт в content/course.js (COURSE.guardian)
   course: { Art: Archivist, light: '#d9a441' },
 };

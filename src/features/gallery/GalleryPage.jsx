@@ -134,14 +134,14 @@ export default function GalleryPage() {
               </figcaption>
             </figure>
           ))}
-          {/* хозяин Кафедры Графа — не пещеры, но рисуется так же */}
+          {/* хозяин Скриптория Графа — не пещеры, но рисуется так же */}
           <figure className={styles.cell}>
             <div className={styles.pair}>
               <Guardian id="course" size={150} />
               <Guardian id="course" size={64} mood="defeated" />
             </div>
             <figcaption>
-              📋 {COURSE.guardian.name}, {COURSE.guardian.kind}
+              📜 {COURSE.guardian.name}, {COURSE.guardian.kind}
             </figcaption>
           </figure>
         </div>

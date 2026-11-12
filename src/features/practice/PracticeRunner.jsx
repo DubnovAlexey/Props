@@ -90,7 +90,7 @@ export default function PracticeRunner({ tasks, onFinish, allowHints = true, sho
           )}
           {task.course && (
             <span className={`chip ${styles.courseChip}`}>
-              <span aria-hidden="true">📋</span>{' '}
+              <span aria-hidden="true">📜</span>{' '}
               {task.course.kind === 'test' ? t('course.chipTest', { n: task.course.number }) : t('course.chip', { n: task.course.number })}
             </span>
           )}

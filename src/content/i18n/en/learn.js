@@ -2,8 +2,8 @@
 export const LEARN = {
   title: 'What the caves will teach you',
   intro: [
-    'Eighteen caves on three tiers, eighteen monster guardians, the Count’s Chair and his lair. Here is what you will know and be able to do once you have gone through them all.',
-    'Below is the table of contents: which topics live in which cave and which of the teacher’s questions you will be able to answer. The caves go from simple to complex, each one built on the ones before.',
+    'Eighteen caves on three tiers, eighteen monster guardians, the Count’s Scriptorium and his lair. Here is what you will know and be able to do once you have gone through them all.',
+    'Below is the table of contents: which topics live in which cave and which questions of Formular’s Register you will be able to answer. The caves go from simple to complex, each one built on the ones before.',
   ],
   skillsTitle: 'What you will be able to do after the caves',
   skills: [
@@ -20,8 +20,8 @@ export const LEARN = {
     'Use Context, hooks and your own hooks; load data asynchronously with loading and error states.',
     'Speed up redraws with memo, useMemo, useCallback — and understand when it is not needed.',
     'Describe props with types (TypeScript, JSDoc) and recognise patterns: controlled fields, HOCs, render props.',
-    'Answer the teacher’s questions on props, lists and conditional rendering with confidence — the Count’s Chair takes each one apart.',
+    'Answer the questions of Formular’s Register on props, lists and conditional rendering with confidence — the Count’s Scriptorium takes each one apart.',
   ],
   tocTitle: 'Table of contents',
-  finaleText: 'The Count’s Trial: one task from every cave, a couple of random ones and the required teacher’s questions.',
+  finaleText: 'The Count’s Trial: one task from every cave, a couple of random ones and the required questions of the Register.',
 };

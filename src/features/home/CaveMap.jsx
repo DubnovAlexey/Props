@@ -218,7 +218,7 @@ export default function CaveMap() {
           </section>
         ))}
         <ol className={styles.path}>
-          {/* Кафедра Графа: вопросы преподавателя — обязательная часть испытания, поэтому стоит перед Логовом */}
+          {/* Скрипторий Графа: вопросы Реестра — обязательная часть испытания, поэтому стоит перед Логовом */}
           <CaveNode
             chapter={{ ...courseAsCave(COURSE), label: t('course.mapLabel') }}
             href={to.course()}
