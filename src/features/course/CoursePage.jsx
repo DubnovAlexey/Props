@@ -99,7 +99,12 @@ export default function CoursePage({ focus = null }) {
         <p className="muted">{COURSE.goal}</p>
       </header>
 
-      <CaveHost chapter={cave} defeated={courseBest !== null && courseBest >= COURSE_PASS} />
+      <CaveHost
+        chapter={cave}
+        defeated={courseBest !== null && courseBest >= COURSE_PASS}
+        eyebrow={t('course.host')}
+        defeatedEyebrow={t('course.hostDefeated')}
+      />
 
       <section className="card stack">
         <RichBlocks lines={COURSE.intro} />

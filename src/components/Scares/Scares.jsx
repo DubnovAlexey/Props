@@ -21,7 +21,7 @@ import Guardian from '../../mascot/guardians/Guardian.jsx';
 import Bat from '../../mascot/Bat.jsx';
 import { sfx } from '../../audio/sfx.js';
 import { buildScare, nextDelay, pickScare, SCARE_EVENT, SCARE_KINDS } from '../../utils/scares.js';
-import { GoblinRunner, HangingSpider, Rat, TrollRunner } from './creatures.jsx';
+import { BloodQuill, GoblinRunner, HangingSpider, Rat, TrollRunner } from './creatures.jsx';
 import styles from './Scares.module.css';
 
 const RETRY_MS = 6000; // игрок печатает или вкладка скрыта — заглянем позже
@@ -103,6 +103,21 @@ function ScareView({ scare }) {
           </span>
         </span>
       ));
+
+    case 'quill':
+      // Строка крови рисуется вслед за пером: обе анимации идут одно и то же время (--dur)
+      return (
+        <span className={`${styles.quillLane} ${scare.flip ? styles.quillBack : ''}`} style={scare.style}>
+          <svg className={styles.quillInk} viewBox={`0 0 ${scare.ink.width} ${scare.ink.height}`} aria-hidden="true">
+            <path d={scare.ink.d} pathLength="1" />
+          </svg>
+          <span className={styles.quillPen}>
+            <span className={styles.quillBob}>
+              <BloodQuill size={scare.size} />
+            </span>
+          </span>
+        </span>
+      );
 
     case 'spider':
       return (

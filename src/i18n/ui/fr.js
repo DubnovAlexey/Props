@@ -420,6 +420,8 @@ export default {
     inCaveText:
       'Les questions du Registre de Formular sur le thème de cette grotte, avec les réponses. Toutes, et la petite épreuve, sont au Scriptorium du Comte.',
     toCourse: '📜 Vers le Scriptorium du Comte',
+    host: 'Maître du Scriptorium',
+    hostDefeated: 'Le maître du Scriptorium est vaincu',
   },
 
   learn: {

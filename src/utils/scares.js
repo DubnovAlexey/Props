@@ -23,6 +23,8 @@ export const SCARE_KINDS = [
   { kind: 'spider', weight: 2, title: 'Паук на нити' },
   { kind: 'banshee', weight: 1, title: 'Банши бросается в лицо' },
   { kind: 'apparition', weight: 2, title: 'Хозяин пещеры в темноте' },
+  // Архивариус Формуляр (Скрипторий Графа) вписывает в Реестр каждого ученика — его перо пишет и здесь
+  { kind: 'quill', weight: 2, title: 'Перо Формуляра пишет кровью' },
 ];
 
 /** Пауза перед самой первой неожиданностью и между следующими, в миллисекундах */
@@ -202,6 +204,35 @@ export function buildScare(kind, random, view) {
         return rat;
       });
       return { kind, duration: Math.max(...rats.map((rat) => rat.end)), flip: !ltr, rats };
+    }
+
+    case 'quill': {
+      // Костяное перо Формуляра летит через экран, выводя за собой кровавую строку-волну.
+      // Строка — путь в системе координат шириной с экран: перо и чернила идут вместе, за одно время.
+      const size = phone ? 92 : 128;
+      const duration = clamp(2600 + width * 1.3, 3400, 5600);
+      const amp = phone ? 8 : 12;
+      const waves = Math.max(3, Math.round(width / 260));
+      const step = width / (waves * 2);
+      let d = `M0 ${amp}`;
+      for (let i = 0; i < waves * 2; i += 1)
+        d += ` Q${Math.round(step * (i + 0.5))} ${i % 2 ? amp * 2 : 0} ${Math.round(step * (i + 1))} ${amp}`;
+      return {
+        kind,
+        duration,
+        size,
+        flip: !ltr,
+        ink: { width: Math.round(width), height: amp * 2, d },
+        style: {
+          '--y': px(clamp(between(random, 0.22, 0.62) * height, 70, height - 120)),
+          '--lane': px(width),
+          '--size': px(size),
+          '--amp': px(amp),
+          '--dur': `${Math.round(duration)}ms`,
+          // перо качается вверх-вниз в такт волнам строки: половина волны — один взмах
+          '--half': `${Math.round(duration / (waves * 2))}ms`,
+        },
+      };
     }
 
     case 'spider': {

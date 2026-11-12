@@ -117,7 +117,8 @@ export default function App({ i18n }) {
           <TabBar section={section} />
           <MascotDock routeKey={route.path} />
           {/* «Неожиданности»: в пещере из темноты выглядывает её хозяин — поэтому передаём id пещеры */}
-          <Scares caveId={route.parts[0] === 'chapter' ? route.parts[1] : null} />
+          {/* В Скриптории Графа из темноты выглядывает его хозяин — архивариус Формуляр (ключ портрета course) */}
+          <Scares caveId={route.parts[0] === 'chapter' ? route.parts[1] : route.parts[0] === 'course' ? 'course' : null} />
         </MascotProvider>
       </I18nProvider>
     </ProgressProvider>

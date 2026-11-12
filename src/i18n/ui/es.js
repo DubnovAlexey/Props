@@ -415,6 +415,8 @@ export default {
     inCaveText:
       'Preguntas del Registro de Formular sobre el tema de esta cueva, con respuestas. Todas, y la prueba menor, están en el Scriptorium del Conde.',
     toCourse: '📜 Al Scriptorium del Conde',
+    host: 'Señor del Scriptorium',
+    hostDefeated: 'El señor del Scriptorium ha caído',
   },
 
   learn: {

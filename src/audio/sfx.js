@@ -187,6 +187,11 @@ export const sfx = {
         tone(ac, { freq: 58, dur: 2.2, type: 'sawtooth', gain: 0.07, glide: 46 });
         tone(ac, { freq: 61, dur: 2.2, type: 'sawtooth', gain: 0.05, glide: 47 });
         break;
+      case 'quill': // перо Формуляра скребёт по пергаменту, а с острия капает кровь
+        for (let i = 0; i < 16; i += 1)
+          noise(ac, { start: 0.15 + i * 0.19 + (i % 3) * 0.03, dur: 0.06, gain: 0.05, from: 5200, to: 3400, type: 'highpass' });
+        [1.1, 2.3].forEach((start) => tone(ac, { freq: 920, start, dur: 0.12, type: 'sine', gain: 0.04, glide: 420 }));
+        break;
       default:
     }
   },

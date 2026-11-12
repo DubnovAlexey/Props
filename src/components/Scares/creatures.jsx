@@ -378,3 +378,37 @@ export function HangingSpider({ size = 84 }) {
     </svg>
   );
 }
+
+/**
+ * Костяное перо архивариуса Формуляра (Скрипторий Графа): чёрное воронье опахало на костяном стержне,
+ * остриё в крови, с него срываются капли. Остриё смотрит вправо-вниз — туда перо и пишет.
+ * size — длина пера в пикселях.
+ */
+export function BloodQuill({ size = 120 }) {
+  return (
+    <svg
+      className={`${styles.creature} ${styles.quill}`}
+      viewBox="0 0 120 60"
+      width={size}
+      height={size / 2}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* опахало: чёрное воронье перо с синеватым отливом и рваными бородками */}
+      <path d="M4 6 C26 2 52 8 76 22 C88 29 98 36 104 42 C92 40 78 38 64 32 C44 24 24 18 4 6 Z" fill="#14141c" />
+      <path d="M4 6 C22 14 40 24 60 30 C74 35 88 39 104 42" stroke="#2c3550" strokeWidth="1.2" fill="none" />
+      <path
+        d="M14 9 L10 2 M24 12 L22 4 M34 15 L33 7 M44 19 L45 11 M54 23 L57 15 M20 13 L14 18 M32 17 L27 23 M46 22 L42 29"
+        stroke="#0a0a10"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      {/* костяной стержень и остриё */}
+      <path d="M2 4 C40 18 80 32 112 50" stroke={BONE} strokeWidth="2.4" fill="none" strokeLinecap="round" />
+      <path d="M104 44 L117 54 L109 50 Z" fill={BONE} />
+      {/* кровь на острие и стекающая капля */}
+      <path d="M108 48 L117 54 L111 51.5 Z" fill={BLOOD} />
+      <circle className={styles.quillDrop} cx="116" cy="57" r="1.8" fill={BLOOD_DARK} />
+    </svg>
+  );
+}

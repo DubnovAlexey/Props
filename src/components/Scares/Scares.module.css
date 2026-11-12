@@ -40,6 +40,9 @@
   --depth: 30vh; /* на сколько спускается паук */
   --size: 300px; /* размер лица из темноты */
   --dx: 0px; /* с какой стороны налетает банши */
+  --lane: 100vw; /* ширина полосы, по которой летит перо Формуляра */
+  --amp: 10px; /* высота волн его кровавой строки */
+  --half: 400ms; /* полволны строки: один взмах пера вверх или вниз */
 }
 
 @media (min-width: 1000px) {
@@ -601,6 +604,126 @@
   100% {
     opacity: 0;
     transform: translate(0, 0) scale(2.7);
+  }
+}
+
+/* Перо Формуляра (архивариус Скриптория Графа): летит через экран и выводит за собой кровавую строку-волну.
+   Остриё пера — в 97% его длины и на 45% высоты полосы; оттуда и начинается строка. */
+.quillLane {
+  position: absolute;
+  left: 0;
+  top: var(--y);
+  width: var(--lane);
+  height: var(--size);
+}
+
+/* летит справа налево — зеркалим всю полосу: и перо, и строку */
+.quillBack {
+  transform: scaleX(-1);
+}
+
+.quillInk {
+  position: absolute;
+  left: 0;
+  top: calc(var(--size) * 0.45 - var(--amp));
+  width: 100%;
+  height: calc(var(--amp) * 2);
+  overflow: visible;
+  animation: quill-ink-fade var(--dur) linear both;
+}
+
+.quillInk path {
+  fill: none;
+  stroke: var(--blood);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 2px var(--blood-glow));
+  animation: quill-write var(--dur) linear both;
+}
+
+.quillPen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: quill-fly var(--dur) linear both;
+}
+
+.quillBob {
+  display: block;
+  animation: quill-bob var(--half) ease-in-out infinite alternate;
+}
+
+.quill {
+  transform-origin: 97% 90%;
+  animation: quill-scratch 0.24s ease-in-out infinite alternate;
+}
+
+.quillDrop {
+  animation: quill-drop 0.9s ease-in infinite;
+}
+
+@keyframes quill-write {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes quill-ink-fade {
+  0%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes quill-fly {
+  0% {
+    opacity: 0;
+    transform: translateX(calc(var(--size) * -0.97));
+  }
+  6%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(calc(var(--lane) - var(--size) * 0.97));
+  }
+}
+
+@keyframes quill-bob {
+  from {
+    transform: translateY(calc(var(--amp) * -0.5));
+  }
+  to {
+    transform: translateY(calc(var(--amp) * 0.5));
+  }
+}
+
+@keyframes quill-scratch {
+  from {
+    transform: rotate(-3deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes quill-drop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 

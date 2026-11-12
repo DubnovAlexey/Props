@@ -406,6 +406,8 @@ export default {
     inCaveText:
       'Questions from Formular’s Register on this cave’s topic, with answers. All of them and the Small Trial are in the Count’s Scriptorium.',
     toCourse: '📜 To the Count’s Scriptorium',
+    host: 'Master of the Scriptorium',
+    hostDefeated: 'The master of the Scriptorium is defeated',
   },
 
   learn: {

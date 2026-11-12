@@ -9,7 +9,8 @@ import BloodTitle from '../../components/BloodTitle/BloodTitle.jsx';
 import styles from './CaveHost.module.css';
 import { useI18n } from '../../i18n/I18nContext.jsx';
 
-export default function CaveHost({ chapter, defeated = false }) {
+// eyebrow — своя подпись над именем (у Скриптория Графа хозяин не пещеры, а Скриптория)
+export default function CaveHost({ chapter, defeated = false, eyebrow = null, defeatedEyebrow = null }) {
   const { t } = useI18n();
   const { guardian, intro, outro } = chapter.story;
   const name = `${guardian.kind} ${guardian.name}`;
@@ -20,7 +21,7 @@ export default function CaveHost({ chapter, defeated = false }) {
         <Guardian id={chapter.id} size={132} mood={defeated ? 'defeated' : 'idle'} label={name} />
       </div>
       <div className={styles.text}>
-        <span className="eyebrow">{defeated ? t('host.defeated') : t('host.eyebrow')}</span>
+        <span className="eyebrow">{defeated ? (defeatedEyebrow ?? t('host.defeated')) : (eyebrow ?? t('host.eyebrow'))}</span>
         <BloodTitle as="h2" className={styles.name}>
           {guardian.name}, <span className={styles.kind}>{guardian.kind}</span>
         </BloodTitle>
