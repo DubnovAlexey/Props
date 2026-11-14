@@ -132,6 +132,7 @@ export default function ChapterPage({ chapterId }) {
           mood={done.done ? 'defeated' : 'idle'}
           className={styles.hostMini}
           label={`${chapter.story.guardian.kind} ${chapter.story.guardian.name}`}
+          zoom
         />
         <div>
           <span className="eyebrow">
@@ -240,7 +241,7 @@ export default function ChapterPage({ chapterId }) {
       {step === 'done' && !done.done && (
         <div className={`card stack anim-in ${styles.standing}`}>
           <div className={styles.standingHost}>
-            <Guardian id={chapter.id} size={96} label={`${chapter.story.guardian.kind} ${chapter.story.guardian.name}`} />
+            <Guardian id={chapter.id} size={96} label={`${chapter.story.guardian.kind} ${chapter.story.guardian.name}`} zoom />
             <blockquote className={styles.standingThreat}>{t('common.quote', { text: chapter.story.guardian.threat })}</blockquote>
           </div>
           <span className="eyebrow">{t('chapter.summaryEyebrow')}</span>

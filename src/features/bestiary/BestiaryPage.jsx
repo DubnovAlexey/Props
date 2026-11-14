@@ -39,7 +39,7 @@ export default function BestiaryPage() {
       </header>
 
       <section className={`card ${styles.count}`}>
-        <Vampire mood="idle" size={86} />
+        <Vampire mood="idle" size={86} zoom />
         <div>
           <span className="eyebrow">{t('bestiary.lordEyebrow')}</span>
           <h2 className={styles.countName}>{t('bestiary.lordName')}</h2>
@@ -57,7 +57,7 @@ export default function BestiaryPage() {
           return (
             <li key={chapter.id} className={`card ${styles.item}`} style={{ '--cave': chapter.color }}>
               <a className={styles.link} href={to.chapter(chapter.id)}>
-                <Guardian id={chapter.id} size={112} mood={done ? 'defeated' : 'idle'} label={`${guardian.kind} ${guardian.name}`} />
+                <Guardian id={chapter.id} size={112} mood={done ? 'defeated' : 'idle'} label={`${guardian.kind} ${guardian.name}`} zoom />
                 <span className={styles.meta}>{t('bestiary.caveMeta', { order: chapter.order, cave: chapter.cave })}</span>
                 <b className={styles.name}>
                   {guardian.name}, {guardian.kind}
@@ -78,6 +78,7 @@ export default function BestiaryPage() {
               size={112}
               mood={courseDone ? 'defeated' : 'idle'}
               label={`${course.story.guardian.kind} ${course.story.guardian.name}`}
+              zoom
             />
             <span className={styles.meta}>
               {course.icon} {course.cave}

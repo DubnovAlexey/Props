@@ -19,7 +19,7 @@ function CaveEntry({ chapter, questions }) {
   return (
     <li className={`card anim-in ${styles.cave}`} style={{ '--cave': chapter.color }}>
       <div className={styles.caveHead}>
-        <Guardian id={chapter.id} size={58} label={`${guardian.kind} ${guardian.name}`} />
+        <Guardian id={chapter.id} size={58} label={`${guardian.kind} ${guardian.name}`} zoom />
         <div className={styles.caveName}>
           <span className={styles.caveMeta}>
             {t('common.cave', { n: chapter.order })} · {chapter.icon} {chapter.cave}
@@ -111,7 +111,7 @@ export default function LearnPage() {
 
       <section className={`card ${styles.special}`} style={{ '--cave': course.color }}>
         <div className={styles.caveHead}>
-          <Guardian id="course" size={58} label={`${course.story.guardian.kind} ${course.story.guardian.name}`} />
+          <Guardian id="course" size={58} label={`${course.story.guardian.kind} ${course.story.guardian.name}`} zoom />
           <div className={styles.caveName}>
             <span className={styles.caveMeta}>
               {course.icon} {course.cave}

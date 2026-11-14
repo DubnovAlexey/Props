@@ -18,7 +18,7 @@ export default function CaveQuestions({ chapterId }) {
     <section className={`card anim-in ${styles.inCave}`}>
       <div className={styles.inCaveHead}>
         {/* хозяин Скриптория выглядывает: его вопросы встречаются по пути, в пещерах */}
-        <Guardian id="course" size={44} />
+        <Guardian id="course" size={44} zoom />
         <h2 className={styles.inCaveTitle}>{t('course.inCave')}</h2>
       </div>
       <p className="muted small">{t('course.inCaveText')}</p>

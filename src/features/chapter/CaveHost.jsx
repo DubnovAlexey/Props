@@ -18,7 +18,7 @@ export default function CaveHost({ chapter, defeated = false, eyebrow = null, de
   return (
     <section className={`card ${styles.host} ${defeated ? styles.defeated : ''}`} aria-label={t('host.label', { name })}>
       <div className={styles.portrait}>
-        <Guardian id={chapter.id} size={132} mood={defeated ? 'defeated' : 'idle'} label={name} />
+        <Guardian id={chapter.id} size={132} mood={defeated ? 'defeated' : 'idle'} label={name} zoom />
       </div>
       <div className={styles.text}>
         <span className="eyebrow">{defeated ? (defeatedEyebrow ?? t('host.defeated')) : (eyebrow ?? t('host.eyebrow'))}</span>

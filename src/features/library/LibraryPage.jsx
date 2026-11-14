@@ -104,7 +104,7 @@ function LibraryIndex() {
           {CHAPTERS.map((chapter) => (
             <li key={chapter.id} style={{ '--cave': chapter.color }}>
               <a className={styles.caveLink} href={to.library(chapter.id)}>
-                <Guardian id={chapter.id} size={46} />
+                <Guardian id={chapter.id} size={46} zoom />
                 <span>
                   <span className={styles.caveMeta}>
                     {chapter.order}. {chapter.cave}
@@ -152,7 +152,7 @@ function CaveScroll({ chapter }) {
         {t('library.all')}
       </a>
       <header className={styles.scrollHead}>
-        <Guardian id={chapter.id} size={72} label={`${guardian.kind} ${guardian.name}`} />
+        <Guardian id={chapter.id} size={72} label={`${guardian.kind} ${guardian.name}`} zoom />
         <div>
           <span className="eyebrow">{t('library.caveEyebrow', { order: chapter.order, cave: chapter.cave })}</span>
           <BloodTitle>{chapter.title}</BloodTitle>

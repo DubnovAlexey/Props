@@ -244,7 +244,7 @@ export default function CaveMap() {
       <section className={`card ${styles.bestiary}`}>
         <div className={styles.bestiaryFaces} aria-hidden="true">
           {['state', 'context', 'hooks'].map((id) => (
-            <Guardian key={id} id={id} size={58} />
+            <Guardian key={id} id={id} size={58} zoom />
           ))}
         </div>
         <div>

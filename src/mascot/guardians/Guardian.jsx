@@ -2,7 +2,8 @@
 // какого рисовать, решает проп id (это id пещеры).
 //   size  — размер в пикселях;
 //   mood  — 'idle' (дышит и сверлит взглядом) или 'defeated' (побеждён: тускнеет, поперёк — три борозды от когтей);
-//   label — подпись для экранных читалок; без неё портрет декоративный.
+//   label — подпись для экранных читалок; без неё портрет декоративный;
+//   zoom  — под мышью портрет вырастает в 2,5 раза поверх страницы (хук useHoverZoom в App).
 // Свет падает снизу, как от факела: так лица выглядят страшнее,
 // а сильная эмоция помогает запомнить тему (эмоциональная окраска).
 import { useId } from 'react';
@@ -13,7 +14,7 @@ import styles from './Guardian.module.css';
 // Три борозды от когтей поперёк портрета поверженного хозяина
 const SLASHES = ['M56 30 Q82 96 102 170', 'M82 24 Q108 92 128 166', 'M108 28 Q134 90 152 154'];
 
-export default function Guardian({ id, size = 120, mood = 'idle', label, className = '' }) {
+export default function Guardian({ id, size = 120, mood = 'idle', label, className = '', zoom = false }) {
   // useId даёт уникальный id: градиенты разных портретов не перепутаются
   const uid = `g${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const entry = GUARDIANS[id];
@@ -30,6 +31,7 @@ export default function Guardian({ id, size = 120, mood = 'idle', label, classNa
       aria-label={label}
       aria-hidden={label ? undefined : true}
       focusable="false"
+      data-zoom={zoom ? '' : undefined}
     >
       <defs>
         <radialGradient id={`${uid}bg`} cx="50%" cy="88%" r="80%">

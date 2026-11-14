@@ -27,6 +27,7 @@ import NotFound from './app/NotFound.jsx';
 import ErrorBoundary from './app/ErrorBoundary.jsx';
 import { I18nProvider, useI18n } from './i18n/I18nContext.jsx';
 import { scrollToTop } from './utils/scroll.js';
+import { useHoverZoom } from './hooks/useHoverZoom.js';
 
 // Свитки (теория) грузятся только когда нужны: это отдельный кусок кода
 const LibraryPage = lazy(() => import('./features/library/LibraryPage.jsx'));
@@ -100,6 +101,9 @@ export default function App({ i18n }) {
   }, [route.path, route.query.term, route.query.question]);
 
   const section = sectionOf(route);
+
+  // Портреты хозяев и Графа с пропом zoom вырастают под мышью в 2,5 раза — один слушатель на всю игру
+  useHoverZoom();
 
   return (
     <ProgressProvider>

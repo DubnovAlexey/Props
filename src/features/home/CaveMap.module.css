@@ -442,6 +442,7 @@
   content: '';
   position: absolute;
   inset: -4px;
+  pointer-events: none; /* пульсирующее кольцо лежит поверх портрета — мышь должна доставать до самого портрета */
   border-radius: 50%;
   border: 2px solid var(--gold);
   animation: pulse-ring 1.8s ease-out infinite;

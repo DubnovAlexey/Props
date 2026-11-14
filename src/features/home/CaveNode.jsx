@@ -29,7 +29,7 @@ export default function CaveNode({ chapter, state, isNext = false, href = to.cha
           </svg>
           {guardian ? (
             <span className={styles.nodePortrait}>
-              <Guardian id={chapter.id} size={50} mood={state?.done ? 'defeated' : 'idle'} />
+              <Guardian id={chapter.id} size={50} mood={state?.done ? 'defeated' : 'idle'} zoom />
             </span>
           ) : (
             <span className={styles.nodeIcon} aria-hidden="true">

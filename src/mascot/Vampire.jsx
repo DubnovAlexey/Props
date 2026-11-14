@@ -8,6 +8,7 @@
 //   idle — парит, talk — говорит, happy — злорадствует, sad — хмурится,
 //   point — указывает влево на важное, wave — взмахивает рукой.
 // Какие части двигаются и как — в Vampire.module.css (классы body, cape, eyes, arm…).
+// zoom — под мышью портрет вырастает в 2,5 раза поверх страницы (хук useHoverZoom в App).
 import { useId } from 'react';
 import styles from './Vampire.module.css';
 import { useI18n } from '../i18n/I18nContext.jsx';
@@ -20,7 +21,7 @@ const BLOOD_SPOTS = [
   [84.6, 87.6, 0.7],
 ];
 
-export default function Vampire({ mood = 'idle', size = 120, className = '' }) {
+export default function Vampire({ mood = 'idle', size = 120, className = '', zoom = false }) {
   const { t } = useI18n();
   // useId даёт уникальную приставку: градиенты двух Графов на странице не перепутаются
   const u = `v${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -32,6 +33,7 @@ export default function Vampire({ mood = 'idle', size = 120, className = '' }) {
       height={(size * 190) / 160}
       role="img"
       aria-label={t('common.count')}
+      data-zoom={zoom ? '' : undefined}
     >
       <defs>
         {/* кожа: тёплый свет снизу, холодная тень сверху */}
